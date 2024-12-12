@@ -7,5 +7,6 @@
   <ItemGroup>
     <ClInclude Include="EngineMath.h" />
     <ClInclude Include="PreCompile.h" />
+    <ClInclude Include="EngineDefine.h" />
   </ItemGroup>
 </Project>

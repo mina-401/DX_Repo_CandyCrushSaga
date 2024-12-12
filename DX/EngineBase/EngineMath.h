@@ -3,6 +3,8 @@
 #include <string>
 #include <functional>
 
+#include "EngineDefine.h"
+
 // FVector로 통일하겠습니다.
 // FVector xy
 // FVector3D xyz
@@ -87,18 +89,18 @@ public:
 	};
 
 
-	FVector()
+	ENGINEAPI FVector()
 		: X(0.0f), Y(0.0f), Z(0.0f), W(1.0f)
 	{
 
 	}
 
-	FVector(float _X, float _Y) : X(_X), Y(_Y), Z(0.0f), W(1.0f)
+	ENGINEAPI FVector(float _X, float _Y) : X(_X), Y(_Y), Z(0.0f), W(1.0f)
 	{
 
 	}
 
-	FVector(float _X, float _Y, float _Z) : X(_X), Y(_Y), Z(_Z), W(1.0f)
+	ENGINEAPI FVector(float _X, float _Y, float _Z) : X(_X), Y(_Y), Z(_Z), W(1.0f)
 	{
 
 	}
@@ -379,8 +381,9 @@ public:
 		return Result;
 	}
 
-	FVector operator*(const class FMatrix& _Matrix) const;
-	FVector& operator*=(const class FMatrix& _Matrix);
+	// 선언과 구현이 분리된 녀석들만 붙여줘면 된다.
+	ENGINEAPI FVector operator*(const class FMatrix& _Matrix) const;
+	ENGINEAPI FVector& operator*=(const class FMatrix& _Matrix);
 
 	FVector& operator-=(const FVector& _Other)
 	{
