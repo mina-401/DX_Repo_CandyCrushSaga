@@ -171,6 +171,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EngineDebug.cpp" />
     <ClCompile Include="EngineMath.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -180,6 +181,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EngineDebug.h" />
     <ClInclude Include="EngineDefine.h" />
     <ClInclude Include="EngineMath.h" />
     <ClInclude Include="PreCompile.h" />

@@ -7,7 +7,9 @@ class UEngineCore
 public:
 	// constrcuter destructer
 	ENGINEAPI UEngineCore();
-	ENGINEAPI ~UEngineCore();
+	ENGINEAPI virtual ~UEngineCore() =0; //엔진코어 인스턴스 사용 안함
+
+	ENGINEAPI static void EngineStart(HINSTANCE _Instance);
 
 	// delete Function
 	UEngineCore(const UEngineCore& _Other) = delete;
