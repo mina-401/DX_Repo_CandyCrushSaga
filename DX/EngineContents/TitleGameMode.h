@@ -15,9 +15,10 @@ public:
 	ATitleGameMode& operator=(const ATitleGameMode& _Other) = delete;
 	ATitleGameMode& operator=(ATitleGameMode&& _Other) noexcept = delete;
 
-	void Tick(float _DeltaTime);
 
 protected:
+	void BeginPlay() override;
+	void Tick(float _DeltaTime) override;
 
 private:
 

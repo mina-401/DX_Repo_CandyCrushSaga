@@ -21,6 +21,12 @@
     <ClCompile Include="Actor.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Object\Component\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineGraphicDevice.cpp">
+      <Filter>Graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineCore.h" />
@@ -46,6 +52,12 @@
     <ClInclude Include="Actor.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Object\Component\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineGraphicDevice.h">
+      <Filter>Graphic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">
@@ -59,6 +71,12 @@
     </Filter>
     <Filter Include="Object\Component">
       <UniqueIdentifier>{d1d404a6-de98-46b8-9986-c60dd06f0a1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Component\Contents">
+      <UniqueIdentifier>{f843cdfb-0cbb-4fad-b6d1-58f1afa6f960}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphic">
+      <UniqueIdentifier>{ad6f3c60-8cdd-47a2-9610-8ce75ca71190}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

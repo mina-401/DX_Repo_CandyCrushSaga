@@ -17,10 +17,10 @@ public:
 	USceneComponent& operator=(const USceneComponent& _Other) = delete;
 	USceneComponent& operator=(USceneComponent&& _Other) noexcept = delete;
 
-
 protected:
 
 private:
+
 	FTransform Transform;
 
 	USceneComponent* Parent;

@@ -1,8 +1,9 @@
 #pragma once
 #include <string>
 #include <memory>
-// 설명 :
-class UObject
+
+// 설명 : std::enable_shared_from_this<UObject>
+class UObject : public std::enable_shared_from_this<UObject>
 {
 public:
 	// constrcuter destructer
@@ -17,6 +18,12 @@ public:
 	UObject(UObject&& _Other) noexcept = delete;
 	UObject& operator=(const UObject& _Other) = delete;
 	UObject& operator=(UObject&& _Other) noexcept = delete;
+
+	template<typename ChildPtrType>
+	std::shared_ptr<ChildPtrType> GetThis()
+	{
+		return std::dynamic_pointer_cast<ChildPtrType>(shared_from_this());
+	}
 
 	std::string GetName() const
 	{
@@ -112,9 +119,21 @@ public:
 		IsDebugValue = !IsDebugValue;
 	}
 
+	int GetOrder()
+	{
+		return Order;
+	}
+
+	virtual void SetOrder(int _Order)
+	{
+		Order = _Order;
+	}
+
 protected:
 
 private:
+	int Order = 0;
+
 	bool IsDestroyValue = false;
 	bool IsActiveValue = true;
 

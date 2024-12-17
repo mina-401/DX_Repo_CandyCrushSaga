@@ -1,10 +1,16 @@
 #pragma once
 #include <EngineBase/Object.h>
+
+// C
+// #include <memory.h>
+// C++
 #include <memory>
 
 // Ό³Έν :
 class UActorComponent : public UObject
 {
+	friend class AActor;
+
 public:
 	// constrcuter destructer
 	UActorComponent();
@@ -16,7 +22,9 @@ public:
 	UActorComponent& operator=(const UActorComponent& _Other) = delete;
 	UActorComponent& operator=(UActorComponent&& _Other) noexcept = delete;
 
-	std::shared_ptr<class AActor> GetActor();
+	class AActor* GetActor();
+	ENGINEAPI virtual void InitializeComponent() {}
+	ENGINEAPI virtual void BeginPlay() {}
 
 protected:
 
