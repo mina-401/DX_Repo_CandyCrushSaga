@@ -1,5 +1,10 @@
 #pragma once
 #include <EngineBase/EngineDefine.h>
+#include <EnginePlatform/EngineWindow.h>
+#include "IContentsCore.h"
+#include "Level.h"
+#include <memory>
+
 
 // 설명 :
 class UEngineCore
@@ -7,19 +12,45 @@ class UEngineCore
 public:
 	// constrcuter destructer
 	ENGINEAPI UEngineCore();
-	ENGINEAPI virtual ~UEngineCore() =0; //엔진코어 인스턴스 사용 안함
+	ENGINEAPI virtual ~UEngineCore() = 0;
 
-	ENGINEAPI static void EngineStart(HINSTANCE _Instance);
+	ENGINEAPI static void EngineStart(HINSTANCE _Instance, std::string_view _DllName);
 
-	// delete Function
-	UEngineCore(const UEngineCore& _Other) = delete;
-	UEngineCore(UEngineCore&& _Other) noexcept = delete;
-	UEngineCore& operator=(const UEngineCore& _Other) = delete;
-	UEngineCore& operator=(UEngineCore&& _Other) noexcept = delete;
+	template<typename GameModeType, typename MainPawnType>
+	static class std::shared_ptr<class ULevel> CreateLevel(std::string_view _Name)
+	{
+		// 1 유지하고 있겠죠.
+		// shared_ptr을 사용하므로 new UEngineLevel()
+		std::shared_ptr<ULevel> NewLevel = NewLevelCreate(_Name);
+		// std::make_shared
+		// new UEngineLevel();
+
+		NewLevel->SpawnActor<GameModeType>();
+		NewLevel->SpawnActor<MainPawnType>();
+
+		// 2가 됩니다
+		return NewLevel;
+	}
+
+	ENGINEAPI static void OpenLevel(std::string_view _Name);
 
 protected:
 
 private:
+	static UEngineWindow MainWindow;
+	static HMODULE ContentsDLL;
+	static std::shared_ptr<IContentsCore> Core;
 
+	static void WindowInit(HINSTANCE _Instance);
+	static void LoadContents(std::string_view _DllName);
+
+	static void EngineFrame();
+	static void EngineEnd();
+
+	ENGINEAPI static std::shared_ptr<ULevel> NewLevelCreate(std::string_view _Name);
+
+	static std::map<std::string, std::shared_ptr<class ULevel>> LevelMap;
+	static std::shared_ptr<class ULevel> CurLevel;
+	static std::shared_ptr<class ULevel> NextLevel;
 };
 

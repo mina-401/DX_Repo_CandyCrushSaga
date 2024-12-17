@@ -10,6 +10,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE _hInstance,
 	_In_ LPWSTR    lpCmdLine,
 	_In_ int       nCmdShow)
 {
-	UEngineCore::EngineStart(_hInstance);
+	// 동적 연결을 위한 "EngineContents" dll이름 넣기
+	UEngineCore::EngineStart(_hInstance, "EngineContents.dll");
 	return 0;
 }  

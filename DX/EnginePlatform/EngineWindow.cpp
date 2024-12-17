@@ -2,28 +2,41 @@
 #include "EngineWindow.h"
 #include <EngineBase/EngineDebug.h>
 
+// 멀티플랫폼으로 짜려면
+//#ifdef _WINDOWS
+//#include <Windows.h>
+//#elseif _리눅스
+//
+//#elseif 안드로이드
+//#endif 
+
 HINSTANCE UEngineWindow::hInstance = nullptr;
 std::map<std::string, WNDCLASSEXA> UEngineWindow::WindowClasss;
 int WindowCount = 0;
+bool UEngineWindow::LoopActive = true;
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK UEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+    case WM_CREATE:
+        ++WindowCount;
+        break;
+
     case WM_PAINT:
     {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hWnd, &ps);
+        // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
         EndPaint(hWnd, &ps);
     }
     break;
-    //case WM_SIZING:
-    //{
-    //    int a = 0;
-    //}
-    break;
     case WM_DESTROY:
         --WindowCount;
+        if (0 >= WindowCount)
+        {
+            UEngineWindow::LoopActive = false;
+        }
         break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
@@ -36,7 +49,8 @@ void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
 {
     hInstance = _Instance;
 
-   
+    // 어차피 무조건 해줘야 한다면 여기서 하려고 한것.
+    // 디폴트 윈도우 클래스 등록
     WNDCLASSEXA wcex;
     wcex.cbSize = sizeof(WNDCLASSEX);
     wcex.style = CS_HREDRAW | CS_VREDRAW;
@@ -68,7 +82,7 @@ int UEngineWindow::WindowMessageLoop(std::function<void()> _StartFunction, std::
         return 0;
     }
 
-    while (0 != WindowCount)
+    while (true == LoopActive)
     {
         if (0 != PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
@@ -86,9 +100,10 @@ int UEngineWindow::WindowMessageLoop(std::function<void()> _StartFunction, std::
 
     return (int)msg.wParam;
 }
+
 void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
 {
-   
+    // 일반적인 맵의 사용법
 
     std::map<std::string, WNDCLASSEXA>::iterator EndIter = WindowClasss.end();
     std::map<std::string, WNDCLASSEXA>::iterator FindIter = WindowClasss.find(std::string(_Class.lpszClassName));
@@ -96,8 +111,13 @@ void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
     // ckw
     if (EndIter != FindIter)
     {
-        
-        MSGASSERT(std::string(_Class.lpszClassName) + " ");
+        // std::string ErrorText = "같은 이름의 윈도우 클래스를 2번 등록했습니다" + std::string(_Class.lpszClassName);
+
+        // std::string 내부에 들고 있는 맴버변수 => std::string => std::vector<char>
+        // std::vector<char> char* = new char[100];
+        // ErrorText const char* 리턴해주는 함수가 c_str()
+        // const char* Text = ErrorText.c_str();
+        MSGASSERT(std::string(_Class.lpszClassName) + " 같은 이름의 윈도우 클래스를 2번 등록했습니다");
         return;
     }
 
@@ -113,6 +133,7 @@ UEngineWindow::UEngineWindow()
 
 UEngineWindow::~UEngineWindow()
 {
+    // 릴리즈하는 순서는 왠만하면 만들어진 순서의 역순이 좋다.
     if (nullptr != WindowHandle)
     {
         DestroyWindow(WindowHandle);

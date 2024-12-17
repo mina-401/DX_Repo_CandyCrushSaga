@@ -13,3 +13,9 @@
 
 // ¼öÇÐ
 #include "EngineMath.h"
+#include "EngineDirectory.h"
+#include "EngineFile.h"
+#include "EngineSerializer.h"
+#include "EnginePath.h"
+#include "EngineDebug.h"
+#include "EngineDefine.h"

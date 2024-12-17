@@ -14,7 +14,7 @@
 // #include <DirectXMath.h>
 
 
-class UEngineMath
+class ENGINEAPI  UEngineMath
 {
 public:
 	// 상수 정의
