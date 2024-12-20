@@ -24,17 +24,11 @@ void URenderer::SetOrder(int _Order)
 	int PrevOrder = GetOrder();
 	UObject::SetOrder(_Order);
 	ULevel* Level = GetActor()->GetWorld();
-	// std::shared_ptr<URenderer> Render(this);
-	// std::enable_shared_from_this<UObject> 상속받은 클래스가 자기자신을 this
-	// std::shared_ptr로 만들어진 this를 사용하고 싶을대 호출하는 함수.
-	// std::shared_ptr<UObject> ObjectPtr = UObject::shared_from_this();
-	// dynmaic_cast를 사용하는 방법이 있을 것이다. 
-	// dynamic_cast <= 는 순수한 포인터를 변환시키는 녀석이지 std::shared_ptr
-	// std::shared_ptr<int> NewInt = std::make_shared<int>();
-	// std::shared_ptr<URenderer> RendererPtr = std::dynamic_pointer_cast<URenderer>(ObjectPtr);
+
 	std::shared_ptr<URenderer> RendererPtr = GetThis<URenderer>();
 	Level->ChangeRenderGroup(0, PrevOrder, RendererPtr);
 }
+
 
 ENGINEAPI void URenderer::BeginPlay()
 {
@@ -48,11 +42,69 @@ ENGINEAPI void URenderer::BeginPlay()
 	InputAssembler2Init();
 	RasterizerInit();
 	PixelShaderInit();
+	ShaderResInit();
 
+}
+
+void URenderer::ShaderResInit()
+{
+	D3D11_BUFFER_DESC BufferInfo = { 0 };
+	BufferInfo.ByteWidth = sizeof(FTransform);
+	BufferInfo.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	BufferInfo.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
+	BufferInfo.Usage = D3D11_USAGE_DYNAMIC;
+
+	if (S_OK != UEngineCore::Device.GetDevice()->CreateBuffer(&BufferInfo, nullptr, &TransformConstBuffer))
+	{
+		MSGASSERT("상수버퍼 생성에 실패했습니다..");
+		return;
+	}
+
+}
+
+void URenderer::ShaderResSetting()
+{
+	FTransform& RendererTrans = GetTransformRef();
+
+	D3D11_MAPPED_SUBRESOURCE Data = {};
+
+	// 이 데이터를 사용하는 랜더링 랜더링 잠깐 정지
+	// 잠깐 그래픽카드야 멈 그래픽카드에 있는 상수버퍼 수정해야 해.
+	UEngineCore::Device.GetContext()->Map(TransformConstBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &Data);
+
+	// Data.pData 그래픽카드와 연결된 주소값.
+	if (nullptr == Data.pData)
+	{
+		MSGASSERT("그래픽카드가 수정을 거부했습니다.");
+	}
+
+	memcpy_s(Data.pData, sizeof(FTransform), &RendererTrans, sizeof(FTransform));
+
+
+	UEngineCore::Device.GetContext()->Unmap(TransformConstBuffer.Get(), 0);
+
+	// 같은 상수버퍼를 
+	ID3D11Buffer* ArrPtr[16] = { TransformConstBuffer.Get() };
+
+	UEngineCore::Device.GetContext()->VSSetConstantBuffers(0, 1, ArrPtr);
 }
 
 void URenderer::Render(UEngineCamera* _Camera, float _DeltaTime)
 {
+	FTransform& CameraTrans = _Camera->GetTransformRef();
+
+	FTransform& RendererTrans = GetTransformRef();
+
+	// 랜더러는 월드 뷰 프로젝트를 다 세팅받았고
+	RendererTrans.View = CameraTrans.View;
+	RendererTrans.Projection = CameraTrans.Projection;
+
+	RendererTrans.WVP = RendererTrans.World * RendererTrans.View * RendererTrans.Projection;
+
+
+
+
+	ShaderResSetting();
 	InputAssembler1Setting();
 	VertexShaderSetting();
 	InputAssembler2Setting();
@@ -211,11 +263,6 @@ void URenderer::VertexShaderInit()
 	std::string Path = File.GetPathToString();
 
 	std::wstring WPath = UEngineString::AnsiToUnicode(Path);
-
-	// 쉐이더 코드를 그냥 문자열로 만들어서 컴파일 할수도 있다.
-	//std::string ShaderCode = "struct EngineVertex \	{ \		float4 COLOR : COLOR; \		float4 OSITION : POSITION; \	}; \	struct VertexShaderOutPut \	{ \		float4 SVPOSITION : V_POSITION; \		float4 COLOR : COLOR; \	}; \	VertexShaderOutPut VertexToWorldEngineVertex _Vertex) \	{ \		VertexShaderOutPut OutPut; \		utPut.SVPOSITION = _Vertex.POSITION; \		OutPut.COLOR = _Vertex.COLOR; \
-	//	return OutPut; \	} 
-	// D3DCompile()
 
 	// 버전을 만든다.
 	std::string version = "vs_5_0";

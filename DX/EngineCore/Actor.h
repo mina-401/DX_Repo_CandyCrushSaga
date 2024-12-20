@@ -102,7 +102,15 @@ public:
 
 		RootComponent->SetRelativeScale3D(_Scale);
 	}
+	void AddActorLocation(const FVector& _Value)
+	{
+		if (nullptr == RootComponent)
+		{
+			return;
+		}
 
+		RootComponent->AddLocation(_Value);
+	}
 protected:
 
 private:

@@ -15,7 +15,22 @@ struct VertexShaderOutPut
     float4 COLOR : COLOR;
 };
 
-// 내가 원하는 크기로사각형들을 만든다. 
+// 상수버퍼를 사용하겠다.
+cbuffer FTransform : register(b0)
+{
+    float4 Scale;
+    float4 Rotation;
+    float4 Location;
+
+    float4x4 ScaleMat;
+    float4x4 RotationMat;
+    float4x4 LocationMat;
+    float4x4 World;
+    float4x4 View;
+    float4x4 Projection;
+    float4x4 WVP;
+};
+
 // 버텍스쉐이더를 다 만들었다.
 VertexShaderOutPut VertexToWorld(EngineVertex _Vertex)
 {
@@ -27,7 +42,7 @@ VertexShaderOutPut VertexToWorld(EngineVertex _Vertex)
 	
     VertexShaderOutPut OutPut;
 	// _Vertex 0.5, 0.5
-    OutPut.SVPOSITION = _Vertex.POSITION;
+    OutPut.SVPOSITION = mul(_Vertex.POSITION, WVP);
     OutPut.NEWPOSITION = _Vertex.POSITION;
 	//OutPut.SVPOSITION *= Projection;
     OutPut.COLOR = _Vertex.COLOR;

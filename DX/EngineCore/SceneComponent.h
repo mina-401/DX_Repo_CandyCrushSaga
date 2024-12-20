@@ -33,7 +33,11 @@ public:
 	{
 		return Transform;
 	}
-
+	void AddLocation(const FVector& _Value)
+	{
+		Transform.Location += _Value;
+		Transform.TransformUpdate();
+	}
 protected:
 	FTransform Transform;
 
