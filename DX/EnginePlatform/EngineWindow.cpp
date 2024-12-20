@@ -13,7 +13,7 @@
 HINSTANCE UEngineWindow::hInstance = nullptr;
 std::map<std::string, WNDCLASSEXA> UEngineWindow::WindowClasss;
 int WindowCount = 0;
-bool UEngineWindow::LoopActive = true;
+// bool UEngineWindow::LoopActive = true;
 
 LRESULT CALLBACK UEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -169,7 +169,7 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
 
 void UEngineWindow::Open(std::string_view _TitleName /*= "Window"*/)
 {
-    // 어 window 안만들고 띄우려고 하네?
+    // 어 window 안만들고 띄우려고 하네?  
     if (0 == WindowHandle)
     {
         // 만들어

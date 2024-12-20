@@ -5,7 +5,6 @@
 #include "IContentsCore.h"
 #include "Level.h"
 #include "EngineGraphicDevice.h"
-
 UEngineGraphicDevice UEngineCore::Device;
 UEngineWindow UEngineCore::MainWindow;
 HMODULE UEngineCore::ContentsDLL = nullptr;
@@ -37,6 +36,7 @@ void UEngineCore::LoadContents(std::string_view _DllName)
 	Dir.MoveParentToDirectory("Build");
 	Dir.Move("bin/x64");
 
+	// 빌드 상황에 따라서 경로 변경
 #ifdef _DEBUG
 	Dir.Move("Debug");
 #else
@@ -46,7 +46,7 @@ void UEngineCore::LoadContents(std::string_view _DllName)
 	UEngineFile File = Dir.GetFile(_DllName);
 
 	std::string FullPath = File.GetPathToString();
-
+	// 규칙이 생길수밖에 없다.
 	ContentsDLL = LoadLibraryA(FullPath.c_str());
 
 	if (nullptr == ContentsDLL)
@@ -84,26 +84,36 @@ void UEngineCore::EngineStart(HINSTANCE _Instance, std::string_view _DllName)
 	UEngineWindow::WindowMessageLoop(
 		[]()
 		{
+			// 어딘가에서 이걸 호출하면 콘솔창이 뜨고 그 뒤로는 std::cout 하면 그 콘솔창에 메세지가 뜰겁니다.
+			// UEngineDebug::StartConsole();
 			UEngineInitData Data;
-
 			Device.CreateDeviceAndContext();
-
 			Core->EngineStart(Data);
 			MainWindow.SetWindowPosAndScale(Data.WindowPos, Data.WindowSize);
 			Device.CreateBackBuffer(MainWindow);
-
+			// 디바이스가 만들어지지 않으면 리소스 로드도 할수가 없다.
+			// 여기부터 리소스 로드가 가능하다.
 
 
 		},
 		[]()
 		{
 			EngineFrame();
+			// 엔진이 돌아갈때 하고 싶은것
 		},
 		[]()
 		{
+			// static으로 하자고 했습니다.
+			// 이때 레벨이 다 delete가 되어야 한다.
+			// 레퍼런스 카운트로 관리되면 그 레퍼런스 카운트는 내가 세고 있어요.
 			EngineEnd();
 		});
 
+
+	// 게임 엔진이 시작되었다.
+	// 윈도우창은 엔진이 알아서 띄워줘야 하고.
+
+	// Window 띄워줘야 한다.
 
 
 }
@@ -161,7 +171,12 @@ void UEngineCore::EngineFrame()
 void UEngineCore::EngineEnd()
 {
 	// 리소스 정리도 여기서 할겁니다.
+	Device.Release();
 
+	CurLevel = nullptr;
+	NextLevel = nullptr;
 	LevelMap.clear();
+
 	UEngineDebug::EndConsole();
+
 }
