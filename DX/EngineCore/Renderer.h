@@ -4,6 +4,7 @@
 struct EngineVertex
 {
 	float4 POSITION;
+	float4 TEXCOORD; // UV값이라고 불리는 존재로 텍스처가 매핑되는 비율을 지정해줍니다.
 	float4 COLOR;
 };
 
@@ -33,7 +34,10 @@ private:
 
 public:
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> Texture2D = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> TextureSettingView = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> SRV = nullptr;
+
+	Microsoft::WRL::ComPtr<ID3D11SamplerState> SamplerState = nullptr;
+
 	Microsoft::WRL::ComPtr<ID3D11Buffer> TransformConstBuffer = nullptr;
 	void ShaderResInit();
 	void ShaderResSetting();
@@ -74,6 +78,7 @@ public:
 	void PixelShaderSetting();
 
 	void OutPutMergeSetting();
+
 
 };
 

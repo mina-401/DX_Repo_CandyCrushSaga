@@ -62,6 +62,9 @@
     </ClInclude>
     <ClInclude Include="CameraActor.h" />
     <ClInclude Include="EngineCamera.h" />
+    <ClInclude Include="ThirdParty\DirectxTex\Inc\DirectXTex.h">
+      <Filter>ThirdParty\DirectxTex\Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">
@@ -103,5 +106,15 @@
     <Filter Include="ThirdParty\DirectxTex\Inc">
       <UniqueIdentifier>{e66c1091-077c-48ff-a85e-d3c9ed36f9fd}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="ThirdParty\DirectxTex\Debug\DirectXTex.lib">
+      <Filter>ThirdParty\DirectxTex\Debug</Filter>
+    </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ThirdParty\DirectxTex\Inc\DirectXTex.inl">
+      <Filter>ThirdParty\DirectxTex\Inc</Filter>
+    </None>
   </ItemGroup>
 </Project>
