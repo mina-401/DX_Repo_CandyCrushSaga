@@ -1,8 +1,8 @@
 #include "PreCompile.h"
 #include "Renderer.h"
 #include <EngineBase/EngineString.h>
-#include <EngineCore/Actor.h>
 #include <EngineCore/EngineCore.h>
+#include <EngineCore/Actor.h>
 #include "Level.h"
 
 URenderer::URenderer()
@@ -31,7 +31,7 @@ void URenderer::SetOrder(int _Order)
 	// std::shared_ptr<int> NewInt = std::make_shared<int>();
 	// std::shared_ptr<URenderer> RendererPtr = std::dynamic_pointer_cast<URenderer>(ObjectPtr);
 	std::shared_ptr<URenderer> RendererPtr = GetThis<URenderer>();
-	Level->ChangeRenderGroup(PrevOrder, RendererPtr);
+	Level->ChangeRenderGroup(0, PrevOrder, RendererPtr);
 }
 
 ENGINEAPI void URenderer::BeginPlay()
@@ -46,9 +46,10 @@ ENGINEAPI void URenderer::BeginPlay()
 	InputAssembler2Init();
 	RasterizerInit();
 	PixelShaderInit();
+
 }
 
-void URenderer::Render(float _DeltaTime)
+void URenderer::Render(UEngineCamera* _Camera, float _DeltaTime)
 {
 	InputAssembler1Setting();
 	VertexShaderSetting();
@@ -70,10 +71,10 @@ void URenderer::InputAssembler1Init()
 	std::vector<EngineVertex> Vertexs;
 	Vertexs.resize(4);
 
-	Vertexs[0] = EngineVertex{ FVector(-0.5f, 0.5f, -0.0f), {} };
-	Vertexs[1] = EngineVertex{ FVector(0.5f, 0.5f, -0.0f), {} };
-	Vertexs[2] = EngineVertex{ FVector(-0.5f, -0.5f, -0.0f), {} };
-	Vertexs[3] = EngineVertex{ FVector(0.5f, -0.5f, -0.0f), {} };
+	Vertexs[0] = EngineVertex{ FVector(-0.5f, 0.5f, -0.0f), {1.0f, 0.0f, 0.0f, 1.0f} };
+	Vertexs[1] = EngineVertex{ FVector(0.5f, 0.5f, -0.0f), {0.0f, 1.0f, 0.0f, 1.0f} };
+	Vertexs[2] = EngineVertex{ FVector(-0.5f, -0.5f, -0.0f), {0.0f, 0.0f, 1.0f, 1.0f} };
+	Vertexs[3] = EngineVertex{ FVector(0.5f, -0.5f, -0.0f), {1.0f, 1.0f, 1.0f, 1.0f} };
 	// 0   1
 	// 
 	// 2   3

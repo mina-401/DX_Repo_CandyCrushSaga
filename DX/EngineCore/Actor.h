@@ -1,7 +1,5 @@
 #pragma once
-#include "ActorComponent.h"
-#include <iostream>
-
+#include "SceneComponent.h"
 
 // 기하구조를 이야기해 봅시다.
 // 설명 :
@@ -21,6 +19,8 @@ public:
 	AActor& operator=(const AActor& _Other) = delete;
 	AActor& operator=(AActor&& _Other) noexcept = delete;
 
+	// 시점함수는 엔진이 실행시켜주는 겁니다.
+	// 직접호출하는 일은 있으면 안됩니다.
 	ENGINEAPI virtual void BeginPlay();
 	ENGINEAPI virtual void Tick(float _DeltaTime);
 
@@ -30,7 +30,7 @@ public:
 
 	// 이녀석 꽤 많이 
 	template<typename ComponentType>
-	void CreateDefaultSubObject()
+	inline std::shared_ptr<ComponentType> CreateDefaultSubObject()
 	{
 		static_assert(std::is_base_of_v<UActorComponent, ComponentType>, "액터 컴포넌트를 상속받지 않은 클래스를 CreateDefaultSubObject하려고 했습니다.");
 
@@ -68,7 +68,7 @@ public:
 		}
 		else if (std::is_base_of_v<UActorComponent, ComponentType>)
 		{
-
+			ActorComponentList.push_back(NewCom);
 		}
 		else
 		{
@@ -81,6 +81,16 @@ public:
 	ULevel* GetWorld()
 	{
 		return World;
+	}
+
+	void SetActorRelativeScale3D(const FVector& _Scale)
+	{
+		if (nullptr == RootComponent)
+		{
+			return;
+		}
+
+		RootComponent->SetRelativeScale3D(_Scale);
 	}
 
 protected:
