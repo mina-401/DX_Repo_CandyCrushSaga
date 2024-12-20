@@ -10,4 +10,15 @@ ACameraActor::ACameraActor()
 ACameraActor::~ACameraActor()
 {
 }
+void ACameraActor::BeginPlay()
+{
+	AActor::BeginPlay();
+}
+
+void ACameraActor::Tick(float _DeltaTime)
+{
+	AActor::Tick(_DeltaTime);
+	CameraComponent->CalculateViewAndProjection();
+
+}
 

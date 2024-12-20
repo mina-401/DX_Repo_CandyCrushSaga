@@ -19,6 +19,10 @@ struct VertexShaderOutPut
 // 버텍스쉐이더를 다 만들었다.
 VertexShaderOutPut VertexToWorld(EngineVertex _Vertex)
 {
+	// CPU에서 계산한 값을 쉐이더에게 넘기는 방법을 알아야 하는데
+	// 상수버퍼라고 부릅니다.
+	// 그중에서 가장 기본적인 것은 상수버퍼를 
+	
 	// float4x4 WVP;
 	
     VertexShaderOutPut OutPut;

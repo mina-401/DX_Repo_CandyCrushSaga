@@ -17,17 +17,27 @@ public:
 	USceneComponent& operator=(const USceneComponent& _Other) = delete;
 	USceneComponent& operator=(USceneComponent&& _Other) noexcept = delete;
 
-	void SetRelativeScale3D(const FVector& _Scale)
+	void SetRelativeScale3D(const FVector& _Value)
 	{
-		Transform.Scale = _Scale;
+		Transform.Scale = _Value;
 		Transform.TransformUpdate();
+	}
+
+	void SetLocation(const FVector& _Value)
+	{
+		Transform.Location = _Value;
+		Transform.TransformUpdate();
+	}
+
+	FTransform& GetTransformRef()
+	{
+		return Transform;
 	}
 
 protected:
 	FTransform Transform;
 
 private:
-
 
 	USceneComponent* Parent;
 	std::list<std::shared_ptr<USceneComponent>> Childs;

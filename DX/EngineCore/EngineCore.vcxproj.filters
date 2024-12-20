@@ -85,5 +85,8 @@
     <Filter Include="Object\Render">
       <UniqueIdentifier>{171a8f05-b8a4-4a58-82eb-850267cc4d24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{b1f14427-afc7-44cd-9807-540561d7ee65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

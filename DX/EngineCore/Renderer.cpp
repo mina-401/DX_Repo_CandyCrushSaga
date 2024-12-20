@@ -1,6 +1,8 @@
 #include "PreCompile.h"
 #include "Renderer.h"
 #include <EngineBase/EngineString.h>
+#include <EngineCore/EngineCamera.h>
+
 #include <EngineCore/EngineCore.h>
 #include <EngineCore/Actor.h>
 #include "Level.h"

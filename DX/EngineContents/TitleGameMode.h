@@ -16,9 +16,9 @@ public:
 	ATitleGameMode& operator=(ATitleGameMode&& _Other) noexcept = delete;
 
 
-protected:
-	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
+protected:
+	//void BeginPlay() override;
 
 private:
 

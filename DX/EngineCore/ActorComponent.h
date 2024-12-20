@@ -1,9 +1,5 @@
 #pragma once
 #include <EngineBase/Object.h>
-
-// C
-// #include <memory.h>
-// C++
 #include <memory>
 
 // Ό³Έν :

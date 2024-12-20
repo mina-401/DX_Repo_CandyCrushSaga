@@ -1,20 +1,23 @@
 #include "PreCompile.h"
 #include "TitleLogo.h"
+#include <EngineCore/Renderer.h>
+ATitleLogo::ATitleLogo()
+{
+	LogoRenderer = CreateDefaultSubObject<URenderer>();
 
-TitleLogo::TitleLogo()
+	SetActorRelativeScale3D({ 100.0f, 100.0f, 1.0f });
+}
+
+ATitleLogo::~ATitleLogo()
 {
 }
 
-TitleLogo::~TitleLogo()
-{
-}
-
-void TitleLogo::BeginPlay()
+void ATitleLogo::BeginPlay()
 {
 	AActor::BeginPlay();
 }
 
-void TitleLogo::Tick(float _DeltaTime)
+void ATitleLogo::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 }
