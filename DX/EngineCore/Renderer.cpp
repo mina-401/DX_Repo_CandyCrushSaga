@@ -3,9 +3,9 @@
 #include <EngineBase/EngineString.h>
 #include <EngineCore/EngineCamera.h>
 
-#include <EngineCore/EngineCore.h>
-#include <EngineCore/Actor.h>
-#include "Level.h"
+#include "ThirdParty/DirectxTex/Inc/DirectXTex.h"
+
+#pragma comment(lib, "DirectXTex.lib")
 
 URenderer::URenderer()
 {
@@ -60,6 +60,19 @@ void URenderer::ShaderResInit()
 		return;
 	}
 
+	UEngineDirectory CurDir;
+	CurDir.MoveParentToDirectory("ContentsResources");
+	UEngineFile File = CurDir.GetFile("Player.png");
+
+	// 다이렉트 텍스가 지원해주는 함수.
+
+	// TGA
+	// DirectX::LoadFromDDSFile
+	// 
+	// DirectX::LoadFromTGAFile
+
+	// DirectX::LoadFromWICFile
+
 }
 
 void URenderer::ShaderResSetting()
@@ -87,6 +100,11 @@ void URenderer::ShaderResSetting()
 	ID3D11Buffer* ArrPtr[16] = { TransformConstBuffer.Get() };
 
 	UEngineCore::Device.GetContext()->VSSetConstantBuffers(0, 1, ArrPtr);
+
+	// RTV 랜더의 대상이 될수 있는 조건이
+	// 쉐이더 리소스로 사용할수 있는 조건이 SRV shader resources view
+	ID3D11ShaderResourceView* Ptr;
+	// UEngineCore::Device.GetContext()->PSSetShaderResources(0, 1, ArrPtr);
 }
 
 void URenderer::Render(UEngineCamera* _Camera, float _DeltaTime)

@@ -88,5 +88,20 @@
     <Filter Include="Core">
       <UniqueIdentifier>{b1f14427-afc7-44cd-9807-540561d7ee65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{e9f5dd72-8047-44e6-8fc0-d21e2ed399d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\DirectxTex">
+      <UniqueIdentifier>{59fefb72-61ba-47bd-9c96-6678dcbffd5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\DirectxTex\Debug">
+      <UniqueIdentifier>{fd3ba854-d4d4-44e5-90e1-2a14ceba8126}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\DirectxTex\Release">
+      <UniqueIdentifier>{26a8a3ae-b2b8-4a93-944b-e9c93e49cdce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\DirectxTex\Inc">
+      <UniqueIdentifier>{e66c1091-077c-48ff-a85e-d3c9ed36f9fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
