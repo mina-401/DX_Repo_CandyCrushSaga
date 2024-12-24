@@ -177,6 +177,8 @@
     <ClCompile Include="EngineCamera.cpp" />
     <ClCompile Include="EngineCore.cpp" />
     <ClCompile Include="EngineGraphicDevice.cpp" />
+    <ClCompile Include="EngineResources.cpp" />
+    <ClCompile Include="EngineTexture.cpp" />
     <ClCompile Include="GameMode.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Pawn.cpp" />
@@ -200,6 +202,8 @@
     <ClInclude Include="EngineCamera.h" />
     <ClInclude Include="EngineCore.h" />
     <ClInclude Include="EngineGraphicDevice.h" />
+    <ClInclude Include="EngineResources.h" />
+    <ClInclude Include="EngineTexture.h" />
     <ClInclude Include="GameMode.h" />
     <ClInclude Include="IContentsCore.h" />
     <ClInclude Include="Level.h" />

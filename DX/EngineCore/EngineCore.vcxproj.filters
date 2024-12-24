@@ -29,6 +29,12 @@
     </ClCompile>
     <ClCompile Include="CameraActor.cpp" />
     <ClCompile Include="EngineCamera.cpp" />
+    <ClCompile Include="EngineResources.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineTexture.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineCore.h" />
@@ -64,6 +70,12 @@
     <ClInclude Include="EngineCamera.h" />
     <ClInclude Include="ThirdParty\DirectxTex\Inc\DirectXTex.h">
       <Filter>ThirdParty\DirectxTex\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineResources.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineTexture.h">
+      <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +117,9 @@
     </Filter>
     <Filter Include="ThirdParty\DirectxTex\Inc">
       <UniqueIdentifier>{e66c1091-077c-48ff-a85e-d3c9ed36f9fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{7efd73e0-ff7d-4aa9-a249-fa16c7226cb9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
