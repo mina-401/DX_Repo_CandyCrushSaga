@@ -2,13 +2,30 @@
 #include "TitleGameMode.h"
 #include "TitleLogo.h"
 #include <EngineCore/CameraActor.h>
+#include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/Level.h>
+#include <EngineCore/EngineGUIWindow.h>
+#include <EngineCore/EngineGUI.h>
+#include <EngineCore/imgui.h>
 
+class TestWindow : public UEngineGUIWindow
+{
+public:
+	void OnGUI() override
+	{
+		ImGui::Button("WindowButton");
+		ImGui::SameLine(); // 한간 띄기
+		ImGui::Text("test");
+
+	}
+};
 ATitleGameMode::ATitleGameMode()
 {
-	GetWorld()->SpawnActor<ATitleLogo>();
-
-
+	{
+		Logo = GetWorld()->SpawnActor<ATitleLogo>();
+		Logo->SetActorLocation({ 300.0f, 0.0f, 0.0f });
+		Logo->GetRenderer()->SetSpriteData(4);
+	}
 
 	// 카메라를 일정거리 뒤로 가서 
 	// 카메라 위치조정을 무조건 해줘야 할것이다.
@@ -18,12 +35,26 @@ ATitleGameMode::ATitleGameMode()
 
 ATitleGameMode::~ATitleGameMode()
 {
+
 }
 
 void ATitleGameMode::Tick(float _DeltaTime)
 {
 	// 부모 호출
 	AActor::Tick(_DeltaTime);
+
+	static float Time = 1.0f;
+	static int Index = 0;
+
+	Logo->GetRenderer()->SetSpriteData(Index);
+
+	Time -= 0.0001;
+
+	if (0.0f >= Time)
+	{
+		++Index;
+		Time = 1.0f;
+	}
 
 
 }

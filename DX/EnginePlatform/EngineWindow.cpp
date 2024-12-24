@@ -12,11 +12,25 @@
 
 HINSTANCE UEngineWindow::hInstance = nullptr;
 std::map<std::string, WNDCLASSEXA> UEngineWindow::WindowClasss;
+std::function<bool(HWND, UINT, WPARAM, LPARAM)> UEngineWindow::CustomProc = nullptr;
 int WindowCount = 0;
 // bool UEngineWindow::LoopActive = true;
 
+void UEngineWindow::SetCustomProc(std::function<bool(HWND, UINT, WPARAM, LPARAM)> _CustomProc)
+{
+    CustomProc = _CustomProc;
+}
+
 LRESULT CALLBACK UEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    if (nullptr != CustomProc)
+    {
+        if (true == CustomProc(hWnd, message, wParam, lParam))
+        {
+            // return true;
+        }
+    }
+
     switch (message)
     {
     case WM_CREATE:
@@ -169,7 +183,7 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
 
 void UEngineWindow::Open(std::string_view _TitleName /*= "Window"*/)
 {
-    // 어 window 안만들고 띄우려고 하네?  
+    // 어 window 안만들고 띄우려고 하네?
     if (0 == WindowHandle)
     {
         // 만들어

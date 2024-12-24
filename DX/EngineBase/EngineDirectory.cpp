@@ -2,6 +2,7 @@
 #include "EngineDirectory.h"
 #include "EngineFile.h"
 #include "EngineDebug.h"
+#include "EngineString.h"
 
 UEngineDirectory::UEngineDirectory()
 	: UEnginePath()
@@ -27,8 +28,15 @@ UEngineDirectory::~UEngineDirectory()
 }
 
 
-std::vector<class UEngineFile> UEngineDirectory::GetAllFile(bool _IsRecursive /*= true*/)
+std::vector<class UEngineFile> UEngineDirectory::GetAllFile(bool _IsRecursive, std::vector<std::string> _Exts)
 {
+	std::vector<std::string> UpperExts;
+
+	for (size_t i = 0; i < _Exts.size(); i++)
+	{
+		UpperExts.push_back(UEngineString::ToUpper(_Exts[i]));
+	}
+
 	std::vector<class UEngineFile> Result;
 
 	// 경로를 넣어주면 그 경로의 첫번째 파일을 가리키게 된다.
@@ -50,10 +58,29 @@ std::vector<class UEngineFile> UEngineDirectory::GetAllFile(bool _IsRecursive /*
 			continue;
 		}
 
+		bool Check = true;
+
+		for (size_t i = 0; i < UpperExts.size(); i++)
+		{
+			std::string CurUpperExt = UEngineString::ToUpper(Path.GetExtension());
+
+			if (CurUpperExt == UpperExts[i])
+			{
+				Check = false;
+				break;
+			}
+		}
+
+		if (true == Check)
+		{
+			++Diriter;
+			continue;
+		}
+
 		Result.push_back(UEngineFile(FilePath));
 		++Diriter;
 	}
-	
+
 	return Result;
 }
 

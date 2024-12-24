@@ -33,11 +33,19 @@ public:
 		return SRV.Get();
 	}
 
+	FVector GetTextureSize()
+	{
+		return Size;
+	}
+
 protected:
 
 private:
 	ENGINEAPI void ResLoad();
 
+	FVector Size;
+	DirectX::TexMetadata Metadata;
+	DirectX::ScratchImage ImageData;
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> Texture2D = nullptr; // 로드한 텍스처
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> SRV = nullptr; // 텍스처를 쉐이더 세팅할수 있는권한
 };

@@ -56,6 +56,12 @@ public:
 	// 이 resources 관리 함수들은 전부다 core에서만 사용되게 하겠습니다.
 	ENGINEAPI static void PushRes(std::shared_ptr<UEngineResources> _Res, const std::string_view _Info, std::string_view _Name, std::string_view _Path);
 
+
+	ENGINEAPI UEnginePath GetPath()
+	{
+		return Path;
+	}
+
 protected:
 	UEnginePath Path;
 
@@ -65,5 +71,6 @@ private:
 	//                               버텍스버퍼             Box             데이터
 	ENGINEAPI static inline std::map<std::string, std::map<std::string, std::shared_ptr<UEngineResources>>> ResMap;
 };
+
 
 

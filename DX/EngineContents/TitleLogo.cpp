@@ -1,9 +1,10 @@
 #include "PreCompile.h"
 #include "TitleLogo.h"
-#include <EngineCore/Renderer.h>
+#include <EngineCore/SpriteRenderer.h>
 ATitleLogo::ATitleLogo()
 {
-	LogoRenderer = CreateDefaultSubObject<URenderer>();
+	LogoRenderer = CreateDefaultSubObject<USpriteRenderer>();
+	LogoRenderer->SetSprite("Candy.png",0);
 
 	SetActorRelativeScale3D({ 100.0f, 100.0f, 1.0f });
 }
