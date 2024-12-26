@@ -27,8 +27,6 @@
     <ClCompile Include="EngineGraphicDevice.cpp">
       <Filter>Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="CameraActor.cpp" />
-    <ClCompile Include="EngineCamera.cpp" />
     <ClCompile Include="EngineResources.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
@@ -65,6 +63,15 @@
     <ClCompile Include="EngineGUI.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="DefaultSceneComponent.cpp">
+      <Filter>Object\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraActor.cpp">
+      <Filter>Object\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineCamera.cpp">
+      <Filter>Object\Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineCore.h" />
@@ -96,8 +103,6 @@
     <ClInclude Include="EngineGraphicDevice.h">
       <Filter>Graphic</Filter>
     </ClInclude>
-    <ClInclude Include="CameraActor.h" />
-    <ClInclude Include="EngineCamera.h" />
     <ClInclude Include="ThirdParty\DirectxTex\Inc\DirectXTex.h">
       <Filter>ThirdParty\DirectxTex\Inc</Filter>
     </ClInclude>
@@ -142,6 +147,15 @@
     </ClInclude>
     <ClInclude Include="imconfig.h">
       <Filter>GUI\IMGUI\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultSceneComponent.h">
+      <Filter>Object\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraActor.h">
+      <Filter>Object\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineCamera.h">
+      <Filter>Object\Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

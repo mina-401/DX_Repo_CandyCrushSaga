@@ -11,7 +11,7 @@ class USceneComponent : public UActorComponent
 public:
 	// constrcuter destructer
 	USceneComponent();
-	~USceneComponent();
+	virtual ~USceneComponent() = 0;
 
 	// delete Function
 	USceneComponent(const USceneComponent& _Other) = delete;
@@ -34,6 +34,12 @@ public:
 	void SetRotation(const FVector& _Value)
 	{
 		Transform.Rotation = _Value;
+		TransformUpdate();
+	}
+
+	void SetScale3D(const FVector& _Value)
+	{
+		Transform.Scale = _Value;
 		TransformUpdate();
 	}
 
