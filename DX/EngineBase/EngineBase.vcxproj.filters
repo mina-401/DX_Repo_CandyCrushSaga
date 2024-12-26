@@ -20,6 +20,12 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="EngineString.cpp" />
+    <ClCompile Include="EngineDelegate.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineTimer.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineMath.h" />
@@ -42,6 +48,12 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="EngineString.h" />
+    <ClInclude Include="EngineDelegate.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineTimer.h">
+      <Filter>Time</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="IO">
@@ -49,6 +61,21 @@
     </Filter>
     <Filter Include="Object">
       <UniqueIdentifier>{f6338caf-2ee4-4e3c-9c1a-3c89d79e52c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Event">
+      <UniqueIdentifier>{23879c47-b9ef-467e-bef4-c8851ca2a154}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time">
+      <UniqueIdentifier>{f198c932-93e9-4195-b5dd-015538b5fff5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{4ef664ee-14dc-4338-8c09-7b9c9f282ee7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header">
+      <UniqueIdentifier>{cdae85da-c4c0-4b84-ab79-194231da5fb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{7f640ad2-9417-4b5c-823e-5325254398e5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

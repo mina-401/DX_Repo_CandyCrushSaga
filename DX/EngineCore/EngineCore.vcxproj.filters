@@ -140,6 +140,9 @@
     <ClInclude Include="EngineGUI.h">
       <Filter>GUI</Filter>
     </ClInclude>
+    <ClInclude Include="imconfig.h">
+      <Filter>GUI\IMGUI\Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">

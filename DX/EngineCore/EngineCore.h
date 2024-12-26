@@ -1,8 +1,9 @@
 #pragma once
 #include <EngineBase/EngineDefine.h>
+#include <EngineBase/EngineTimer.h>
 #include <EnginePlatform/EngineWindow.h>
-#include "IContentsCore.h"
 #include "EngineGraphicDevice.h"
+#include "IContentsCore.h"
 #include "Level.h"
 #include <memory>
 
@@ -36,10 +37,10 @@ public:
 	ENGINEAPI static void OpenLevel(std::string_view _Name);
 
 	ENGINEAPI static UEngineGraphicDevice Device;
+	ENGINEAPI static UEngineWindow MainWindow;
 
 	ENGINEAPI static FVector GetScreenScale();
 
-	ENGINEAPI static UEngineWindow MainWindow;
 protected:
 
 private:
@@ -48,6 +49,8 @@ private:
 	static HMODULE ContentsDLL;
 	static std::shared_ptr<IContentsCore> Core;
 	static UEngineInitData Data;
+
+	static UEngineTimer Timer;
 
 	static void WindowInit(HINSTANCE _Instance);
 	static void LoadContents(std::string_view _DllName);
@@ -61,3 +64,4 @@ private:
 	static std::shared_ptr<class ULevel> CurLevel;
 	static std::shared_ptr<class ULevel> NextLevel;
 };
+

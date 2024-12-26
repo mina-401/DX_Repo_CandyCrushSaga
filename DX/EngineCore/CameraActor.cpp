@@ -9,6 +9,7 @@ ACameraActor::ACameraActor()
 
 ACameraActor::~ACameraActor()
 {
+	CameraComponent = nullptr;
 }
 void ACameraActor::BeginPlay()
 {

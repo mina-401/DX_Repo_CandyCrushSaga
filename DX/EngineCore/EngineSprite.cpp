@@ -10,7 +10,7 @@ UEngineSprite::~UEngineSprite()
 {
 }
 
-std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToMeta(std::string_view _Name)
+std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToMeta(std::string_view _Name, std::string_view _DataFileExt)
 {
 	std::shared_ptr<UEngineTexture> Tex = UEngineTexture::Find<UEngineTexture>(_Name);
 
@@ -32,7 +32,7 @@ std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToMeta(std::string_vie
 
 	UEnginePath Path = Tex->GetPath();
 	std::string FileName = Path.GetFileName();
-	FileName += ".meta";
+	FileName += _DataFileExt;
 	Path.MoveParent();
 	Path.Append(FileName);
 
@@ -71,6 +71,7 @@ std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToMeta(std::string_vie
 
 		FSpriteData SpriteData;
 
+
 		{
 			std::string Number = UEngineString::InterString(Text, "x:", "\n", Start);
 			SpriteData.CuttingPos.X = static_cast<float>(atof(Number.c_str()));
@@ -80,6 +81,7 @@ std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToMeta(std::string_vie
 			std::string Number = UEngineString::InterString(Text, "y:", "\n", Start);
 			SpriteData.CuttingPos.Y = static_cast<float>(atof(Number.c_str()));
 		}
+
 		{
 			std::string Number = UEngineString::InterString(Text, "width:", "\n", Start);
 			SpriteData.CuttingSize.X = static_cast<float>(atof(Number.c_str()));
@@ -89,6 +91,9 @@ std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToMeta(std::string_vie
 			std::string Number = UEngineString::InterString(Text, "height:", "\n", Start);
 			SpriteData.CuttingSize.Y = static_cast<float>(atof(Number.c_str()));
 		}
+
+
+		SpriteData.CuttingPos.Y = TexSize.Y - SpriteData.CuttingPos.Y - SpriteData.CuttingSize.Y;
 
 		SpriteData.CuttingPos.X /= TexSize.X;
 		SpriteData.CuttingPos.Y /= TexSize.Y;

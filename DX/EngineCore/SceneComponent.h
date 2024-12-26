@@ -6,6 +6,8 @@
 // Ό³Έν :
 class USceneComponent : public UActorComponent
 {
+	friend class AActor;
+
 public:
 	// constrcuter destructer
 	USceneComponent();
@@ -17,33 +19,56 @@ public:
 	USceneComponent& operator=(const USceneComponent& _Other) = delete;
 	USceneComponent& operator=(USceneComponent&& _Other) noexcept = delete;
 
+	void AddLocation(const FVector& _Value)
+	{
+		Transform.Location += _Value;
+		TransformUpdate();
+	}
+
+	void AddRotation(const FVector& _Value)
+	{
+		Transform.Rotation += _Value;
+		TransformUpdate();
+	}
+
+	void SetRotation(const FVector& _Value)
+	{
+		Transform.Rotation = _Value;
+		TransformUpdate();
+	}
+
 	void SetRelativeScale3D(const FVector& _Value)
 	{
 		Transform.Scale = _Value;
-		Transform.TransformUpdate();
+		TransformUpdate();
 	}
 
 	void SetLocation(const FVector& _Value)
 	{
 		Transform.Location = _Value;
-		Transform.TransformUpdate();
+		TransformUpdate();
 	}
 
 	FTransform& GetTransformRef()
 	{
 		return Transform;
 	}
-	void AddLocation(const FVector& _Value)
-	{
-		Transform.Location += _Value;
-		Transform.TransformUpdate();
-	}
+
+	ENGINEAPI void SetupAttachment(std::shared_ptr<USceneComponent> _Parent);
+
+	void SetupAttachment(USceneComponent* _Parent);
+
+	ENGINEAPI void TransformUpdate();
+
 protected:
 	FTransform Transform;
 
-private:
+	ENGINEAPI void BeginPlay() override;
 
-	USceneComponent* Parent;
+	void ParentMatrixCheck();
+
+private:
+	USceneComponent* Parent = nullptr;
 	std::list<std::shared_ptr<USceneComponent>> Childs;
 };
 

@@ -219,6 +219,7 @@
     <ClInclude Include="EngineTexture.h" />
     <ClInclude Include="GameMode.h" />
     <ClInclude Include="IContentsCore.h" />
+    <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />
     <ClInclude Include="imgui_impl_dx11.h" />
     <ClInclude Include="imgui_impl_win32.h" />

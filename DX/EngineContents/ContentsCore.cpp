@@ -38,7 +38,7 @@ void UContentsCore::EngineStart(UEngineInitData& _Data)
 	}
 
 
-	UEngineSprite::CreateSpriteToMeta("Candy.png");
+	UEngineSprite::CreateSpriteToMeta("Player.png", ".sdata");
 	UEngineCore::CreateLevel<ATitleGameMode, APawn>("Titlelevel");
 	UEngineCore::OpenLevel("Titlelevel");
 	// 윈도우 크기 지정

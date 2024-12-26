@@ -1,13 +1,13 @@
-ï»¿#include "PreCompile.h"
+#include "PreCompile.h"
 #include "EngineWindow.h"
 #include <EngineBase/EngineDebug.h>
 
-// ë©€í‹°í”Œë«í¼ìœ¼ë¡œ ì§œë ¤ë©´
+// ¸ÖÆ¼ÇÃ·§ÆûÀ¸·Î Â¥·Á¸é
 //#ifdef _WINDOWS
 //#include <Windows.h>
-//#elseif _ë¦¬ëˆ…ìŠ¤
+//#elseif _¸®´ª½º
 //
-//#elseif ì•ˆë“œë¡œì´ë“œ
+//#elseif ¾Èµå·ÎÀÌµå
 //#endif 
 
 HINSTANCE UEngineWindow::hInstance = nullptr;
@@ -41,7 +41,7 @@ LRESULT CALLBACK UEngineWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, 
     {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hWnd, &ps);
-        // TODO: ì—¬ê¸°ì— hdcë¥¼ ì‚¬ìš©í•˜ëŠ” ê·¸ë¦¬ê¸° ì½”ë“œë¥¼ ì¶”ê°€í•©ë‹ˆë‹¤...
+        // TODO: ¿©±â¿¡ hdc¸¦ »ç¿ëÇÏ´Â ±×¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù...
         EndPaint(hWnd, &ps);
     }
     break;
@@ -63,8 +63,8 @@ void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
 {
     hInstance = _Instance;
 
-    // ì–´ì°¨í”¼ ë¬´ì¡°ê±´ í•´ì¤˜ì•¼ í•œë‹¤ë©´ ì—¬ê¸°ì„œ í•˜ë ¤ê³  í•œê²ƒ.
-    // ë””í´íŠ¸ ìœˆë„ìš° í´ë˜ìŠ¤ ë“±ë¡
+    // ¾îÂ÷ÇÇ ¹«Á¶°Ç ÇØÁà¾ß ÇÑ´Ù¸é ¿©±â¼­ ÇÏ·Á°í ÇÑ°Í.
+    // µğÆúÆ® À©µµ¿ì Å¬·¡½º µî·Ï
     WNDCLASSEXA wcex;
     wcex.cbSize = sizeof(WNDCLASSEX);
     wcex.style = CS_HREDRAW | CS_VREDRAW;
@@ -92,13 +92,13 @@ int UEngineWindow::WindowMessageLoop(std::function<void()> _StartFunction, std::
 
     if (nullptr == _FrameFunction)
     {
-        MSGASSERT("ì—…ë°ì´íŠ¸ í‘ì…˜ì´ ë°”ì¸ë“œ ë˜ì–´ ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
+        MSGASSERT("¾÷µ¥ÀÌÆ® Æã¼ÇÀÌ ¹ÙÀÎµå µÇ¾î ÀÖÁö ¾Ê½À´Ï´Ù.");
         return 0;
     }
 
     while (true == LoopActive)
     {
-        if (0 != PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+        if(0 != PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
@@ -117,7 +117,7 @@ int UEngineWindow::WindowMessageLoop(std::function<void()> _StartFunction, std::
 
 void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
 {
-    // ì¼ë°˜ì ì¸ ë§µì˜ ì‚¬ìš©ë²•
+    // ÀÏ¹İÀûÀÎ ¸ÊÀÇ »ç¿ë¹ı
 
     std::map<std::string, WNDCLASSEXA>::iterator EndIter = WindowClasss.end();
     std::map<std::string, WNDCLASSEXA>::iterator FindIter = WindowClasss.find(std::string(_Class.lpszClassName));
@@ -125,13 +125,13 @@ void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
     // ckw
     if (EndIter != FindIter)
     {
-        // std::string ErrorText = "ê°™ì€ ì´ë¦„ì˜ ìœˆë„ìš° í´ë˜ìŠ¤ë¥¼ 2ë²ˆ ë“±ë¡í–ˆìŠµë‹ˆë‹¤" + std::string(_Class.lpszClassName);
+        // std::string ErrorText = "°°Àº ÀÌ¸§ÀÇ À©µµ¿ì Å¬·¡½º¸¦ 2¹ø µî·ÏÇß½À´Ï´Ù" + std::string(_Class.lpszClassName);
 
-        // std::string ë‚´ë¶€ì— ë“¤ê³  ìˆëŠ” ë§´ë²„ë³€ìˆ˜ => std::string => std::vector<char>
+        // std::string ³»ºÎ¿¡ µé°í ÀÖ´Â ¸É¹öº¯¼ö => std::string => std::vector<char>
         // std::vector<char> char* = new char[100];
-        // ErrorText const char* ë¦¬í„´í•´ì£¼ëŠ” í•¨ìˆ˜ê°€ c_str()
+        // ErrorText const char* ¸®ÅÏÇØÁÖ´Â ÇÔ¼ö°¡ c_str()
         // const char* Text = ErrorText.c_str();
-        MSGASSERT(std::string(_Class.lpszClassName) + " ê°™ì€ ì´ë¦„ì˜ ìœˆë„ìš° í´ë˜ìŠ¤ë¥¼ 2ë²ˆ ë“±ë¡í–ˆìŠµë‹ˆë‹¤");
+        MSGASSERT(std::string(_Class.lpszClassName) + " °°Àº ÀÌ¸§ÀÇ À©µµ¿ì Å¬·¡½º¸¦ 2¹ø µî·ÏÇß½À´Ï´Ù");
         return;
     }
 
@@ -140,14 +140,14 @@ void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
     WindowClasss.insert(std::pair{ _Class.lpszClassName, _Class });
 }
 
-UEngineWindow::UEngineWindow()
+UEngineWindow::UEngineWindow() 
 {
-
+    
 }
 
 UEngineWindow::~UEngineWindow()
 {
-    // ë¦´ë¦¬ì¦ˆí•˜ëŠ” ìˆœì„œëŠ” ì™ ë§Œí•˜ë©´ ë§Œë“¤ì–´ì§„ ìˆœì„œì˜ ì—­ìˆœì´ ì¢‹ë‹¤.
+    // ¸±¸®ÁîÇÏ´Â ¼ø¼­´Â ¿Ø¸¸ÇÏ¸é ¸¸µé¾îÁø ¼ø¼­ÀÇ ¿ª¼øÀÌ ÁÁ´Ù.
     if (nullptr != WindowHandle)
     {
         DestroyWindow(WindowHandle);
@@ -164,7 +164,7 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
 
     if (false == WindowClasss.contains(_ClassName.data()))
     {
-        MSGASSERT(std::string(_ClassName) + " ë“±ë¡í•˜ì§€ ì•Šì€ í´ë˜ìŠ¤ë¡œ ìœˆë„ìš°ì°½ì„ ë§Œë“¤ë ¤ê³  í–ˆìŠµë‹ˆë‹¤");
+        MSGASSERT(std::string(_ClassName) + " µî·ÏÇÏÁö ¾ÊÀº Å¬·¡½º·Î À©µµ¿ìÃ¢À» ¸¸µé·Á°í Çß½À´Ï´Ù");
         return;
     }
 
@@ -173,20 +173,20 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
 
     if (nullptr == WindowHandle)
     {
-        MSGASSERT(std::string(_TitleName) + " ìœˆë„ìš° ìƒì„±ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+        MSGASSERT(std::string(_TitleName) + " À©µµ¿ì »ı¼º¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
         return;
     }
 
-    // ìœˆë„ìš°ê°€ ë§Œë“¤ì–´ì§€ë©´ hdcë¥¼ ì—¬ê¸°ì„œ ì–»ì–´ì˜¬ ê²ë‹ˆë‹¤.
+    // À©µµ¿ì°¡ ¸¸µé¾îÁö¸é hdc¸¦ ¿©±â¼­ ¾ò¾î¿Ã °Ì´Ï´Ù.
     HDC WindowMainDC = GetDC(WindowHandle);
 }
 
 void UEngineWindow::Open(std::string_view _TitleName /*= "Window"*/)
 {
-    // ì–´ window ì•ˆë§Œë“¤ê³  ë„ìš°ë ¤ê³  í•˜ë„¤?
+    // ¾î window ¾È¸¸µé°í ¶ç¿ì·Á°í ÇÏ³×?
     if (0 == WindowHandle)
     {
-        // ë§Œë“¤ì–´
+        // ¸¸µé¾î
         Create(_TitleName);
     }
 
@@ -195,10 +195,10 @@ void UEngineWindow::Open(std::string_view _TitleName /*= "Window"*/)
         return;
     }
 
-    // ë‹¨ìˆœíˆ ìœˆë„ì°½ì„ ë³´ì—¬ì£¼ëŠ” ê²ƒë§Œì´ ì•„ë‹ˆë¼
-    ShowWindow(WindowHandle, SW_SHOW);
+	// ´Ü¼øÈ÷ À©µµÃ¢À» º¸¿©ÁÖ´Â °Í¸¸ÀÌ ¾Æ´Ï¶ó
+	ShowWindow(WindowHandle, SW_SHOW);
     UpdateWindow(WindowHandle);
-    // ShowWindow(WindowHandle, SW_HIDE);
+	// ShowWindow(WindowHandle, SW_HIDE);
 }
 
 void UEngineWindow::SetWindowPosAndScale(FVector _Pos, FVector _Scale)
@@ -215,7 +215,7 @@ FVector UEngineWindow::GetMousePos()
     POINT MousePoint;
 
     GetCursorPos(&MousePoint);
-    // ìœˆë„ìš°ì°½ ìœ„ì¹˜ê¸°ì¤€ìœ¼ë¡œ ë§ˆìš°ìŠ¤ í¬ì§€ì…˜ì„ 
+    // À©µµ¿ìÃ¢ À§Ä¡±âÁØÀ¸·Î ¸¶¿ì½º Æ÷Áö¼ÇÀ» 
     ScreenToClient(WindowHandle, &MousePoint);
 
     return FVector(MousePoint.x, MousePoint.y);
