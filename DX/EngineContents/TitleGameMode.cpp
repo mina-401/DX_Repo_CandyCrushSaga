@@ -6,6 +6,7 @@
 #include <EngineCore/EngineGUIWindow.h>
 #include <EngineCore/EngineGUI.h>
 #include <EngineCore/imgui.h>
+#include <EngineCore/Level.h>
 
 class TestWindow : public UEngineGUIWindow
 {

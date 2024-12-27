@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "IndexBuffer.h"
+#include <EngineCore/EngineCore.h>
 
 UIndexBuffer::UIndexBuffer()
 {

@@ -3,7 +3,9 @@
 #include <EngineBase/EngineString.h>
 #include <EngineCore/EngineCamera.h>
 #include <EngineCore/EngineTexture.h>
+#include <EngineCore/EngineCore.h>
 #include "EngineVertex.h"
+#include <EngineCore/Actor.h>
 
 URenderer::URenderer()
 {

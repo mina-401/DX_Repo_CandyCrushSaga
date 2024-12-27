@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "EngineTexture.h"
+#include <EngineCore/EngineCore.h>
 
 #ifdef _DEBUG
 #pragma comment(lib, "DirectXTex_Debug.lib")

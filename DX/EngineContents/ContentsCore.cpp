@@ -4,6 +4,8 @@
 #include <EngineCore/EngineTexture.h>
 #include <EngineCore/EngineSprite.h>
 #include "TitleGameMode.h"
+#include <EngineCore/EngineCore.h>
+#include <EngineCore/Pawn.h>
 
 // #define은 그냥 무조건 복붙
 CreateContentsCoreDefine(UContentsCore);

@@ -245,8 +245,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="ThirdParty\DirectxTex\Debug\DirectXTex.lib">
+    <Library Include="ThirdParty\DirectxTex\Debug\DirectXTex_Debug.lib">
       <Filter>ThirdParty\DirectxTex\Debug</Filter>
+    </Library>
+    <Library Include="ThirdParty\DirectxTex\Release\DirectXTex_Release.lib">
+      <Filter>ThirdParty\DirectxTex\Release</Filter>
     </Library>
   </ItemGroup>
   <ItemGroup>
