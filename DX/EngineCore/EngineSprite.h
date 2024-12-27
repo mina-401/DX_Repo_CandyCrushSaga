@@ -3,7 +3,7 @@
 #include <EngineBase/EngineMath.h>
 #include "EngineResources.h"
 
-struct FSpriteData
+struct FSpriteData 
 {
 	float4 CuttingPos = { 0.0f, 0.0f };
 	float4 CuttingSize = { 1.0f, 1.0f };

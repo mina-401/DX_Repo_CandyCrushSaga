@@ -80,7 +80,7 @@ std::vector<class UEngineFile> UEngineDirectory::GetAllFile(bool _IsRecursive, s
 		Result.push_back(UEngineFile(FilePath));
 		++Diriter;
 	}
-
+	
 	return Result;
 }
 

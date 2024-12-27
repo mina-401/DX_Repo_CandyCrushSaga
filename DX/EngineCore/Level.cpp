@@ -58,7 +58,7 @@ void ULevel::Tick(float _DeltaTime)
 {
 	std::list<std::shared_ptr<class AActor>>::iterator StartIter = BeginPlayList.begin();
 	std::list<std::shared_ptr<class AActor>>::iterator EndIter = BeginPlayList.end();
-	for (; StartIter != EndIter; )
+	for ( ; StartIter != EndIter; )
 	{
 		std::shared_ptr<AActor> CurActor = *StartIter;
 
@@ -96,9 +96,9 @@ void ULevel::Render(float _DeltaTime)
 		UEngineGUI::GUIRender();
 
 		// IMGUI가 랜더링을하면서 
-
+		
 	}
-
+	
 
 
 	UEngineCore::GetDevice().RenderEnd();

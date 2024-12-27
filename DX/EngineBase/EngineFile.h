@@ -16,7 +16,7 @@ const int MAXPATH = 256;
 
 class UEngineFile : public UEnginePath
 {
-	// 하드코딩 
+// 하드코딩 
 public:
 	ENGINEAPI UEngineFile();
 	// 생성체인
@@ -40,7 +40,7 @@ public:
 
 	ENGINEAPI std::string GetAllFileText();
 
-	// 기능 클래스 랩핑
+// 기능 클래스 랩핑
 private:
 	// 상수
 	// _MAX_DIR 윈도우에 의존적인 프로그램

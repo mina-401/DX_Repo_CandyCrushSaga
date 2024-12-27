@@ -77,7 +77,7 @@ private:
 	// 11로 오면서 인터페이스를 2가지 부류로 분류했다.
 
 	// 절대 안지울 거니까.
-
+	
 	// 메모리 로드해라 관련
 	// 그래픽카드에한테 그림 저장좀 해달라고 할수 있습니다.
 	Microsoft::WRL::ComPtr<ID3D11Device> Device = nullptr;

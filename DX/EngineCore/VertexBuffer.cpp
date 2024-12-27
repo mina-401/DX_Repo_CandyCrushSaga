@@ -1,6 +1,5 @@
 #include "PreCompile.h"
 #include "VertexBuffer.h"
-#include "EngineCore.h"
 
 UVertexBuffer::UVertexBuffer()
 {

@@ -15,10 +15,9 @@ public:
 	ATitleGameMode& operator=(const ATitleGameMode& _Other) = delete;
 	ATitleGameMode& operator=(ATitleGameMode&& _Other) noexcept = delete;
 
+	void Tick(float _DeltaTime);
 
-	void Tick(float _DeltaTime) override;
 protected:
-	//void BeginPlay() override;
 
 private:
 	std::shared_ptr<class ATitleLogo> Logo;

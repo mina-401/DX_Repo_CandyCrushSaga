@@ -24,7 +24,7 @@ public:
 	URenderer& operator=(URenderer&& _Other) noexcept = delete;
 
 	ENGINEAPI void SetOrder(int _Order) override;
-
+ 
 	ENGINEAPI void SetSprite(std::string_view _Value);
 	ENGINEAPI void SetSprite(UEngineSprite* _Sprite);
 

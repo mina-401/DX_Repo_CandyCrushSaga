@@ -20,7 +20,7 @@ std::string UEngineString::ToUpper(std::string_view _string)
 	{
 		Result[i] = std::toupper(_string[i]);
 	}
-
+	
 	return Result;
 }
 

@@ -3,8 +3,6 @@
 #include <EngineBase/EngineString.h>
 #include <EngineCore/EngineCamera.h>
 #include <EngineCore/EngineTexture.h>
-#include <EngineCore/Actor.h>
-#include "EngineCore.h"
 #include "EngineVertex.h"
 
 URenderer::URenderer()
@@ -99,7 +97,7 @@ void URenderer::ShaderResInit()
 		}
 	}
 
-	D3D11_SAMPLER_DESC SampInfo = { D3D11_FILTER::D3D11_FILTER_MIN_MAG_MIP_POINT };
+	D3D11_SAMPLER_DESC SampInfo = { D3D11_FILTER::D3D11_FILTER_MIN_MAG_MIP_POINT};
 	SampInfo.AddressU = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_BORDER; // 0~1사이만 유효
 	SampInfo.AddressV = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_BORDER; // y
 	SampInfo.AddressW = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_CLAMP; // z // 3중 
@@ -159,7 +157,7 @@ void URenderer::ShaderResSetting()
 	}
 
 
-
+	
 
 	ID3D11ShaderResourceView* ArrSRV[16] = { Sprite->GetSRV() };
 	UEngineCore::GetDevice().GetContext()->PSSetShaderResources(0, 1, ArrSRV);
@@ -180,7 +178,7 @@ void URenderer::Render(UEngineCamera* _Camera, float _DeltaTime)
 
 	RendererTrans.WVP = RendererTrans.World * RendererTrans.View * RendererTrans.Projection;
 
-
+	
 
 
 	ShaderResSetting();
@@ -207,7 +205,7 @@ void URenderer::InputAssembler1Init()
 	Vertexs[2] = EngineVertex{ FVector(-0.5f, -0.5f, -0.0f), {0.0f , 1.0f } , {0.0f, 0.0f, 1.0f, 1.0f} };
 	Vertexs[3] = EngineVertex{ FVector(0.5f, -0.5f, -0.0f), {1.0f , 1.0f } , {1.0f, 1.0f, 1.0f, 1.0f} };
 
-	D3D11_BUFFER_DESC BufferInfo = { 0 };
+	D3D11_BUFFER_DESC BufferInfo = {0};
 
 	BufferInfo.ByteWidth = sizeof(EngineVertex) * static_cast<int>(Vertexs.size());
 	BufferInfo.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -355,7 +353,7 @@ void URenderer::VertexShaderInit()
 		VSShaderCodeBlob->GetBufferSize(),
 		nullptr,
 		&VertexShader
-	);
+		);
 
 	if (S_OK != Result)
 	{
@@ -414,7 +412,7 @@ void URenderer::InputAssembler2Init()
 	Data.pSysMem = &Indexs[0];
 	if (S_OK != UEngineCore::GetDevice().GetDevice()->CreateBuffer(&BufferInfo, &Data, &IndexBuffer))
 	{
-		MSGASSERT("버텍스 버퍼 생성에 실패했습니다.");
+		MSGASSERT("인덱스 버퍼 생성에 실패했습니다.");
 		return;
 	}
 }

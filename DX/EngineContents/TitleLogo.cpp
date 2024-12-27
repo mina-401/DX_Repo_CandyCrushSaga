@@ -35,8 +35,9 @@ ATitleLogo::ATitleLogo()
 	// 결과는 같다. 
 	// 부모의 크기에 내가 영향을 받을수 있기 대문에 함수가 나뉜것이다.
 	// 부모가 없으면
-	LogoRenderer->SetRelativeScale3D({ 50, 50, 1.0f });
+	LogoRenderer->SetRelativeScale3D({50, 50, 1.0f});
 	LogoRenderer->SetupAttachment(RootComponent);
+
 
 
 	//Child = CreateDefaultSubObject<USpriteRenderer>();

@@ -12,7 +12,7 @@ public:
 	UEngineResources() {
 
 	}
-	~UEngineResources() {
+	~UEngineResources()	{
 
 	}
 
@@ -71,6 +71,5 @@ private:
 	//                               버텍스버퍼             Box             데이터
 	ENGINEAPI static inline std::map<std::string, std::map<std::string, std::shared_ptr<UEngineResources>>> ResMap;
 };
-
 
 

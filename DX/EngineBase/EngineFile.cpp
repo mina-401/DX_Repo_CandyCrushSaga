@@ -143,6 +143,7 @@ void UEngineFile::Close()
 	}
 }
 
+
 std::string UEngineFile::GetAllFileText()
 {
 	UEngineSerializer Ser;

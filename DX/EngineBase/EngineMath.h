@@ -625,7 +625,7 @@ public:
 	{
 		DirectMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(_Angle.DirectVector);
 		// 쿼터니온을 기반으로한 행렬은 치명적인 문제가 많았다.
-
+		
 		// 짐벌락 현상 축이 겹치면서 덜덜덜덜덜 떨리는 현상등도 생겼고.
 		// 만들어진 행렬 3축의 각도를 계산하는 순서에 따라서 오류가 나거나 안나는 등의 문제도 생겼습니다.
 		// 그래서 짐벌락 축오류부터 수학자들이 이 오류를 해결하기 위해서 복소수 기반의 실수부와 허수부의 조합으로
@@ -688,7 +688,7 @@ public:
 
 	// 위치와 크기 양쪽영향을 주는 행렬이다.
 	// 그것조차도 내마음대로 정할수 있어.
-
+	
 	//                 1280          720        640           360            누가 앞에 나오고 누가 뒤에 나올거냐
 	void ViewPort(float _Width, float _Height, float _Left, float _Top, float _ZMin, float _ZMax)
 	{
@@ -790,6 +790,7 @@ struct FTransform
 	// 변환용 벨류
 	float4 Scale;
 	float4 Rotation;
+	FQuat Quat;
 	float4 Location;
 
 	// 릴리에티브 로컬

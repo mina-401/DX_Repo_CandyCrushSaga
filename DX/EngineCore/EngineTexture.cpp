@@ -1,9 +1,8 @@
 #include "PreCompile.h"
 #include "EngineTexture.h"
-#include "EngineCore.h"
 
 #ifdef _DEBUG
-#pragma comment(lib, "DirectXTex.lib")
+#pragma comment(lib, "DirectXTex_Debug.lib")
 #else
 #pragma comment(lib, "DirectXTex_Release.lib")
 #endif
@@ -26,7 +25,7 @@ std::shared_ptr<UEngineTexture> UEngineTexture::Load(std::string_view _Name, std
 		return nullptr;
 	}
 
-	std::shared_ptr<UEngineTexture> NewRes = std::make_shared<UEngineTexture>();
+	std::shared_ptr<UEngineTexture> NewRes =  std::make_shared<UEngineTexture>();
 	PushRes<UEngineTexture>(NewRes, _Name, _Path);
 	NewRes->ResLoad();
 

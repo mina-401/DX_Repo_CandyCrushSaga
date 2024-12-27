@@ -281,8 +281,8 @@ void FTransform::TransformUpdate(bool _IsAbsolut /*= false*/)
 
 	// 절대로
 	// 100 100 100
-
-
+	
+	
 	// world인지 local
 	ScaleMat.Scale(Scale);
 	RotationMat.RotationDeg(Rotation);
@@ -297,7 +297,7 @@ void FTransform::TransformUpdate(bool _IsAbsolut /*= false*/)
 		LocalWorld = CheckWorld * ParentMat.InverseReturn();
 		// LocalWorld 나의 로컬값이라는 것.
 	}
-	else
+	else 
 	{
 		//      크         자             이            공           부
 		LocalWorld = ScaleMat * RotationMat * LocationMat;
