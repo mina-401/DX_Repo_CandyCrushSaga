@@ -8,7 +8,13 @@
 #include "EngineGUI.h"
 #include "Level.h"
 #include <EngineBase/EngineTimer.h>
+UEngineGraphicDevice& UEngineCore::GetDevice()
+{
+	return Device;
+}
 
+// 리얼 본체죠?
+// UEngineGraphicDevice EngienCore.dll::UEngineCore::Device;
 UEngineGraphicDevice UEngineCore::Device;
 UEngineWindow UEngineCore::MainWindow;
 HMODULE UEngineCore::ContentsDLL = nullptr;
@@ -141,7 +147,7 @@ std::shared_ptr<ULevel> UEngineCore::NewLevelCreate(std::string_view _Name)
 	// UObject의 기능이었습니다.
 	std::shared_ptr<ULevel> Ptr = std::make_shared<ULevel>();
 	Ptr->SetName(_Name);
-
+	 
 	LevelMap.insert({ _Name.data(), Ptr });
 
 	std::cout << "NewLevelCreate" << std::endl;

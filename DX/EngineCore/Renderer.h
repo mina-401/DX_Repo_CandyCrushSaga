@@ -1,15 +1,13 @@
 #pragma once
 #include "SceneComponent.h"
 #include "EngineSprite.h"
+#include "RenderUnit.h"
 
-struct EngineVertex
-{
-	float4 POSITION;
-	float4 TEXCOORD; // UV값이라고 불리는 존재로 텍스처가 매핑되는 비율을 지정해줍니다.
-	float4 COLOR;
-};
 
-// 설명 :
+
+
+// 설명 : 어떤 랜더링이든 할수 잇는 구조로 만들겠다.
+// 랜더링이란 랜더러만 하는게 아닙니다. 3D
 class URenderer : public USceneComponent
 {
 	friend class UEngineCamera;
@@ -25,23 +23,23 @@ public:
 	URenderer& operator=(const URenderer& _Other) = delete;
 	URenderer& operator=(URenderer&& _Other) noexcept = delete;
 
-	void SetOrder(int _Order) override;
+	ENGINEAPI void SetOrder(int _Order) override;
 
-	void SetTexture(std::string_view _Value);
+	ENGINEAPI void SetSprite(std::string_view _Value);
+	ENGINEAPI void SetSprite(UEngineSprite* _Sprite);
 
 	ENGINEAPI void SetSpriteData(size_t _Index);
 
 protected:
 	ENGINEAPI void BeginPlay() override;
+	ENGINEAPI virtual void Render(UEngineCamera* _Camera, float _DeltaTime);
 
 private:
-	virtual void Render(UEngineCamera* _Camera, float _DeltaTime);
 
 public:
 	FSpriteData SpriteData;
 
-	std::shared_ptr<class UEngineSprite> Sprite = nullptr;
-
+	class UEngineSprite* Sprite = nullptr;
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> SamplerState = nullptr; // 샘플러 스테이트
 	Microsoft::WRL::ComPtr<ID3D11Buffer> TransformConstBuffer = nullptr; // 상수버퍼
 	Microsoft::WRL::ComPtr<ID3D11Buffer> SpriteConstBuffer = nullptr; // 스프라이트용 상수버퍼
@@ -84,5 +82,7 @@ public:
 	void PixelShaderSetting();
 
 	void OutPutMergeSetting();
+
+	std::vector<URenderUnit> Units;
 };
 
