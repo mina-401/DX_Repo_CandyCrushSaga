@@ -18,11 +18,12 @@ public:
 	template<typename VertexType>
 	static std::shared_ptr<UVertexBuffer> Create(std::string_view _Name, const std::vector<VertexType>& _VertexData)
 	{
-		return Create(_Name, reinterpret_cast<const void*>(& _VertexData[0]), sizeof(VertexType), _VertexData.size());
+		return Create(_Name, reinterpret_cast<const void*>(&_VertexData[0]), sizeof(VertexType), _VertexData.size());
 	}
 
 	static std::shared_ptr<UVertexBuffer> Create(std::string_view _Name, const void* _InitData, size_t _VertexSize, size_t _VertexCount);
 
+	void Setting();
 
 protected:
 	void ResCreate(const void* _InitData, size_t _VertexSize, size_t _VertexCount);
@@ -30,7 +31,7 @@ protected:
 private:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> VertexBuffer = nullptr;
 	D3D11_BUFFER_DESC BufferInfo = { 0 };
-	int VertexSize = 0;
-	int VertexCount = 0;
+	UINT VertexSize = 0;
+	UINT VertexCount = 0;
 };
 

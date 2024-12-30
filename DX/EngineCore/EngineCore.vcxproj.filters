@@ -87,6 +87,7 @@
     <ClCompile Include="EngineGraphicDevice_Resources.cpp">
       <Filter>Graphic</Filter>
     </ClCompile>
+    <ClCompile Include="EngineBlend.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineCore.h" />
@@ -187,6 +188,7 @@
     <ClInclude Include="EngineVertex.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="EngineBlend.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">
