@@ -1,16 +1,16 @@
 #include "PreCompile.h"
-#include "VertexBuffer.h"
+#include "EngineVertexBuffer.h"
 #include "EngineCore.h"
 
-UVertexBuffer::UVertexBuffer()
+UEngineVertexBuffer::UEngineVertexBuffer()
 {
 }
 
-UVertexBuffer::~UVertexBuffer()
+UEngineVertexBuffer::~UEngineVertexBuffer()
 {
 }
 
-std::shared_ptr<UVertexBuffer> UVertexBuffer::Create(std::string_view _Name, const void* _InitData, size_t _VertexSize, size_t _VertexCount)
+std::shared_ptr<UEngineVertexBuffer> UEngineVertexBuffer::Create(std::string_view _Name, const void* _InitData, size_t _VertexSize, size_t _VertexCount)
 {
 	std::string UpperName = ToUpperName(_Name);
 
@@ -20,14 +20,14 @@ std::shared_ptr<UVertexBuffer> UVertexBuffer::Create(std::string_view _Name, con
 		return nullptr;
 	}
 
-	std::shared_ptr<UVertexBuffer> NewRes = std::make_shared<UVertexBuffer>();
-	PushRes<UVertexBuffer>(NewRes, _Name, "");
+	std::shared_ptr<UEngineVertexBuffer> NewRes = std::make_shared<UEngineVertexBuffer>();
+	PushRes<UEngineVertexBuffer>(NewRes, _Name, "");
 	NewRes->ResCreate(_InitData, _VertexSize, _VertexCount);
 
 	return NewRes;
 }
 
-void UVertexBuffer::ResCreate(const void* _InitData, size_t _VertexSize, size_t _VertexCount)
+void UEngineVertexBuffer::ResCreate(const void* _InitData, size_t _VertexSize, size_t _VertexCount)
 {
 	VertexCount = static_cast<UINT>(_VertexCount);
 	VertexSize = static_cast<UINT>(_VertexSize);
@@ -39,20 +39,20 @@ void UVertexBuffer::ResCreate(const void* _InitData, size_t _VertexSize, size_t 
 	D3D11_SUBRESOURCE_DATA Data; // 초기값 넣어주는 용도의 구조체
 	Data.pSysMem = _InitData;
 
-	if (S_OK != UEngineCore::GetDevice().GetDevice()->CreateBuffer(&BufferInfo, &Data, &VertexBuffer))
+	if (S_OK != UEngineCore::GetDevice().GetDevice()->CreateBuffer(&BufferInfo, &Data, &Buffer))
 	{
 		MSGASSERT("버텍스 버퍼 생성에 실패했습니다.");
 		return;
 	}
 }
 
-void UVertexBuffer::Setting()
+void UEngineVertexBuffer::Setting()
 {
 	// UINT VertexSize = sizeof(EngineVertex);
 	// 이 버텍스 버퍼가 10개짜리인데 3번째 버텍스 부터 세팅해줘.
 	UINT Offset = 0;
 	ID3D11Buffer* ArrBuffer[1];
-	ArrBuffer[0] = VertexBuffer.Get();
+	ArrBuffer[0] = Buffer.Get();
 	UEngineCore::GetDevice().GetContext()->IASetVertexBuffers(0, 1, ArrBuffer, &VertexSize, &Offset);
-
+	
 }

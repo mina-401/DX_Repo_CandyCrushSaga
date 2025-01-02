@@ -1,13 +1,30 @@
 #include "PreCompile.h"
 #include "EngineGraphicDevice.h"
 #include "EngineVertex.h"
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
+#include "EngineVertexBuffer.h"
+#include "EngineIndexBuffer.h"
 #include "Mesh.h"
 #include "EngineBlend.h"
+#include "EngineShader.h"
+
+void UEngineGraphicDevice::ShaderInit()
+{
+	UEngineDirectory CurDir;
+	CurDir.MoveParentToDirectory("EngineShader");
+
+	std::vector<UEngineFile> ShaderFiles = CurDir.GetAllFile(true, {".fx", ".hlsl"});
+
+	for (size_t i = 0; i < ShaderFiles.size(); i++)
+	{
+		UEngineShader::ReflectionCompile(ShaderFiles[i]);
+	}
+
+
+}
 
 void UEngineGraphicDevice::DefaultResourcesInit()
 {
+	ShaderInit();
 	MeshInit();
 	BlendInit();
 }
@@ -24,7 +41,7 @@ void UEngineGraphicDevice::MeshInit()
 		Vertexs[2] = EngineVertex{ FVector(-0.5f, -0.5f, 0.0f), {0.0f , 1.0f } , {0.0f, 0.0f, 1.0f, 1.0f} };
 		Vertexs[3] = EngineVertex{ FVector(0.5f, -0.5f, 0.0f), {1.0f , 1.0f } , {1.0f, 1.0f, 1.0f, 1.0f} };
 
-		UVertexBuffer::Create("Rect", Vertexs);
+		UEngineVertexBuffer::Create("Rect", Vertexs);
 	}
 
 	{
@@ -37,12 +54,13 @@ void UEngineGraphicDevice::MeshInit()
 		Indexs.push_back(1);
 		Indexs.push_back(3);
 		Indexs.push_back(2);
-		UIndexBuffer::Create("Rect", Indexs);
+		UEngineIndexBuffer::Create("Rect", Indexs);
 	}
 
 	{
 		UMesh::Create("Rect");
 	}
+
 }
 
 void UEngineGraphicDevice::BlendInit()
@@ -53,7 +71,7 @@ void UEngineGraphicDevice::BlendInit()
 	// transparent 라는 단어
 
 
-	D3D11_BLEND_DESC Desc = { 0 };
+	D3D11_BLEND_DESC Desc = {0};
 
 	// 자동으로 알파부분을 
 	// 알파가 0.0f 색상부분을 알아서 안그리게 도와주는 기능
@@ -75,7 +93,7 @@ void UEngineGraphicDevice::BlendInit()
 	// 알파블랜드의 기본 공식
 
 	// SrcColor 1.0, 0.0f, 0.0f, 0.8f; * 0.8f 0.8f 0.8f 0.8f
-
+	
 	// SrcColor 0.0, 0.0f, 1.0f, 1.0f; * 1 - 0.8f,  1 - 0.8f, 1 - 0.8f, 1 - 0.8f
 
 	// 알베도컬러 SrcColor 옵션 SrcFactor  BlendOp  DestColor  옵션 DestFactor  
@@ -85,6 +103,8 @@ void UEngineGraphicDevice::BlendInit()
 	Desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 	Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
 	Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
+
+
 
 	UEngineBlend::Create("AlphaBlend", Desc);
 }

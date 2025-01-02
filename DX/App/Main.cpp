@@ -11,6 +11,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE _hInstance,
 	_In_ int       nCmdShow)
 {
 	// 동적 연결을 위한 "EngineContents" dll이름 넣기
-	UEngineCore::EngineStart(_hInstance, "EngineContents.dll");
+	UEngineCore::EngineStart(_hInstance, "CandyCrushSaga.dll");
 	return 0;
 }  

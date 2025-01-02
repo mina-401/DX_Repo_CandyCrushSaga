@@ -1,5 +1,5 @@
 #include "PreCompile.h"
-#include "ContentsCore.h"
+#include "CandyCrushSaga.h"
 #include <EngineCore/Level.h>
 #include <EngineCore/EngineTexture.h>
 #include <EngineCore/EngineSprite.h>
@@ -8,18 +8,18 @@
 #include <EngineCore/Pawn.h>
 
 // #define은 그냥 무조건 복붙
-CreateContentsCoreDefine(UContentsCore);
+CreateContentsCoreDefine(UCandyCrushSaga);
 
-UContentsCore::UContentsCore()
+UCandyCrushSaga::UCandyCrushSaga()
 {
 }
 
-UContentsCore::~UContentsCore()
+UCandyCrushSaga::~UCandyCrushSaga()
 {
 }
 
 
-void UContentsCore::EngineStart(UEngineInitData& _Data)
+void UCandyCrushSaga::EngineStart(UEngineInitData& _Data)
 {
 	// mainwindow는 아무나 건들면 안된다.
 	// 넌 컨텐츠잖아 엔진이 관리하는 윈도우라는게 존재하는지도 몰라야한다.
@@ -43,7 +43,7 @@ void UContentsCore::EngineStart(UEngineInitData& _Data)
 		}
 	}
 
-	UEngineSprite::CreateSpriteToMeta("Player.png", ".sdata");
+	//UEngineSprite::CreateSpriteToMeta("Title.png", ".sdata");
 
 
 	// UEngineCore::CreateLevel<APlayGameMode, APawn>("PlayLevel");
@@ -53,12 +53,12 @@ void UContentsCore::EngineStart(UEngineInitData& _Data)
 	
 }
 
-void UContentsCore::EngineTick(float _DeltaTime)
+void UCandyCrushSaga::EngineTick(float _DeltaTime)
 {
 
 }
 
-void UContentsCore::EngineEnd()
+void UCandyCrushSaga::EngineEnd()
 {
 
 }

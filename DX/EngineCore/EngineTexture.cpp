@@ -26,7 +26,7 @@ std::shared_ptr<UEngineTexture> UEngineTexture::Load(std::string_view _Name, std
 		return nullptr;
 	}
 
-	std::shared_ptr<UEngineTexture> NewRes = std::make_shared<UEngineTexture>();
+	std::shared_ptr<UEngineTexture> NewRes =  std::make_shared<UEngineTexture>();
 	PushRes<UEngineTexture>(NewRes, _Name, _Path);
 	NewRes->ResLoad();
 

@@ -99,7 +99,7 @@ private:
 	float CurAnimationSpeed = 1.0f;
 
 	std::map<std::string, FrameAnimation> FrameAnimations;
-	FrameAnimation* CurAnimation = nullptr;
+	FrameAnimation* CurAnimation = nullptr; 
 	UEngineSprite* Sprite = nullptr;
 };
 

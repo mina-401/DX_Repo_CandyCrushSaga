@@ -65,15 +65,14 @@ cbuffer FUVValue : register(b2)
 	float4 PlusUVValue;
 };
 
-// 버텍스쉐이더를 다 만들었다.
-VertexShaderOutPut VertexToWorld(EngineVertex _Vertex)
+// 버텍스 쉐이더에는 무조건 _VS
+VertexShaderOutPut VertexToWorld_VS(EngineVertex _Vertex)
 {
 	// CPU에서 계산한 값을 쉐이더에게 넘기는 방법을 알아야 하는데
 	// 상수버퍼라고 부릅니다.
 	// 그중에서 가장 기본적인 것은 상수버퍼를 
 	
 	// float4x4 WVP;
-	
 	VertexShaderOutPut OutPut;
 	
 	
@@ -125,7 +124,7 @@ Texture2D ImageTexture : register(t0);
 SamplerState ImageSampler : register(s0);
 
 // 이미지를 샘플링해서 이미지를 보이게 만들고
-float4 PixelToWorld(VertexShaderOutPut _Vertex) : SV_Target0
+float4 PixelToWorld_PS(VertexShaderOutPut _Vertex) : SV_Target0
 {
 	
 	// ImageTexture.Load({0,0));
