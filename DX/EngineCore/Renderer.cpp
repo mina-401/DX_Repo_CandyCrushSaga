@@ -18,30 +18,27 @@ URenderer::~URenderer()
 
 }
 
-void URenderer::SetSprite(UEngineSprite* _Sprite)
+void URenderer::SetTexture(std::string_view _Value)
 {
-	Sprite = _Sprite;
+	Texture = UEngineTexture::Find<UEngineTexture>(_Value).get();
 
-	if (nullptr == Sprite)
+	if (nullptr == Texture)
 	{
-		MSGASSERT("존재하지 않는 스프라이트를 사용하려고 했습니다.");
+		MSGASSERT("존재하지 않는 텍스처를 세팅하려고 했습니다.");
 	}
 }
 
-void URenderer::SetSprite(std::string_view _Value)
+void URenderer::SetTexture(UEngineTexture* _Texture)
 {
-	std::string UpperName = UEngineString::ToUpper(_Value);
-
-	Sprite = UEngineSprite::Find<UEngineSprite>(UpperName).get();
-
-	if (nullptr == Sprite)
-	{
-		MSGASSERT("존재하지 않는 스프라이트를 사용하려고 했습니다.");
-	}
+	Texture = _Texture;
 }
 
 void URenderer::SetOrder(int _Order)
 {
+	if (0 != GetOrder() && _Order == GetOrder())
+	{
+		return;
+	}
 	int PrevOrder = GetOrder();
 	UObject::SetOrder(_Order);
 	ULevel* Level = GetActor()->GetWorld();
@@ -54,7 +51,7 @@ void URenderer::SetOrder(int _Order)
 ENGINEAPI void URenderer::BeginPlay()
 {
 	USceneComponent::BeginPlay();
-	SetOrder(0);
+	SetOrder(GetOrder());
 
 	// 기본적인 랜더링 파이프라인을 익히기 위한 
 	// 모든 기본 코드들을 다 쳐볼 생각입니다.
@@ -86,6 +83,21 @@ void URenderer::ShaderResInit()
 
 	{
 		D3D11_BUFFER_DESC BufferInfo = { 0 };
+		BufferInfo.ByteWidth = sizeof(FUVValue);
+		BufferInfo.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		BufferInfo.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
+		BufferInfo.Usage = D3D11_USAGE_DYNAMIC;
+
+		if (S_OK != UEngineCore::GetDevice().GetDevice()->CreateBuffer(&BufferInfo, nullptr, &UVValue))
+		{
+			MSGASSERT("상수버퍼 생성에 실패했습니다..");
+			return;
+		}
+	}
+
+
+	{
+		D3D11_BUFFER_DESC BufferInfo = { 0 };
 		BufferInfo.ByteWidth = sizeof(FSpriteData);
 		BufferInfo.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 		BufferInfo.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
@@ -99,8 +111,8 @@ void URenderer::ShaderResInit()
 	}
 
 	D3D11_SAMPLER_DESC SampInfo = { D3D11_FILTER::D3D11_FILTER_MIN_MAG_MIP_POINT };
-	SampInfo.AddressU = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_BORDER; // 0~1사이만 유효
-	SampInfo.AddressV = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_BORDER; // y
+	SampInfo.AddressU = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP; // 0~1사이만 유효
+	SampInfo.AddressV = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP; // y
 	SampInfo.AddressW = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_CLAMP; // z // 3중 
 
 	SampInfo.BorderColor[0] = 0.0f;
@@ -142,6 +154,25 @@ void URenderer::ShaderResSetting()
 		D3D11_MAPPED_SUBRESOURCE Data = {};
 		// 이 데이터를 사용하는 랜더링 랜더링 잠깐 정지
 		// 잠깐 그래픽카드야 멈 그래픽카드에 있는 상수버퍼 수정해야 해.
+		UEngineCore::GetDevice().GetContext()->Map(UVValue.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &Data);
+
+		// Data.pData 그래픽카드와 연결된 주소값.
+		if (nullptr == Data.pData)
+		{
+			MSGASSERT("그래픽카드가 수정을 거부했습니다.");
+		}
+		memcpy_s(Data.pData, sizeof(FUVValue), &UVValueData, sizeof(FUVValue));
+		UEngineCore::GetDevice().GetContext()->Unmap(UVValue.Get(), 0);
+
+		// 같은 상수버퍼를 
+		ID3D11Buffer* ArrPtr[16] = { UVValue.Get() };
+		UEngineCore::GetDevice().GetContext()->VSSetConstantBuffers(2, 1, ArrPtr);
+	}
+
+	{
+		D3D11_MAPPED_SUBRESOURCE Data = {};
+		// 이 데이터를 사용하는 랜더링 랜더링 잠깐 정지
+		// 잠깐 그래픽카드야 멈 그래픽카드에 있는 상수버퍼 수정해야 해.
 		UEngineCore::GetDevice().GetContext()->Map(SpriteConstBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &Data);
 
 		// Data.pData 그래픽카드와 연결된 주소값.
@@ -160,7 +191,7 @@ void URenderer::ShaderResSetting()
 
 
 
-	ID3D11ShaderResourceView* ArrSRV[16] = { Sprite->GetSRV() };
+	ID3D11ShaderResourceView* ArrSRV[16] = { Texture->GetSRV() };
 	UEngineCore::GetDevice().GetContext()->PSSetShaderResources(0, 1, ArrSRV);
 
 	ID3D11SamplerState* ArrSMP[16] = { SamplerState.Get() };
@@ -374,18 +405,13 @@ void URenderer::RasterizerInit()
 	Desc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 	UEngineCore::GetDevice().GetDevice()->CreateRasterizerState(&Desc, &RasterizerState);
 
-	ViewPortInfo.Width = 1280.0f;
-	ViewPortInfo.Height = 720.0f;
-	ViewPortInfo.TopLeftX = 0.0f;
-	ViewPortInfo.TopLeftY = 0.0f;
-	ViewPortInfo.MinDepth = 0.0f;
-	ViewPortInfo.MaxDepth = 1.0f;
+
+
 }
 
 
 void URenderer::RasterizerSetting()
 {
-	UEngineCore::GetDevice().GetContext()->RSSetViewports(1, &ViewPortInfo);
 	UEngineCore::GetDevice().GetContext()->RSSetState(RasterizerState.Get());
 }
 
@@ -506,9 +532,14 @@ void URenderer::OutPutMergeSetting()
 	UEngineCore::GetDevice().GetContext()->OMSetRenderTargets(1, &ArrRtv[0], nullptr);
 }
 
-void URenderer::SetSpriteData(size_t _Index)
+void URenderer::SetSpriteData(UEngineSprite* _Sprite, size_t _Index)
 {
-	SpriteData = Sprite->GetSpriteData(_Index);
+	SpriteData = _Sprite->GetSpriteData(_Index);
+}
+
+void URenderer::AddUVPlusValue(float4 _Value)
+{
+	UVValueData.PlusUVValue += _Value;
 }
 
 void URenderer::SetMesh(std::string_view _Name)

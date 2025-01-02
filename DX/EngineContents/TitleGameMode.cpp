@@ -1,12 +1,12 @@
 #include "PreCompile.h"
 #include "TitleGameMode.h"
-#include "TitleLogo.h"
 #include <EngineCore/CameraActor.h>
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/EngineGUIWindow.h>
 #include <EngineCore/EngineGUI.h>
 #include <EngineCore/imgui.h>
 #include <EngineCore/Level.h>
+#include "TitleMap.h"
 
 //class TestWindow : public UEngineGUIWindow
 //{
@@ -23,13 +23,10 @@
 ATitleGameMode::ATitleGameMode()
 {
 	{
-		Logo = GetWorld()->SpawnActor<ATitleLogo>();
-		// Logo->SetActorLocation({ 300.0f, 0.0f, 0.0f });
-		Logo->GetRenderer()->SetSpriteData(4);
+		Map = GetWorld()->SpawnActor<ATitleMap>();
+
 	}
 
-	// 카메라를 일정거리 뒤로 가서 
-	// 카메라 위치조정을 무조건 해줘야 할것이다.
 	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetMainCamera();
 	Camera->SetActorLocation({0.0f, 0.0f, -1000.0f, 1.0f});
 

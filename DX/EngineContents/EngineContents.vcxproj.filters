@@ -4,22 +4,28 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PreCompile.cpp" />
     <ClCompile Include="ContentsCore.cpp" />
-    <ClCompile Include="TitleLogo.cpp">
-      <Filter>Title</Filter>
-    </ClCompile>
     <ClCompile Include="TitleGameMode.cpp">
       <Filter>GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleMap.cpp">
+      <Filter>Title</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleButton.cpp">
+      <Filter>Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="ContentsCore.h" />
-    <ClInclude Include="TitleLogo.h">
-      <Filter>Title</Filter>
-    </ClInclude>
     <ClInclude Include="TitleGameMode.h">
       <Filter>GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleMap.h">
+      <Filter>Title</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleButton.h">
+      <Filter>Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
