@@ -16,7 +16,7 @@ std::shared_ptr<UEngineSprite> UEngineSprite::CreateSpriteToFolder(std::string_v
 {
 	UEngineDirectory Dir = _Path;
 
-	std::vector<UEngineFile> Files = Dir.GetAllFile(false, { ".png"});
+	std::vector<UEngineFile> Files = Dir.GetAllFile(false, { ".png" });
 
 	if (0 == Files.size())
 	{

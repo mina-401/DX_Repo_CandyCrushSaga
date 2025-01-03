@@ -31,8 +31,8 @@ ATitleGameMode::ATitleGameMode()
 			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
 			return;
 		}
-		Dir.Append("Image");
-		Dir.Append("Title");
+		Dir.Append("Image//Title");
+
 		std::vector<UEngineFile> ImageFiles = Dir.GetAllFile(true, { ".PNG", ".BMP", ".JPG" });
 		for (size_t i = 0; i < ImageFiles.size(); i++)
 		{
@@ -40,9 +40,12 @@ ATitleGameMode::ATitleGameMode()
 			UEngineTexture::Load(FilePath);
 		}
 	}
-
 	{
-		//Map = GetWorld()->SpawnActor<ATitleMap>();
+		UEngineSprite::CreateSpriteToMeta("TitleMap.png", ".sdata");
+
+	}
+	{
+		Map = GetWorld()->SpawnActor<ATitleMap>();
 
 	}
 	{
