@@ -24,6 +24,24 @@
 ATitleGameMode::ATitleGameMode()
 {
 
+	TitleDirLoad();
+	SpritesInit();
+	{
+		Map = GetWorld()->SpawnActor<ATitleMap>();
+
+	}
+	{
+		//Button = GetWorld()->SpawnActor<ATitleButton>();
+	}
+	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetMainCamera();
+	Camera->SetActorLocation({0.0f, 0.0f, -1000.0f, 1.0f});
+
+	//UEngineGUI::CreateGUIWindow<TestWindow>("TestWindow");
+}
+
+void ATitleGameMode::TitleDirLoad()
+{
+
 	{
 		UEngineDirectory Dir;
 		if (false == Dir.MoveParentToDirectory("ContentsResources"))
@@ -40,21 +58,7 @@ ATitleGameMode::ATitleGameMode()
 			UEngineTexture::Load(FilePath);
 		}
 	}
-	{
-		UEngineSprite::CreateSpriteToMeta("TitleMap.png", ".sdata");
 
-	}
-	{
-		Map = GetWorld()->SpawnActor<ATitleMap>();
-
-	}
-	{
-		//Button = GetWorld()->SpawnActor<ATitleButton>();
-	}
-	std::shared_ptr<ACameraActor> Camera = GetWorld()->GetMainCamera();
-	Camera->SetActorLocation({0.0f, 0.0f, -1000.0f, 1.0f});
-
-	//UEngineGUI::CreateGUIWindow<TestWindow>("TestWindow");
 }
 
 ATitleGameMode::~ATitleGameMode()
@@ -69,4 +73,12 @@ void ATitleGameMode::Tick(float _DeltaTime)
 
 
 
+}
+
+void ATitleGameMode::SpritesInit()
+{
+	{
+		UEngineSprite::CreateSpriteToMeta("TitleMap.png", ".sdata");
+
+	}
 }
