@@ -21,5 +21,6 @@ protected:
 
 private:
 	std::shared_ptr<class ATitleMap> Map;
+	std::shared_ptr<class ATitleButton> Button;
 };
 

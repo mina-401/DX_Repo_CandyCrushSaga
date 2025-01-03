@@ -1,6 +1,7 @@
 #pragma once
 #include "EngineEnums.h"
 #include <EngineBase/EngineFile.h>
+#include "EngineShaderResources.h"
 
 
 // Ό³Έν :
@@ -20,10 +21,17 @@ public:
 	UEngineShader& operator=(const UEngineShader& _Other) = delete;
 	UEngineShader& operator=(UEngineShader&& _Other) noexcept = delete;
 
-	static void ReflectionCompile(UEngineFile& _File);
+	ENGINEAPI static void ReflectionCompile(UEngineFile& _File);
 
+	UEngineShaderResources ShaderResources;
+
+	Microsoft::WRL::ComPtr<ID3DBlob> GetShaderCodeBlob()
+	{
+		return ShaderCodeBlob;
+	};
 
 protected:
+	EShaderType ShaderType = EShaderType::MAX;
 	UINT VersionHigh = 5;
 	UINT VersionLow = 0;
 	Microsoft::WRL::ComPtr<ID3DBlob> ShaderCodeBlob = nullptr;
@@ -31,6 +39,7 @@ protected:
 	std::string EntryName;
 
 	void ShaderResCheck();
+
 
 private:
 };

@@ -13,6 +13,10 @@
     <ClCompile Include="TitleButton.cpp">
       <Filter>Title</Filter>
     </ClCompile>
+    <ClCompile Include="CandyCrushSaga_Resources.cpp" />
+    <ClCompile Include="CustomTestRenderer.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -27,6 +31,9 @@
     <ClInclude Include="TitleButton.h">
       <Filter>Title</Filter>
     </ClInclude>
+    <ClInclude Include="CustomTestRenderer.h">
+      <Filter>Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameMode">
@@ -34,6 +41,9 @@
     </Filter>
     <Filter Include="Title">
       <UniqueIdentifier>{249f42aa-0181-4677-89df-705cf8723202}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render">
+      <UniqueIdentifier>{2024a45a-e644-48b4-b868-97443da1f547}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -5,6 +5,8 @@
 #include <d3d11_4.h> // directx 11 버전4용 헤더
 #include <d3dcompiler.h> // 쉐이더 컴파일러용 인터페이스 쉐이더는 추후 설명
 #include <EnginePlatform/EngineWindow.h>
+#include <memory>
+
 
 // 라이브러리들
 #pragma comment(lib, "d3d11")
@@ -77,7 +79,7 @@ private:
 	// 11로 오면서 인터페이스를 2가지 부류로 분류했다.
 
 	// 절대 안지울 거니까.
-	
+
 	// 메모리 로드해라 관련
 	// 그래픽카드에한테 그림 저장좀 해달라고 할수 있습니다.
 	Microsoft::WRL::ComPtr<ID3D11Device> Device = nullptr;
@@ -94,11 +96,18 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> DXBackBufferTexture = nullptr;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> RTV = nullptr;
 
+	// 깊이 버퍼 텍스처를 만들어야 한다.
+	std::shared_ptr<class UEngineTexture> DepthTex;
+
+
 	//FVector ClearColor = FVector::BLUE;
 	ENGINEAPI void DefaultResourcesInit();
 
 	ENGINEAPI void MeshInit();
 	ENGINEAPI void BlendInit();
 	ENGINEAPI void ShaderInit();
+	ENGINEAPI void MaterialInit();
+	ENGINEAPI void RasterizerStateInit();
+	ENGINEAPI void TextureInit();
 };
 

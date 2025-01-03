@@ -173,6 +173,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CandyCrushSaga.cpp" />
+    <ClCompile Include="CandyCrushSaga_Resources.cpp" />
+    <ClCompile Include="CustomTestRenderer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -196,6 +201,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CandyCrushSaga.h" />
+    <ClInclude Include="CustomTestRenderer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Player.h" />
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="TitleButton.h">

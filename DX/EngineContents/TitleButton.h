@@ -1,22 +1,29 @@
 #pragma once
+#include <EngineCore/Actor.h>
 
 // Ό³Έν :
-class TitleButton
+class ATitleButton : public AActor
 {
 public:
 	// constrcuter destructer
-	TitleButton();
-	~TitleButton();
+	ATitleButton();
+	~ATitleButton();
 
 	// delete Function
-	TitleButton(const TitleButton& _Other) = delete;
-	TitleButton(TitleButton&& _Other) noexcept = delete;
-	TitleButton& operator=(const TitleButton& _Other) = delete;
-	TitleButton& operator=(TitleButton&& _Other) noexcept = delete;
+	ATitleButton(const ATitleButton& _Other) = delete;
+	ATitleButton(ATitleButton&& _Other) noexcept = delete;
+	ATitleButton& operator=(const ATitleButton& _Other) = delete;
+	ATitleButton& operator=(ATitleButton&& _Other) noexcept = delete;
 
+	std::shared_ptr<class USpriteRenderer> GetRenderer()
+	{
+		return Renderer;
+	}
 protected:
-
+	void BeginPlay() override;
+	void Tick(float _DeltaTime) override;
 private:
-
+	std::shared_ptr<class USpriteRenderer> Renderer;
+	std::shared_ptr<class USpriteRenderer> Child;
 };
 

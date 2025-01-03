@@ -53,11 +53,13 @@ public:
 
 		// 내가 그냥 ActorComponent
 		// 내가 그냥 SceneComponent
-		if (std::is_base_of_v<UActorComponent, ComponentType>)
+		if (std::is_base_of_v<UActorComponent, ComponentType>
+			&& !std::is_base_of_v<USceneComponent, ComponentType>)
 		{
 			ActorComponentList.push_back(NewCom);
 		}
-		else
+		else if (!std::is_base_of_v<UActorComponent, ComponentType>
+			&& !std::is_base_of_v<USceneComponent, ComponentType>)
 		{
 			MSGASSERT("말도 안됨");
 		}
@@ -119,6 +121,24 @@ public:
 
 		RootComponent->AddRotation(_Value);
 	}
+
+	void AttachToActor(AActor* _Parent);
+
+	// 트랜스폼 자체를 고칠수는 없다. 복사본을 주는 함수.
+	FTransform GetActorTransform()
+	{
+		if (nullptr == RootComponent)
+		{
+			return FTransform();
+		}
+
+		return RootComponent->GetTransformRef();
+	}
+
+
+	ENGINEAPI FVector GetActorUpVector();
+	ENGINEAPI FVector GetActorRightVector();
+	ENGINEAPI FVector GetActorForwardVector();
 
 protected:
 	std::shared_ptr<class USceneComponent> RootComponent = nullptr;

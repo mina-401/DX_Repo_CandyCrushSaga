@@ -26,6 +26,11 @@ public:
 
 	void Setting();
 
+	ENGINEAPI UINT GetIndexCount()
+	{
+		return IndexCount;
+	}
+
 protected:
 	void ResCreate(const void* _InitData, size_t _VertexSize, size_t _VertexCount);
 

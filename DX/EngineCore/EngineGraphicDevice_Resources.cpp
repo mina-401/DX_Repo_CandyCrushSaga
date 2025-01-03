@@ -6,40 +6,82 @@
 #include "Mesh.h"
 #include "EngineBlend.h"
 #include "EngineShader.h"
+#include "EngineMaterial.h"
+#include "EngineTexture.h"
+
+void UEngineGraphicDevice::DefaultResourcesInit()
+{
+	TextureInit();
+	MeshInit();
+	BlendInit();
+	RasterizerStateInit();
+	ShaderInit();
+	MaterialInit();
+}
+
+void UEngineGraphicDevice::TextureInit()
+{
+
+	D3D11_SAMPLER_DESC SampInfo = { D3D11_FILTER::D3D11_FILTER_MIN_MAG_MIP_POINT };
+	SampInfo.AddressU = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP; // 0~1사이만 유효
+	SampInfo.AddressV = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP; // y
+	SampInfo.AddressW = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_CLAMP; // z // 3중 
+
+	SampInfo.BorderColor[0] = 0.0f;
+	SampInfo.BorderColor[1] = 0.0f;
+	SampInfo.BorderColor[2] = 0.0f;
+	SampInfo.BorderColor[3] = 0.0f;
+
+	// SampInfo.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	// Lod라고 불리는 것은 z값이 얼마나 멀어지면 얼마나 대충 색깔 빼올거냐. 
+	// SampInfo.MaxLOD = 0.0f;
+	// SampInfo.MinLOD = 0.0f;
+
+	UEngineSampler::Create("WRAPSampler", SampInfo);
+
+
+	{
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("EngineShader"))
+		{
+			MSGASSERT("EngineShader 폴더를 찾지 못했습니다.");
+			return;
+		}
+		std::vector<UEngineFile> ImageFiles = Dir.GetAllFile(true, { ".PNG", ".BMP", ".JPG" });
+		for (size_t i = 0; i < ImageFiles.size(); i++)
+		{
+			std::string FilePath = ImageFiles[i].GetPathToString();
+			UEngineTexture::Load(FilePath);
+		}
+	}
+}
 
 void UEngineGraphicDevice::ShaderInit()
 {
 	UEngineDirectory CurDir;
 	CurDir.MoveParentToDirectory("EngineShader");
 
-	std::vector<UEngineFile> ShaderFiles = CurDir.GetAllFile(true, {".fx", ".hlsl"});
+	std::vector<UEngineFile> ShaderFiles = CurDir.GetAllFile(true, { ".fx", ".hlsl" });
 
 	for (size_t i = 0; i < ShaderFiles.size(); i++)
 	{
 		UEngineShader::ReflectionCompile(ShaderFiles[i]);
 	}
-
-
 }
 
-void UEngineGraphicDevice::DefaultResourcesInit()
-{
-	ShaderInit();
-	MeshInit();
-	BlendInit();
-}
+
 
 void UEngineGraphicDevice::MeshInit()
 {
 	int a = 0;
 
 	{
-		std::vector<EngineVertex> Vertexs;
+		std::vector<FEngineVertex> Vertexs;
 		Vertexs.resize(4);
-		Vertexs[0] = EngineVertex{ FVector(-0.5f, 0.5f, 0.0f), {0.0f , 0.0f }, {1.0f, 0.0f, 0.0f, 1.0f} };
-		Vertexs[1] = EngineVertex{ FVector(0.5f, 0.5f, 0.0f), {1.0f , 0.0f } , {0.0f, 1.0f, 0.0f, 1.0f} };
-		Vertexs[2] = EngineVertex{ FVector(-0.5f, -0.5f, 0.0f), {0.0f , 1.0f } , {0.0f, 0.0f, 1.0f, 1.0f} };
-		Vertexs[3] = EngineVertex{ FVector(0.5f, -0.5f, 0.0f), {1.0f , 1.0f } , {1.0f, 1.0f, 1.0f, 1.0f} };
+		Vertexs[0] = FEngineVertex{ FVector(-0.5f, 0.5f, 0.0f), {0.0f , 0.0f }, {1.0f, 0.0f, 0.0f, 1.0f} };
+		Vertexs[1] = FEngineVertex{ FVector(0.5f, 0.5f, 0.0f), {1.0f , 0.0f } , {0.0f, 1.0f, 0.0f, 1.0f} };
+		Vertexs[2] = FEngineVertex{ FVector(-0.5f, -0.5f, 0.0f), {0.0f , 1.0f } , {0.0f, 0.0f, 1.0f, 1.0f} };
+		Vertexs[3] = FEngineVertex{ FVector(0.5f, -0.5f, 0.0f), {1.0f , 1.0f } , {1.0f, 1.0f, 1.0f, 1.0f} };
 
 		UEngineVertexBuffer::Create("Rect", Vertexs);
 	}
@@ -71,7 +113,7 @@ void UEngineGraphicDevice::BlendInit()
 	// transparent 라는 단어
 
 
-	D3D11_BLEND_DESC Desc = {0};
+	D3D11_BLEND_DESC Desc = { 0 };
 
 	// 자동으로 알파부분을 
 	// 알파가 0.0f 색상부분을 알아서 안그리게 도와주는 기능
@@ -93,7 +135,7 @@ void UEngineGraphicDevice::BlendInit()
 	// 알파블랜드의 기본 공식
 
 	// SrcColor 1.0, 0.0f, 0.0f, 0.8f; * 0.8f 0.8f 0.8f 0.8f
-	
+
 	// SrcColor 0.0, 0.0f, 1.0f, 1.0f; * 1 - 0.8f,  1 - 0.8f, 1 - 0.8f, 1 - 0.8f
 
 	// 알베도컬러 SrcColor 옵션 SrcFactor  BlendOp  DestColor  옵션 DestFactor  
@@ -109,3 +151,20 @@ void UEngineGraphicDevice::BlendInit()
 	UEngineBlend::Create("AlphaBlend", Desc);
 }
 
+void UEngineGraphicDevice::RasterizerStateInit()
+{
+	D3D11_RASTERIZER_DESC Desc = {};
+	Desc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
+	Desc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
+
+	UEngineRasterizerState::Create("EngineBase", Desc);
+}
+
+void UEngineGraphicDevice::MaterialInit()
+{
+	{
+		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("SpriteMaterial");
+		Mat->SetVertexShader("EngineSpriteShader.fx");
+		Mat->SetPixelShader("EngineSpriteShader.fx");
+	}
+}

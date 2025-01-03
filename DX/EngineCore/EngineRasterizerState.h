@@ -1,7 +1,8 @@
 #pragma once
+#include "EngineResources.h"
 
 // Ό³Έν :
-class UEngineRasterizerState
+class UEngineRasterizerState : public UEngineResources
 {
 public:
 	// constrcuter destructer
@@ -14,9 +15,14 @@ public:
 	UEngineRasterizerState& operator=(const UEngineRasterizerState& _Other) = delete;
 	UEngineRasterizerState& operator=(UEngineRasterizerState&& _Other) noexcept = delete;
 
+	ENGINEAPI static std::shared_ptr<UEngineRasterizerState> Create(std::string_view _Name, const D3D11_RASTERIZER_DESC& _Value);
+
+	void Setting();
+
 protected:
 
 private:
-
+	void ResCreate(const D3D11_RASTERIZER_DESC& _Value);
+	Microsoft::WRL::ComPtr<ID3D11RasterizerState> State = nullptr;
 };
 

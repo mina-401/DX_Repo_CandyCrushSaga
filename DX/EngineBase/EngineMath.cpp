@@ -1,15 +1,9 @@
 #include "PreCompile.h"
 #include "EngineMath.h"
 
-const double UEngineMath::DPI = 3.14159265358979323846264338327950288419716939937510;
-const double UEngineMath::DPI2 = DPI * 2.0;
 
-const float UEngineMath::PI = 3.14159265358979323846264f;
-const float UEngineMath::PI2 = PI * 2.0f;
 
 // 디그리를 라디안으로 바꾸는 값이 된다.
-const float UEngineMath::D2R = UEngineMath::PI / 180.0f;
-const float UEngineMath::R2D = 180.0f / UEngineMath::PI;
 
 const FVector FVector::ZERO = { 0.0f, 0.0f };
 const FVector FVector::LEFT = { -1.0f, 0.0f };
@@ -281,8 +275,8 @@ void FTransform::TransformUpdate(bool _IsAbsolut /*= false*/)
 
 	// 절대로
 	// 100 100 100
-	
-	
+
+
 	// world인지 local
 	ScaleMat.Scale(Scale);
 	RotationMat.RotationDeg(Rotation);
@@ -297,7 +291,7 @@ void FTransform::TransformUpdate(bool _IsAbsolut /*= false*/)
 		LocalWorld = CheckWorld * ParentMat.InverseReturn();
 		// LocalWorld 나의 로컬값이라는 것.
 	}
-	else 
+	else
 	{
 		//      크         자             이            공           부
 		LocalWorld = ScaleMat * RotationMat * LocationMat;

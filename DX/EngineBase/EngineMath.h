@@ -26,14 +26,14 @@ class ENGINEAPI  UEngineMath
 {
 public:
 	// 상수 정의
-	static const double DPI;
-	static const double DPI2;
+	static inline const double DPI = 3.14159265358979323846264338327950288419716939937510;
+	static inline const double DPI2 = DPI * 2.0;
 
-	static const float PI;
-	static const float PI2;
+	static inline const float PI = 3.14159265358979323846264f;
+	static inline const float PI2 = PI * 2.0f;
 
-	static const float D2R;
-	static const float R2D;
+	static inline const float D2R = UEngineMath::PI / 180.0f;
+	static inline const float R2D = 180.0f / UEngineMath::PI;
 
 	static float Sqrt(float _Value)
 	{
@@ -625,7 +625,7 @@ public:
 	{
 		DirectMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(_Angle.DirectVector);
 		// 쿼터니온을 기반으로한 행렬은 치명적인 문제가 많았다.
-		
+
 		// 짐벌락 현상 축이 겹치면서 덜덜덜덜덜 떨리는 현상등도 생겼고.
 		// 만들어진 행렬 3축의 각도를 계산하는 순서에 따라서 오류가 나거나 안나는 등의 문제도 생겼습니다.
 		// 그래서 짐벌락 축오류부터 수학자들이 이 오류를 해결하기 위해서 복소수 기반의 실수부와 허수부의 조합으로
@@ -674,8 +674,6 @@ public:
 	void PerspectiveFovRad(float _FovAngle, float _Width, float _Height, float _Near, float _Far)
 	{
 		Identity();
-
-		Identity();
 		DirectMatrix = DirectX::XMMatrixPerspectiveFovLH(_FovAngle, _Width / _Height, _Near, _Far);
 	}
 
@@ -688,7 +686,7 @@ public:
 
 	// 위치와 크기 양쪽영향을 주는 행렬이다.
 	// 그것조차도 내마음대로 정할수 있어.
-	
+
 	//                 1280          720        640           360            누가 앞에 나오고 누가 뒤에 나올거냐
 	void ViewPort(float _Width, float _Height, float _Left, float _Top, float _ZMin, float _ZMax)
 	{
