@@ -113,6 +113,8 @@
     <ClCompile Include="EngineInputLayOutInfo.cpp" />
     <ClCompile Include="EngineSampler.cpp" />
     <ClCompile Include="EngineVertex.cpp" />
+    <ClCompile Include="EngineDepthStencilState.cpp" />
+    <ClCompile Include="TimeEventComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -240,6 +242,8 @@
     <ClInclude Include="EngineInputLayOutInfo.h" />
     <ClInclude Include="EngineSampler.h" />
     <ClInclude Include="IndexBuffer.h" />
+    <ClInclude Include="EngineDepthStencilState.h" />
+    <ClInclude Include="TimeEventComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">

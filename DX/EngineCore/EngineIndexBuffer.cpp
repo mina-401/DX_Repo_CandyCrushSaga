@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "EngineIndexBuffer.h"
+#include "EngineCore.h"
 
 UEngineIndexBuffer::UEngineIndexBuffer()
 {

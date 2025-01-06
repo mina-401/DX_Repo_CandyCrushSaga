@@ -108,12 +108,144 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: MenuIcons_0
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 97
+        width: 268
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72eac4dcfaeb4714ca78d95a094842ec
+      internalID: -1381348136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MenuIcons_1
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 113
+        width: 255
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 133fafc7d7b636d40b6d3c024d5cd24f
+      internalID: 1786107556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MenuIcons_2
+      rect:
+        serializedVersion: 2
+        x: 622
+        y: 112
+        width: 256
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0559866dbe7740a4d8c86e8124f32614
+      internalID: 229583944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MenuIcons_3
+      rect:
+        serializedVersion: 2
+        x: 923
+        y: 110
+        width: 257
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76bd654090b0ab54782e359cfeadb023
+      internalID: -1799352506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MenuIcons_4
+      rect:
+        serializedVersion: 2
+        x: 1224
+        y: 116
+        width: 258
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 211f1e364ea210044afa4cbf46aee4f7
+      internalID: -1540841074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MenuIcons_5
+      rect:
+        serializedVersion: 2
+        x: 1522
+        y: 112
+        width: 258
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e4eb14985aac6b45a617e5f99ed3022
+      internalID: -104463512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 7302abb79b3937b4288c23a93811217b
     internalID: 0
     vertices: []
     indices: 
@@ -122,7 +254,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      MenuIcons_0: -1381348136
+      MenuIcons_1: 1786107556
+      MenuIcons_2: 229583944
+      MenuIcons_3: -1799352506
+      MenuIcons_4: -1540841074
+      MenuIcons_5: -104463512
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

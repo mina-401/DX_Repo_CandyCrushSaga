@@ -173,6 +173,7 @@
   <ItemGroup>
     <ClCompile Include="EngineInput.cpp" />
     <ClCompile Include="EngineWindow.cpp" />
+    <ClCompile Include="EngineWinImage.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PreCompile.h</PrecompiledHeaderFile>
@@ -187,6 +188,7 @@
   <ItemGroup>
     <ClInclude Include="EngineInput.h" />
     <ClInclude Include="EngineWindow.h" />
+    <ClInclude Include="EngineWinImage.h" />
     <ClInclude Include="PreCompile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

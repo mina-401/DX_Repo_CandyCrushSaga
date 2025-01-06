@@ -3,6 +3,7 @@
 #include <EngineCore/DefaultSceneComponent.h>
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/EngineCore.h>
+#include "TitleButton.h"
 
 
 ATitleMap::ATitleMap()
@@ -13,12 +14,12 @@ ATitleMap::ATitleMap()
 	Renderer = CreateDefaultSubObject<USpriteRenderer>();
 	Renderer->SetupAttachment(RootComponent);
 
-	Renderer->SetSprite("TitleMap.png");
-	
+	Renderer->SetTexture("TitleMap.png");
 	
 	FVector Size = UEngineCore::GetScreenScale();
-	Renderer->SetRelativeScale3D({ Size.X,Size.Y,1.0f});
+	Renderer->SetRelativeScale3D({Size.X,Size.Y,0.0f});
 
+	//Button = GetWorld()->SpawnActor<ATitleButton>();
 
 	
 }
