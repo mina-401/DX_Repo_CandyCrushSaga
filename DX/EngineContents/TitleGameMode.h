@@ -1,13 +1,13 @@
 #pragma once
-#include <EngineCore/Actor.h>
 
-// Ό³Έν :
-class ATitleGameMode : public AActor
+#include<EngineCore/GameMode.h>
+
+class ATitleGameMode : public AGameMode
 {
 public:
 	// constrcuter destructer
-	ATitleGameMode();
-	~ATitleGameMode();
+	 ATitleGameMode();
+	 ~ATitleGameMode();
 
 	// delete Function
 	ATitleGameMode(const ATitleGameMode& _Other) = delete;

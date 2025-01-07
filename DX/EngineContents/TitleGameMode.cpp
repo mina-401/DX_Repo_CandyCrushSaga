@@ -6,8 +6,10 @@
 #include <EngineCore/EngineGUIWindow.h>
 #include <EngineCore/EngineGUI.h>
 #include <EngineCore/imgui.h>
+#include <EngineCore/EngineCore.h>
 #include <EngineCore/Level.h>
 #include "TitleMap.h"
+#include <EnginePlatform/EngineInput.h>
 
 
 //class TestWindow : public UEngineGUIWindow
@@ -72,7 +74,11 @@ void ATitleGameMode::Tick(float _DeltaTime)
 	// 부모 호출
 	AActor::Tick(_DeltaTime);
 
-
+	if (UEngineInput::IsPress('P'))
+	{
+		UEngineCore::OpenLevel("PlayLevel");
+		//AddRelativeLocation(FVector{ -100.0f * _DeltaTime, 0.0f, 0.0f });
+	}
 
 }
 
@@ -80,7 +86,7 @@ void ATitleGameMode::SpritesInit()
 {
 	{
 		//UEngineSprite::CreateSpriteToMeta("TitleMap.png", ".sdata");
-		UEngineSprite::CreateSpriteToMeta("MenuIcons.png", ".sdata");
+		//UEngineSprite::CreateSpriteToMeta("MenuIcons.png", ".sdata");
 
 	}
 }

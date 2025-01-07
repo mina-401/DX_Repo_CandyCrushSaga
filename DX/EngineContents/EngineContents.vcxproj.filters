@@ -17,6 +17,13 @@
     <ClCompile Include="CustomTestRenderer.cpp">
       <Filter>Render</Filter>
     </ClCompile>
+    <ClCompile Include="PlayGameMode.cpp">
+      <Filter>GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayMap.cpp">
+      <Filter>GameMap</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -34,6 +41,13 @@
     <ClInclude Include="CustomTestRenderer.h">
       <Filter>Render</Filter>
     </ClInclude>
+    <ClInclude Include="PlayGameMode.h">
+      <Filter>GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayMap.h">
+      <Filter>GameMap</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameMode">
@@ -44,6 +58,9 @@
     </Filter>
     <Filter Include="Render">
       <UniqueIdentifier>{2024a45a-e644-48b4-b868-97443da1f547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMap">
+      <UniqueIdentifier>{802f3329-e0a2-4257-8ba5-35db487a03c0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

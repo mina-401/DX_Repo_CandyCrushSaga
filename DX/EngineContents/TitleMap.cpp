@@ -4,6 +4,7 @@
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/EngineCore.h>
 #include "TitleButton.h"
+#include "HUD.h"
 
 
 ATitleMap::ATitleMap()
@@ -19,7 +20,8 @@ ATitleMap::ATitleMap()
 	FVector Size = UEngineCore::GetScreenScale();
 	Renderer->SetRelativeScale3D({Size.X,Size.Y,0.0f});
 
-	//Button = GetWorld()->SpawnActor<ATitleButton>();
+	
+	
 
 	
 }

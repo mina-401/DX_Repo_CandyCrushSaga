@@ -88,7 +88,7 @@ private:
 		void EventCheck();
 
 		void KeyCheck(float _DeltaTime);
-		
+
 	};
 
 	ENGINEAPI static UEngineInput& GetInst();
@@ -99,15 +99,15 @@ public:
 
 	// UEngineInput::GetInst().IsDown('A')
 
-	bool IsDoubleClick(int _KeyIndex, float _Time)
+	static bool IsDoubleClick(int _KeyIndex, float _Time)
 	{
-		if (false == Keys.contains(_KeyIndex))
+		if (false == GetInst().Keys.contains(_KeyIndex))
 		{
 			MSGASSERT("아직도 등록되지 않은 키가 존재합니다.");
 			return false;
 		}
 
-		return Keys[_KeyIndex].IsDown && Keys[_KeyIndex].FreeTime < _Time;
+		return GetInst().Keys[_KeyIndex].IsDown && GetInst().Keys[_KeyIndex].FreeTime < _Time;
 	}
 
 	static bool IsDown(int _KeyIndex)
@@ -128,7 +128,7 @@ public:
 		return GetInst().Keys[_KeyIndex].IsDown;
 	}
 
-	bool IsUp(int _KeyIndex)
+	static bool IsUp(int _KeyIndex)
 	{
 		if (false == GetInst().Keys.contains(_KeyIndex))
 		{
@@ -150,7 +150,7 @@ public:
 		return GetInst().Keys[_KeyIndex].IsPress;
 	}
 
-	float IsPressTime(int _KeyIndex)
+	static float IsPressTime(int _KeyIndex)
 	{
 		if (false == GetInst().Keys.contains(_KeyIndex))
 		{
@@ -162,7 +162,7 @@ public:
 	}
 
 
-	bool IsFree(int _KeyIndex)
+	static bool IsFree(int _KeyIndex)
 	{
 		if (false == GetInst().Keys.contains(_KeyIndex))
 		{
@@ -173,7 +173,7 @@ public:
 		return GetInst().Keys[_KeyIndex].IsFree;
 	}
 
-	void BindAction(int _KeyIndex, KeyEvent _EventType,  std::function<void()> _Function);
+	void BindAction(int _KeyIndex, KeyEvent _EventType, std::function<void()> _Function);
 
 protected:
 
@@ -182,7 +182,7 @@ private:
 	// static 값형 변수 선언하고 
 	// 지울필요 없다.
 	// static UEngineInput Inst;
-	
+
 	// 포인터형
 	// static UEngineInput* Inst;
 

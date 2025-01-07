@@ -115,6 +115,7 @@
     <ClCompile Include="EngineVertex.cpp" />
     <ClCompile Include="EngineDepthStencilState.cpp" />
     <ClCompile Include="TimeEventComponent.cpp" />
+    <ClCompile Include="Collision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -244,6 +245,7 @@
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="EngineDepthStencilState.h" />
     <ClInclude Include="TimeEventComponent.h" />
+    <ClInclude Include="Collision.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">
