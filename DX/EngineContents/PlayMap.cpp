@@ -4,6 +4,7 @@
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/EngineCore.h>
 #include "HUD.h"
+#include "CustomTestRenderer.h"
 
 APlayMap::APlayMap()
 {
@@ -18,12 +19,16 @@ APlayMap::APlayMap()
 	Renderer = CreateDefaultSubObject<USpriteRenderer>();
 	Renderer->SetupAttachment(RootComponent);
 
-	
 	Renderer->SetTexture("Background.png");
 	
-
 	FVector Size = UEngineCore::GetScreenScale();
 	Renderer->SetRelativeScale3D({ Size.X,Size.Y,0.0f });
+	Renderer->SetWorldLocation({ 0,0,100 });
+
+	//std::shared_ptr<UCustomTestRenderer> CustomRenderer = CreateDefau ltSubObject<UCustomTestRenderer>();
+	//CustomRenderer->SetupAttachment(RootComponent);
+	//CustomRenderer->SetRelativeScale3D({ Size.X,Size.Y,0.0f });
+	//CustomRenderer->SetRelativeLocation({ 0,0,-1 });   
 
 	
 }

@@ -24,6 +24,7 @@
       <Filter>GameMap</Filter>
     </ClCompile>
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Candy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -48,6 +49,7 @@
       <Filter>GameMap</Filter>
     </ClInclude>
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="Candy.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameMode">

@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "SpriteRenderer.h"
+#include "EngineCamera.h"
 
 USpriteRenderer::USpriteRenderer()
 {
@@ -11,7 +12,7 @@ USpriteRenderer::USpriteRenderer()
 	GetRenderUnit().ConstantBufferLinkData("FSpriteData", SpriteData);
 	GetRenderUnit().ConstantBufferLinkData("FUVValue", UVValue);
 
-	  
+
 	UVValue.PlusUVValue = { 0.0f, 0.0f, 0.0f, 0.0f };
 	SpriteData.CuttingPos = { 0.0f, 0.0f };
 	SpriteData.CuttingSize = { 1.0f, 1.0f };
@@ -88,6 +89,35 @@ void USpriteRenderer::Render(UEngineCamera* _Camera, float _DeltaTime)
 	}
 
 	URenderer::Render(_Camera, _DeltaTime);
+
+	if (true == IsBillboard)
+	{
+		Transform.WVP;
+	}
+}
+
+void USpriteRenderer::RenderTransUpdate(UEngineCamera* _Camera)
+{
+	FTransform& CameraTrans = _Camera->GetTransformRef();
+	FTransform& RendererTrans = GetTransformRef();
+	//	// 랜더러는 월드 뷰 프로젝트를 다 세팅받았고
+	// RendererTrans.View = CameraTrans.View;
+
+	RendererTrans.View = CameraTrans.View;
+
+	FMatrix CurWorld = RendererTrans.World;
+
+	if (true == IsBillboard)
+	{
+		RendererTrans.View.ArrVector[0] = { 1.0f, 0.0f, 0.0f, 0.0f };
+		RendererTrans.View.ArrVector[1] = { 0.0f, 1.0f, 0.0f, 0.0f };
+		RendererTrans.View.ArrVector[2] = { 0.0f, 0.0f, 1.0f, 0.0f };
+
+		// CurWorld = RendererTrans.ScaleMat * RendererTrans.LocationMat * RendererTrans.ParentMat;
+	}
+
+	RendererTrans.Projection = CameraTrans.Projection;
+	RendererTrans.WVP = CurWorld * RendererTrans.View * RendererTrans.Projection;
 }
 
 void USpriteRenderer::ComponentTick(float _DeltaTime)
@@ -97,6 +127,9 @@ void USpriteRenderer::ComponentTick(float _DeltaTime)
 	// 애니메이션 진행시키는 코드를 ComponentTick으로 옮겼다. 
 	if (nullptr != CurAnimation)
 	{
+		FrameAnimation* EventAnimation = nullptr;
+		int EventFrame = -1;
+
 		CurAnimation->IsEnd = false;
 		std::vector<int>& Indexs = CurAnimation->FrameIndex;
 		std::vector<float>& Times = CurAnimation->FrameTime;
@@ -117,7 +150,9 @@ void USpriteRenderer::ComponentTick(float _DeltaTime)
 
 			if (CurAnimation->Events.contains(CurIndex))
 			{
-				CurAnimation->Events[CurIndex]();
+				EventAnimation = CurAnimation;
+				EventFrame = CurIndex;
+				// CurAnimation->Events[CurIndex]();
 			}
 
 			// 애니메이션 앤드
@@ -138,7 +173,9 @@ void USpriteRenderer::ComponentTick(float _DeltaTime)
 
 					if (CurAnimation->Events.contains(CurIndex))
 					{
-						CurAnimation->Events[CurIndex]();
+						EventAnimation = CurAnimation;
+						EventFrame = CurIndex;
+						// CurAnimation->Events[CurIndex]();
 					}
 				}
 				else
@@ -152,6 +189,14 @@ void USpriteRenderer::ComponentTick(float _DeltaTime)
 
 
 		CurIndex = Indexs[CurAnimation->CurIndex];
+
+		if (nullptr != EventAnimation)
+		{
+			if (EventAnimation->Events.contains(CurIndex))
+			{
+				EventAnimation->Events[CurIndex]();
+			}
+		}
 	}
 
 

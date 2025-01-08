@@ -21,7 +21,7 @@ public:
 
 	ENGINEAPI void SetCollisionProfileName(std::string_view _ProfileName);
 	ENGINEAPI void BeginPlay() override;
-	// ENGINEAPI void DebugRender(UEngineCamera* _Camera, float _DeltaTime);
+	ENGINEAPI void DebugRender(UEngineCamera* _Camera, float _DeltaTime);
 
 	std::string GetCollisionProfileName()
 	{

@@ -189,3 +189,29 @@ void UCollision::CollisionEventCheck(std::shared_ptr<UCollision> _Other)
 		}
 	}
 }
+
+void UCollision::DebugRender(UEngineCamera* _Camera, float _DeltaTime)
+{
+	URenderUnit Unit;
+
+	FTransform& CameraTrans = _Camera->GetTransformRef();
+	FTransform& RendererTrans = GetTransformRef();
+	//	// 랜더러는 월드 뷰 프로젝트를 다 세팅받았고
+	RendererTrans.View = CameraTrans.View;
+	RendererTrans.Projection = CameraTrans.Projection;
+	RendererTrans.WVP = RendererTrans.World * RendererTrans.View * RendererTrans.Projection;
+
+	Unit.SetMesh("Rect");
+	Unit.SetMaterial("CollisionDebugMaterial");
+
+
+	Unit.ConstantBufferLinkData("FTransform", GetTransformRef());
+	FVector Color = { 0.0f, 1.0f, 0.0f };
+	Unit.ConstantBufferLinkData("OutColor", Color);
+
+	Unit.Render(_Camera, _DeltaTime);
+
+}
+
+
+

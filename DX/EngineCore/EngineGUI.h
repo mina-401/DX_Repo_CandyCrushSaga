@@ -37,7 +37,7 @@ public:
 		return Window;
 	}
 
-	static void GUIRender();
+	static void GUIRender(class ULevel* _Level);
 
 protected:
 

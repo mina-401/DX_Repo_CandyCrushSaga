@@ -1,16 +1,16 @@
 #include "PreCompile.h"
 #include "CustomTestRenderer.h"
 
-CustomTestRenderer::CustomTestRenderer()
+UCustomTestRenderer::UCustomTestRenderer()
 {
 	CreateRenderUnit();
 	SetMesh("Rect");
-	SetMaterial("MyTestMaterial");
+	SetMaterial("CandyBackgroundMaterial");
 	MyColor.Albedo = float4(1.0f, 1.0f, 1.0f, 1.0f);
 	GetRenderUnit().ConstantBufferLinkData("FMyColor", MyColor);
 }
 
-CustomTestRenderer::~CustomTestRenderer()
+UCustomTestRenderer::~UCustomTestRenderer()
 {
 }
 

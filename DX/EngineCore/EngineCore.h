@@ -27,8 +27,10 @@ public:
 		// std::make_shared
 		// new UEngineLevel();
 
-		NewLevel->SpawnActor<GameModeType>();
-		NewLevel->SpawnActor<MainPawnType>();
+		std::shared_ptr<GameModeType> GameMode = NewLevel->SpawnActor<GameModeType>();
+		std::shared_ptr<MainPawnType> Pawn = NewLevel->SpawnActor<MainPawnType>();
+
+		NewLevel->InitLevel(GameMode.get(), Pawn.get());
 
 		// 2가 됩니다
 		return NewLevel;

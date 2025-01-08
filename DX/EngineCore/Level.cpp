@@ -8,13 +8,6 @@
 #include "CameraActor.h"
 #include "EngineGUI.h"
 
-// 플레이어 Renderer
-
-// 카메라 1 Renderer
-// 카메라 2 Renderer
-
-
-
 
 
 std::shared_ptr<class ACameraActor> ULevel::SpawnCamera(int _Order)
@@ -60,6 +53,11 @@ void ULevel::LevelChangeEnd()
 
 void ULevel::Tick(float _DeltaTime)
 {
+	if (GetMainCamera()->IsFreeCamera())
+	{
+		return;
+	}
+
 	std::list<std::shared_ptr<class AActor>>::iterator StartIter = BeginPlayList.begin();
 	std::list<std::shared_ptr<class AActor>>::iterator EndIter = BeginPlayList.end();
 	for (; StartIter != EndIter; )
@@ -75,6 +73,12 @@ void ULevel::Tick(float _DeltaTime)
 		StartIter = BeginPlayList.erase(StartIter);
 
 		CurActor->BeginPlay();
+
+		if (nullptr != CurActor->Parent)
+		{
+			continue;
+		}
+
 		AllActorList.push_back(CurActor);
 	}
 
@@ -100,9 +104,30 @@ void ULevel::Render(float _DeltaTime)
 		Camera.second->GetCameraComponent()->Render(_DeltaTime);
 	}
 
+
+	{
+		std::shared_ptr<class ACameraActor> Camera = GetMainCamera();
+
+		// 충돌체 릴리즈
+		for (std::pair<const std::string, std::list<std::shared_ptr<UCollision>>>& Group : Collisions)
+		{
+			std::list<std::shared_ptr<UCollision>>& List = Group.second;
+
+			for (std::shared_ptr<UCollision>& _Collision : List)
+			{
+				if (false == _Collision->IsActive())
+				{
+					continue;
+				}
+
+				_Collision->DebugRender(Camera->GetCameraComponent().get(), _DeltaTime);
+			}
+		}
+	}
+
 	if (true == UEngineWindow::IsApplicationOn())
 	{
-		UEngineGUI::GUIRender();
+		UEngineGUI::GUIRender(this);
 		// IMGUI가 랜더링을하면서 
 	}
 
@@ -237,6 +262,14 @@ void ULevel::Release(float _DeltaTime)
 		// 언리얼은 중간에 삭제할수 없어.
 		for (; StartIter != EndIter; )
 		{
+			if (nullptr != (*StartIter)->Parent)
+			{
+				// 부모가 있는 애는 어차피 부모가 다 tick
+				// 레벨이 돌려줄필요가 없어졌다.
+				StartIter = List.erase(StartIter);
+				continue;
+			}
+
 			if (false == (*StartIter)->IsDestroy())
 			{
 				++StartIter;
@@ -247,4 +280,11 @@ void ULevel::Release(float _DeltaTime)
 			StartIter = List.erase(StartIter);
 		}
 	}
+}
+
+void ULevel::InitLevel(AGameMode* _GameMode, APawn* _Pawn)
+{
+	GameMode = _GameMode;
+
+	MainPawn = _Pawn;
 }

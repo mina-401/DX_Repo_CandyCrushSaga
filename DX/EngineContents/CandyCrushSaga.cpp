@@ -8,6 +8,7 @@
 #include <EngineCore/Pawn.h>
 #include <EngineCore/EngineShader.h>
 #include <EngineCore/EngineMaterial.h>
+
 #include "PlayGameMode.h"  
 
 // #define은 그냥 무조건 복붙
@@ -32,11 +33,11 @@ void UCandyCrushSaga::EngineStart(UEngineInitData& _Data)
 
 	
 
-	//MyGSetting();
+	MyGSetting();
 
 	// UEngineCore::CreateLevel<APlayGameMode, APawn>("PlayLevel");
 
-	UEngineCore::CreateLevel<ATitleGameMode, AActor>("TitleLevel");
+	UEngineCore::CreateLevel<ATitleGameMode, APawn>("TitleLevel");
 	UEngineCore::CreateLevel<APlayGameMode, APawn>("PlayLevel");
 	UEngineCore::OpenLevel("PlayLevel");
 	

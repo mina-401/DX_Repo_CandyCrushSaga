@@ -7,18 +7,18 @@ struct FMyColor
 };
 
 // Ό³Έν :
-class CustomTestRenderer : public URenderer
+class UCustomTestRenderer : public URenderer
 {
 public:
 	// constrcuter destructer
-	CustomTestRenderer();
-	~CustomTestRenderer();
+	UCustomTestRenderer();
+	~UCustomTestRenderer();
 
 	// delete Function
-	CustomTestRenderer(const CustomTestRenderer& _Other) = delete;
-	CustomTestRenderer(CustomTestRenderer&& _Other) noexcept = delete;
-	CustomTestRenderer& operator=(const CustomTestRenderer& _Other) = delete;
-	CustomTestRenderer& operator=(CustomTestRenderer&& _Other) noexcept = delete;
+	UCustomTestRenderer(const UCustomTestRenderer& _Other) = delete;
+	UCustomTestRenderer(UCustomTestRenderer&& _Other) noexcept = delete;
+	UCustomTestRenderer& operator=(const UCustomTestRenderer& _Other) = delete;
+	UCustomTestRenderer& operator=(UCustomTestRenderer&& _Other) noexcept = delete;
 
 protected:
 

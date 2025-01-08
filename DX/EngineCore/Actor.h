@@ -82,6 +82,16 @@ public:
 		RootComponent->SetWorldLocation(_Value);
 	}
 
+	void AddActorLocation(const FVector& _Value)
+	{
+		if (nullptr == RootComponent)
+		{
+			return;
+		}
+
+		RootComponent->AddWorldLocation(_Value);
+	}
+
 	void SetActorRelativeScale3D(const FVector& _Scale)
 	{
 		if (nullptr == RootComponent)
@@ -119,10 +129,15 @@ public:
 			return;
 		}
 
-		RootComponent->AddRotation(_Value);
+		RootComponent->AddWorldRotation(_Value);
 	}
 
-	void AttachToActor(AActor* _Parent);
+	ENGINEAPI void AttachToActor(AActor* _Parent);
+
+	FVector GetActorLocation()
+	{
+		return RootComponent->Transform.WorldLocation;
+	}
 
 	// 트랜스폼 자체를 고칠수는 없다. 복사본을 주는 함수.
 	FTransform GetActorTransform()
@@ -135,6 +150,18 @@ public:
 		return RootComponent->GetTransformRef();
 	}
 
+	void SetActorTransform(const FTransform& _Transform)
+	{
+		if (nullptr == RootComponent)
+		{
+			return;
+		}
+
+		RootComponent->Transform = _Transform;
+
+		return;
+	}
+
 
 	ENGINEAPI FVector GetActorUpVector();
 	ENGINEAPI FVector GetActorRightVector();
@@ -144,6 +171,11 @@ protected:
 	std::shared_ptr<class USceneComponent> RootComponent = nullptr;
 
 private:
+	// 누구의 자식인지도 알고 
+	AActor* Parent = nullptr;
+	// 자기 자식들도 알게 된다.
+	std::list<std::shared_ptr<AActor>> ChildList;
+
 	// 초기화 하면 안됩니다.
 	// 스폰액터 방식이 변경되었으니까.
 	ULevel* World;
