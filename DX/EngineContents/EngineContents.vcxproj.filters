@@ -23,8 +23,16 @@
     <ClCompile Include="PlayMap.cpp">
       <Filter>GameMap</Filter>
     </ClCompile>
-    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Candy.cpp" />
+    <ClCompile Include="HUD.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentsEditorGUI.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMapGameMode.cpp">
+      <Filter>GameMode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -48,8 +56,17 @@
     <ClInclude Include="PlayMap.h">
       <Filter>GameMap</Filter>
     </ClInclude>
-    <ClInclude Include="HUD.h" />
     <ClInclude Include="Candy.h" />
+    <ClInclude Include="GMConst.h" />
+    <ClInclude Include="HUD.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentsEditorGUI.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMapGameMode.h">
+      <Filter>GameMode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameMode">
@@ -63,6 +80,12 @@
     </Filter>
     <Filter Include="GameMap">
       <UniqueIdentifier>{802f3329-e0a2-4257-8ba5-35db487a03c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HUD">
+      <UniqueIdentifier>{f7598bac-3039-419a-af4e-e2fb5904ccd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{03c33d4f-686f-424f-8e7f-44febbe00eb9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

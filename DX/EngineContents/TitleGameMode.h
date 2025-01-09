@@ -18,7 +18,7 @@ public:
 	void Tick(float _DeltaTime);
 
 protected:
-
+	void LevelChangeStart() override;
 private:
 	std::shared_ptr<class ATitleMap> Map;
 	

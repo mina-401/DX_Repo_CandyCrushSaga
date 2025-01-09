@@ -10,8 +10,9 @@
 #include "PlayMap.h"
 
 #include "Candy.h"
+#include "ContentsEditorGUI.h"
 
-class CandyCrushSagaDebugWindow : public UEngineGUIWindow
+class DebugWindow : public UEngineGUIWindow
 {
 public:
 	void OnGUI() override
@@ -46,14 +47,38 @@ APlayGameMode::~APlayGameMode()
 {
 }
 
+void APlayGameMode::LevelChangeStart()
+{
+	UEngineGUI::AllWindowOff();
+
+	{
+		std::shared_ptr<UContentsEditorGUI> Window = UEngineGUI::FindGUIWindow<UContentsEditorGUI>("CCSEditorGUI");
+
+		if (nullptr == Window)
+		{
+			Window = UEngineGUI::CreateGUIWindow<UContentsEditorGUI>("CCSEditorGUI");
+		}
+
+		Window->SetActive(true);
+	}
+
+	{
+		std::shared_ptr<DebugWindow> Window = UEngineGUI::FindGUIWindow<DebugWindow>("DebugWindow");
+
+		if (nullptr == Window)
+		{
+			Window = UEngineGUI::CreateGUIWindow<DebugWindow>("DebugWindow");
+		}
+
+		Window->SetActive(true);
+	}
+}
+
 void APlayGameMode::BeginPlay()
 {
 	AActor::BeginPlay();
+
 	{
-		UEngineGUI::CreateGUIWindow<CandyCrushSagaDebugWindow>("CandyCrushSagaDebugWindow");
-	}
-	{
-		std::shared_ptr<class ACandy> PrevCandy = nullptr;
 		Candys.resize(CandyRow + 1);
 
 

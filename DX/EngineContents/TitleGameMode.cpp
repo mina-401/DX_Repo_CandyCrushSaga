@@ -10,19 +10,9 @@
 #include <EngineCore/Level.h>
 #include "TitleMap.h"
 #include <EnginePlatform/EngineInput.h>
+#include "ContentsEditorGUI.h"
 
 
-//class TestWindow : public UEngineGUIWindow
-//{
-//public:
-//	void OnGUI() override
-//	{
-//		ImGui::Button("WindowButton");
-//		ImGui::SameLine(); // ÇÑ°£ ¶ç±â
-//		ImGui::Text("test");
-//
-//	}
-//};
 
 ATitleGameMode::ATitleGameMode()
 {
@@ -89,4 +79,21 @@ void ATitleGameMode::SpritesInit()
 		//UEngineSprite::CreateSpriteToMeta("MenuIcons.png", ".sdata");
 
 	}
+}
+
+void ATitleGameMode::LevelChangeStart()
+{
+	UEngineGUI::AllWindowOff();
+
+	{
+		std::shared_ptr<UContentsEditorGUI> Window = UEngineGUI::FindGUIWindow<UContentsEditorGUI>("CCSEditorGUI");
+
+		if (nullptr == Window)
+		{
+			Window = UEngineGUI::CreateGUIWindow<UContentsEditorGUI>("CCSEditorGUI");
+		}
+
+		Window->SetActive(true);
+	}
+
 }

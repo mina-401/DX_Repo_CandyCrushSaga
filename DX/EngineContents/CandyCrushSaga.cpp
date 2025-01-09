@@ -10,6 +10,9 @@
 #include <EngineCore/EngineMaterial.h>
 
 #include "PlayGameMode.h"  
+#include "TileMapGameMode.h"  
+#include <EngineCore/EngineGUI.h>
+#include "ContentsEditorGUI.h"
 
 // #define은 그냥 무조건 복붙
 CreateContentsCoreDefine(UCandyCrushSaga);
@@ -33,13 +36,20 @@ void UCandyCrushSaga::EngineStart(UEngineInitData& _Data)
 
 	
 
-	MyGSetting();
+	//MyGSetting();
 
 	// UEngineCore::CreateLevel<APlayGameMode, APawn>("PlayLevel");
 
 	UEngineCore::CreateLevel<ATitleGameMode, APawn>("TitleLevel");
+
 	UEngineCore::CreateLevel<APlayGameMode, APawn>("PlayLevel");
+	//UEngineCore::CreateLevel<ATileMapGameMode, APawn>("TileMapEditor");
+	//UEngineCore::OpenLevel("TileMapEditor");
 	UEngineCore::OpenLevel("PlayLevel");
+
+	UEngineGUI::CreateGUIWindow<UContentsEditorGUI>("CCSEditorGUI");
+	std::shared_ptr<UContentsEditorGUI> Window = UEngineGUI::FindGUIWindow<UContentsEditorGUI>("CCSEditorGUI");
+	Window->SetActive(true);
 	
 }
 

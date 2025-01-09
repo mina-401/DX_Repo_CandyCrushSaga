@@ -2,10 +2,21 @@
 #include<EngineCore/GameMode.h>
 #include <random>
 
-class Random
-{
+//class StageCandyData
+//{
+//	bool IsActive = true;
+//};
+//
+//class CandyManager : public AActor
+//{
+//	void CreateStage(int X, int Y); 
+//	void DeleteIndex(int X, int Y);
+//
+//	void CandyCreate(); // 진짜 캔디 만들기
+//
+//	std::vector<std::vector<StageCandyData>> Data;
+//};
 
-};
 class APlayGameMode : public AGameMode
 {
 public:
@@ -21,6 +32,7 @@ public:
 
 protected:
 
+	void LevelChangeStart() override;
 	virtual void BeginPlay();
 	virtual void Tick(float _DeltaTime);
 private:

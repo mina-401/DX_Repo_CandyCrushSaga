@@ -178,6 +178,7 @@
     </ClCompile>
     <ClCompile Include="CandyCrushSaga.cpp" />
     <ClCompile Include="CandyCrushSaga_Resources.cpp" />
+    <ClCompile Include="ContentsEditorGUI.cpp" />
     <ClCompile Include="CustomTestRenderer.cpp">
       <SubType>
       </SubType>
@@ -205,6 +206,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PreCompile.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="TileMapGameMode.cpp" />
     <ClCompile Include="TitleButton.cpp">
       <SubType>
       </SubType>
@@ -221,10 +223,12 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="CandyCrushSaga.h" />
+    <ClInclude Include="ContentsEditorGUI.h" />
     <ClInclude Include="CustomTestRenderer.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GMConst.h" />
     <ClInclude Include="HUD.h">
       <SubType>
       </SubType>
@@ -239,6 +243,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PreCompile.h" />
+    <ClInclude Include="TileMapGameMode.h" />
     <ClInclude Include="TitleButton.h">
       <SubType>
       </SubType>
