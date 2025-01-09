@@ -33,6 +33,7 @@
     <ClCompile Include="TileMapGameMode.cpp">
       <Filter>GameMode</Filter>
     </ClCompile>
+    <ClCompile Include="CandyManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -67,6 +68,7 @@
     <ClInclude Include="TileMapGameMode.h">
       <Filter>GameMode</Filter>
     </ClInclude>
+    <ClInclude Include="CandyManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameMode">

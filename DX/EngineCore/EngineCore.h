@@ -45,7 +45,7 @@ public:
 
 	ENGINEAPI static UEngineWindow& GetMainWindow();
 
-	ENGINEAPI static std::map<std::string, std::shared_ptr<class ULevel>> GetAllLevelMap();
+	ENGINEAPI static std::map<std::string, std::shared_ptr<class ULevel>> GetAllLevelMap(); 
 
 protected:
 

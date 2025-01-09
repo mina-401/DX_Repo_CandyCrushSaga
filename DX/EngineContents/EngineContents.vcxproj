@@ -178,6 +178,10 @@
     </ClCompile>
     <ClCompile Include="CandyCrushSaga.cpp" />
     <ClCompile Include="CandyCrushSaga_Resources.cpp" />
+    <ClCompile Include="CandyManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ContentsEditorGUI.cpp" />
     <ClCompile Include="CustomTestRenderer.cpp">
       <SubType>
@@ -223,6 +227,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="CandyCrushSaga.h" />
+    <ClInclude Include="CandyManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ContentsEditorGUI.h" />
     <ClInclude Include="CustomTestRenderer.h">
       <SubType>

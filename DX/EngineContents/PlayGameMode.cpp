@@ -11,6 +11,7 @@
 
 #include "Candy.h"
 #include "ContentsEditorGUI.h"
+#include "CandyManager.h"
 
 class DebugWindow : public UEngineGUIWindow
 {
@@ -77,55 +78,17 @@ void APlayGameMode::LevelChangeStart()
 void APlayGameMode::BeginPlay()
 {
 	AActor::BeginPlay();
-
 	{
-		Candys.resize(CandyRow + 1);
+		std::shared_ptr< class ACandyManager> CandyManager = GetWorld()->SpawnActor<ACandyManager>();
+		CandyManager->CreateStage(5, 5);
+		CandyManager->DeleteIndex(1, 1);
+		CandyManager->CandyCreate();
 
-
-		FVector CurPos = { 0,0 };
-
-		
-		for (int i = 1; i <= CandyRow; i++)
-		{
-			Candys[i].resize(CandyCol + 1);
-		}
-		for (int row = 1; row <= CandyRow; row++)
-		{
-			for (int col = 1; col <= CandyCol; col++)
-			{
-				
-				int RandIndex = RandomInt(1, 46);
-				Candys[row][col] = SpawnCandy(CurPos, RandIndex);
-				
-			}
-			float PlusPos = (Candys[row][1]->GetRenderer()->GetWorldScale3D().Y + 10.0f);
-			CurPos.Y -= PlusPos;
-			CurPos.X = 0;
-		}
 	}
 
-}
-std::shared_ptr<class ACandy> APlayGameMode::SpawnCandy(FVector& _CurPos,int _CandyIndex)
-{
-	// 캔디는 랜덤 확률로 생성한다.
-	// candyIndex++
-	// 이미지에서 랜덤으로 가져오기
-
-	
-	
-	std::shared_ptr<class ACandy> NewCandy = GetWorld()->SpawnActor<ACandy>();
-
-	FVector Scale = NewCandy->GetRenderer()->GetWorldScale3D();
-	Scale += {10.0f, 10.0f};
-	_CurPos = { _CurPos.X + Scale.X,_CurPos.Y };
-
-
-	NewCandy->AddActorLocation(_CurPos);
-	NewCandy->GetRenderer()->SetSprite("Candy", _CandyIndex);
-
-	return NewCandy;
 
 }
+
 void APlayGameMode::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
