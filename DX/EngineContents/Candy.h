@@ -49,9 +49,9 @@ public:
 		return Renderer;
 	}
 	void SetCandy(FVector RenderPos,FVector& _Pos, int _Index);
-	void SameLine(FVector& _CurPos);
 
-	CandySpriteData GetCandyData()
+
+	CandySpriteData& GetCandyData()
 	{
 		return CandyData;
 	}
@@ -64,6 +64,7 @@ private:
 	std::shared_ptr<class UCollision> Collision;
 
 	CandySpriteData CandyData;
+	FVector MaxSize = { 0,0 };
 	FVector CandyScale = { 50,50 };
 
 	

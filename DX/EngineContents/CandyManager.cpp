@@ -25,14 +25,14 @@ void ACandyManager::CreateStage(int X, int Y)
 	CandyRow = X;
 	CandyCol = Y;
 
-	Candys.resize(X + 1);
-	for (int i = 1; i <= X; i++)
+	Candys.resize(X );
+	for (int i = 0; i < X; i++)
 	{
 		Candys[i].resize(Y + 1);
 	}
 
-	Data.resize(X + 1);
-	for (int i = 1; i <= X; i++)
+	Data.resize(X );
+	for (int i = 0; i < X; i++)
 	{
 		Data[i].resize(Y + 1);
 	}
@@ -49,25 +49,25 @@ void ACandyManager::CandyCreate()
 	{
 
 
-		FVector SetPos = { 200,100 };
-		for (int row = 1; row <= CandyRow; row++)
+		FVector SetPos = { -100,100};
+		for (int row = 0; row < CandyRow; row++)
 		{
 
 			std::shared_ptr<class ACandy> NewCandy = nullptr;
-			for (int col = 1; col <= CandyCol; col++)		
+			for (int col = 0; col < CandyCol; col++)		
 			{
 				if (false == Data[row][col].IsActive) {}
 				else {
 					// Äµµð ½ºÆù
 					int RandomIndx = RandomInt(1, 46);
-					NewCandy =GetWorld()->SpawnActor<ACandy>();			
+					NewCandy =GetWorld()->SpawnActor<ACandy>();
 
-					SetPos.X -= CandyScale.X;
+					SetPos.X += CandyScale.X;
 					NewCandy->SetCandy({row,col}, SetPos, RandomIndx);
 					Candys[row][col] = NewCandy;
 				}
 			}
-			SetPos.X = 200;
+			SetPos.X = -100;
 			SetPos.Y -= CandyScale.Y;
 		
 			

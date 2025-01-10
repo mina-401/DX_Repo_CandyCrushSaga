@@ -26,19 +26,19 @@ public:
 
 
 	 std::vector<std::vector<std::shared_ptr<class ACandy>>> Candys;
-	
+	 int CandyRow = 5;
+	 int CandyCol = 5;
+	 FVector CandyScale = { 50,50 };
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 private:
 
-	void SameLine(std::shared_ptr<class ACandy> _Candy, FVector& _CurPos); 
+
 
 	 std::vector<std::vector<StageCandyData>> Data;
 	 
-	  int CandyRow = 5;
-	  int CandyCol = 5;  
-	  FVector CandyScale = { 50,50 };
+	  
 
 private:
 

@@ -79,14 +79,6 @@ void ACandy::SetCandy(FVector RenderPos, FVector& _Pos, int _Index)
 
 	//SetName("Candy");
 }
-
-void ACandy::SameLine(FVector& _CurPos)
-{
-	float PlusPos = (GetRenderer()->GetWorldScale3D().Y + 5.0f);
-	_CurPos.Y -= PlusPos;
-	
-}
-
 void ACandy::BeginPlay()
 {
 	AActor::BeginPlay();
