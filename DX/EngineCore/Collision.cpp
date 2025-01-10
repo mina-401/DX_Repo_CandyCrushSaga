@@ -2,8 +2,8 @@
 #include "Collision.h"
 #include <EngineBase/EngineString.h>
 #include <EngineCore/EngineCamera.h>
-#include "Actor.h"
-#include "Level.h"
+#include <EngineCore/Level.h>	
+#include <EngineCore/Actor.h>	
 
 UCollision::UCollision()
 {
@@ -60,6 +60,44 @@ bool UCollision::CollisionCheck(std::string_view _OtherName, std::vector<UCollis
 		}
 
 		if (true == FTransform::Collision(CollisionType, Transform, OtherCol->CollisionType, OtherCol->Transform))
+		{
+			_Vector.push_back(OtherCol.get());
+		}
+	}
+
+	return 0 != _Vector.size();
+}
+
+bool UCollision::CollisionCheck(std::string_view _OtherName, FVector _NextPos, std::vector<UCollision*>& _Vector)
+{
+	std::string UpperName = UEngineString::ToUpper(_OtherName);
+
+	std::map<std::string, std::list<std::shared_ptr<class UCollision>>>& Collision = GetWorld()->Collisions;
+
+	if (false == Collision.contains(UpperName))
+	{
+		MSGASSERT("존재하지 않는 그룹과 충돌할수 없습니다" + std::string(UpperName));
+		return false;
+	}
+
+	// 절대 네버 절대 안된다.
+	// std::list<std::shared_ptr<class UCollision>> Group = Collision[_OtherName];
+
+	FTransform NextTransform = Transform;
+
+	NextTransform.Location += _NextPos;
+	NextTransform.TransformUpdate();
+
+	std::list<std::shared_ptr<class UCollision>>& Group = Collision[UpperName];
+
+	for (std::shared_ptr<class UCollision>& OtherCol : Group)
+	{
+		if (false == OtherCol->IsActive())
+		{
+			continue;
+		}
+
+		if (true == FTransform::Collision(CollisionType, NextTransform, OtherCol->CollisionType, OtherCol->Transform))
 		{
 			_Vector.push_back(OtherCol.get());
 		}
@@ -147,6 +185,11 @@ void UCollision::SetCollisionEnd(std::function<void(UCollision*, UCollision*)> _
 
 void UCollision::CollisionEventCheck(std::shared_ptr<UCollision> _Other)
 {
+	if (false == _Other->IsActive())
+	{
+		return;
+	}
+
 	if (true == FTransform::Collision(CollisionType, Transform, _Other->CollisionType, _Other->Transform))
 	{
 		// 충돌 했다.

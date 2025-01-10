@@ -12,6 +12,8 @@
 #include "Candy.h"
 #include "ContentsEditorGUI.h"
 #include "CandyManager.h"
+#include "Mouse.h"
+#include <EnginePlatform/EngineInput.h>
 
 class DebugWindow : public UEngineGUIWindow
 {
@@ -79,7 +81,17 @@ void APlayGameMode::BeginPlay()
 {
 	AActor::BeginPlay();
 	{
-		std::shared_ptr< class ACandyManager> CandyManager = GetWorld()->SpawnActor<ACandyManager>();
+		GetWorld()->CreateCollisionProfile("Candy");
+		GetWorld()->CreateCollisionProfile("Mouse");
+		//GetWorld()->LinkCollisionProfile("Candy", "Mouse");
+		GetWorld()->LinkCollisionProfile("Mouse", "Candy");
+	}
+	{
+		CandyMouseObj = GetWorld()->SpawnActor<AMouse>();
+		
+	}
+	{
+		CandyManager = GetWorld()->SpawnActor<ACandyManager>();
 		CandyManager->CreateStage(5, 5);
 		CandyManager->DeleteIndex(1, 1);
 		CandyManager->CandyCreate();
@@ -92,6 +104,8 @@ void APlayGameMode::BeginPlay()
 void APlayGameMode::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
+
+	
 }
 
 void APlayGameMode::PlayDirLoad()

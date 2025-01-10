@@ -224,6 +224,7 @@
     <ClCompile Include="RenderUnit.cpp" />
     <ClCompile Include="SceneComponent.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
+    <ClCompile Include="TileMapRenderer.cpp" />
     <ClCompile Include="TimeEventComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -276,6 +277,7 @@
     <ClInclude Include="SceneComponent.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="ThirdParty\DirectxTex\Inc\DirectXTex.h" />
+    <ClInclude Include="TileMapRenderer.h" />
     <ClInclude Include="TimeEventComponent.h" />
   </ItemGroup>
   <ItemGroup>

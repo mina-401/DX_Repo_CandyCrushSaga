@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="EngineSpriteShader.fx" />
+    <FxCompile Include="EngineTileMapShader.fx" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

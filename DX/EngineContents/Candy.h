@@ -1,6 +1,36 @@
 #pragma once
 #include <EngineCore/Actor.h>
+enum class SpriteType
+{
+	Normal,
+	StripedHorizontal,
+	StripedVertical,
+	Wrapped
+};
+enum class Color
+{
+	Blue,
+	Red,
+	Orange,
+	Yellow,
+	Purple,
+	Green,
+	Choco,
 
+};
+
+class CandySpriteData
+{
+public:
+	/*SpriteType CandySpriteType;
+	Color CandyColor;*/
+
+	FVector SetPos = { 0,0 };
+	int SpriteIndex = 0;
+	int row = 0;
+	int col = 0;
+
+};
 class ACandy : public AActor
 {
 public:
@@ -19,17 +49,24 @@ public:
 		return Renderer;
 	}
 	void SetCandy(FVector RenderPos,FVector& _Pos, int _Index);
+	void SameLine(FVector& _CurPos);
+
+	CandySpriteData GetCandyData()
+	{
+		return CandyData;
+	}
 
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 private:
 	std::shared_ptr<class USpriteRenderer> Renderer;
+	std::shared_ptr<class UCollision> Collision;
 
-	int row=0;
-	int col=0;
-	// 자기가 무슨 색깔인지,
-	// row, col 데이터
+	CandySpriteData CandyData;
+	FVector CandyScale = { 50,50 };
+
+	
 	
 };
 

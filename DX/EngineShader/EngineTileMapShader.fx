@@ -60,13 +60,8 @@ cbuffer FSpriteData : register(b1)
     float4 Pivot; // 0.5 0.0f
 };
 
-cbuffer FUVValue : register(b2)
-{
-    float4 PlusUVValue;
-};
-
 // 버텍스쉐이더를 다 만들었다.
-VertexShaderOutPut TileMap_VS(EngineVertex _Vertex)
+VertexShaderOutPut VertexToWorld_VS(EngineVertex _Vertex)
 {
 	// CPU에서 계산한 값을 쉐이더에게 넘기는 방법을 알아야 하는데
 	// 상수버퍼라고 부릅니다.
@@ -85,15 +80,13 @@ VertexShaderOutPut TileMap_VS(EngineVertex _Vertex)
     OutPut.UV = _Vertex.UV;
     OutPut.UV.x = (_Vertex.UV.x * CuttingSize.x) + CuttingPos.x;
     OutPut.UV.y = (_Vertex.UV.y * CuttingSize.y) + CuttingPos.y;
-    OutPut.UV.x += PlusUVValue.x;
-    OutPut.UV.y += PlusUVValue.y;
 	
     OutPut.COLOR = _Vertex.COLOR;
     return OutPut;
 }
 
 
-Texture2D ImageTexture : register(t0);
+Texture2D TileMapTex : register(t0);
 // 샘플러 1개가 필요합니다.
 SamplerState ImageSampler : register(s0);
 
@@ -107,10 +100,10 @@ cbuffer ResultColor : register(b0)
 };
 
 // 이미지를 샘플링해서 이미지를 보이게 만들고
-float4 TileMap_PS(VertexShaderOutPut _Vertex) : SV_Target0
+float4 PixelToWorld_PS(VertexShaderOutPut _Vertex) : SV_Target0
 {
 	
-    float4 Color = ImageTexture.Sample(ImageSampler, _Vertex.UV.xy);
+    float4 Color = TileMapTex.Sample(ImageSampler, _Vertex.UV.xy);
 	
     if (0.0f >= Color.a)
     {

@@ -34,6 +34,7 @@
       <Filter>GameMode</Filter>
     </ClCompile>
     <ClCompile Include="CandyManager.cpp" />
+    <ClCompile Include="Mouse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -69,6 +70,7 @@
       <Filter>GameMode</Filter>
     </ClInclude>
     <ClInclude Include="CandyManager.h" />
+    <ClInclude Include="Mouse.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameMode">

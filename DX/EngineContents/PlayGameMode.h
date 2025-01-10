@@ -15,15 +15,22 @@ public:
 	APlayGameMode& operator=(const APlayGameMode& _Other) = delete;
 	APlayGameMode& operator=(APlayGameMode&& _Other) noexcept = delete;
 
+	std::shared_ptr< class ACandyManager> GetCandyManager()
+	{
+		return CandyManager;
+	}
 protected:
 
 	void LevelChangeStart() override;
 	virtual void BeginPlay();
 	virtual void Tick(float _DeltaTime);
+
 private:
 	std::shared_ptr<class APlayMap> Map;
 	std::vector<std::vector<std::shared_ptr<class ACandy>>> Candys;
 
+	 std::shared_ptr< class ACandyManager> CandyManager;
+	 std::shared_ptr< class AMouse> CandyMouseObj;
 	void PlayDirLoad();
 	void SpritesInit();
 

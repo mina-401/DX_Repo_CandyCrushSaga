@@ -116,6 +116,9 @@
     <ClCompile Include="EngineDepthStencilState.cpp" />
     <ClCompile Include="TimeEventComponent.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="TileMapRenderer.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -246,6 +249,9 @@
     <ClInclude Include="EngineDepthStencilState.h" />
     <ClInclude Include="TimeEventComponent.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="TileMapRenderer.h">
+      <Filter>Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">

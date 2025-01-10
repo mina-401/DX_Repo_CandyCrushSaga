@@ -2,13 +2,17 @@
 #include "CandyManager.h"	
 #include <EngineCore/Level.h>
 #include <EngineCore/EngineCore.h>
-
+#include <EngineCore/CameraActor.h>
 #include <EngineCore/SpriteRenderer.h>
 
+
 #include "Candy.h"
+#include <EnginePlatform/EngineInput.h>
+
 
 ACandyManager::ACandyManager()
 {
+	
 }
 
 ACandyManager::~ACandyManager()
@@ -45,8 +49,7 @@ void ACandyManager::CandyCreate()
 	{
 
 
-		FVector CurPos = { 0,0 };
-		FVector ScaleSprite = { 0,0 };
+		FVector SetPos = { 200,100 };
 		for (int row = 1; row <= CandyRow; row++)
 		{
 
@@ -56,16 +59,18 @@ void ACandyManager::CandyCreate()
 				if (false == Data[row][col].IsActive) {}
 				else {
 					// Äµµð ½ºÆù
-					int RandomIndx = RandomInt(1, 47);
+					int RandomIndx = RandomInt(1, 46);
 					NewCandy =GetWorld()->SpawnActor<ACandy>();			
-					NewCandy->SetCandy({row,col}, CurPos, RandomIndx);
+
+					SetPos.X -= CandyScale.X;
+					NewCandy->SetCandy({row,col}, SetPos, RandomIndx);
 					Candys[row][col] = NewCandy;
 				}
 			}
-
-			float PlusPos = (NewCandy->GetRenderer()->GetWorldScale3D().Y+5.0f);
-			CurPos.Y -= PlusPos;
-			CurPos.X = 0;
+			SetPos.X = 200;
+			SetPos.Y -= CandyScale.Y;
+		
+			
 		}
 	}
 }
@@ -80,5 +85,7 @@ void ACandyManager::BeginPlay()
 void ACandyManager::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
+
+	
 }
 

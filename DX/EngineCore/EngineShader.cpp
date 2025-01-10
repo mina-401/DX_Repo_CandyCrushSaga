@@ -18,7 +18,7 @@ void UEngineShader::ReflectionCompile(UEngineFile& _File)
 
 	_File.FileOpen("rt");
 	std::string ShaderCode = _File.GetAllFileText();
-	
+
 
 	{
 		size_t EntryIndex = ShaderCode.find("_VS(");
@@ -33,7 +33,7 @@ void UEngineShader::ReflectionCompile(UEngineFile& _File)
 				EntryName += "_VS";
 
 				UEngineVertexShader::Load(_File.GetPathToString(), EntryName);
-				
+
 			}
 		}
 	}
@@ -134,7 +134,7 @@ void UEngineShader::ShaderResCheck()
 			NewRes.ShaderType = ShaderType;
 			NewRes.Name = UpperName;
 			NewRes.BindIndex = ResDesc.BindPoint;
-			NewRes.Res = Res;
+			NewRes.Res = Res.get();
 
 			ShaderResources.CreateTextureRes(UpperName, NewRes);
 

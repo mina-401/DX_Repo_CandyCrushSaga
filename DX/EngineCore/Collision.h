@@ -34,6 +34,8 @@ public:
 	// unreal¿¡¼­ vector
 	ENGINEAPI bool CollisionCheck(std::string_view _OtherName, std::vector<UCollision*>& _Vector);
 
+	ENGINEAPI bool CollisionCheck(std::string_view _OtherName, FVector _NextPos, std::vector<UCollision*>& _Vector);
+
 	void SetCollisionType(ECollisionType _Type)
 	{
 		CollisionType = _Type;
