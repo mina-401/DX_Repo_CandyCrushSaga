@@ -19,7 +19,7 @@ enum class Color
 
 };
 
-class CandySpriteData
+class FCandySpriteData
 {
 public:
 	/*SpriteType CandySpriteType;
@@ -51,10 +51,11 @@ public:
 	void SetCandy(FVector RenderPos,FVector& _Pos, int _Index);
 
 
-	CandySpriteData& GetCandyData()
+	FCandySpriteData& GetCandyData()
 	{
 		return CandyData;
 	}
+	FCandySpriteData CandyData;
 
 protected:
 	void BeginPlay() override;
@@ -63,7 +64,6 @@ private:
 	std::shared_ptr<class USpriteRenderer> Renderer;
 	std::shared_ptr<class UCollision> Collision;
 
-	CandySpriteData CandyData;
 	FVector MaxSize = { 0,0 };
 	FVector CandyScale = { 50,50 };
 

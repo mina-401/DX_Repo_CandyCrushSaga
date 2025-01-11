@@ -10,6 +10,7 @@
 #include <EnginePlatform/EngineInput.h>
 #include "PlayGameMode.h"
 #include "CandyManager.h"
+#include <EngineCore/TimeEventComponent.h>
 
 AMouse::AMouse()
 {
@@ -17,7 +18,7 @@ AMouse::AMouse()
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
-
+	TimeEventComponent = CreateDefaultSubObject<UTimeEventComponent>();
 	Renderer = CreateDefaultSubObject<USpriteRenderer>();
 	Renderer->SetupAttachment(RootComponent);
 	Renderer->SetAutoScale(false);
@@ -47,6 +48,8 @@ AMouse::AMouse()
 			if (nullptr == this->SelectCandy)
 			{
 				UEngineDebug::OutPutString("Not Candy");
+				
+
 			}
 			else {
 				UEngineDebug::OutPutString("Candy Select");
@@ -56,6 +59,9 @@ AMouse::AMouse()
 				if (true == UEngineInput::IsDown(VK_LBUTTON))
 				{
 					this->SelectCandy = CurCandy;
+					//this->SelectCandy->SetActive(false);
+
+
 				}
 
 				if (true == UEngineInput::IsUp(VK_LBUTTON))
@@ -64,6 +70,7 @@ AMouse::AMouse()
 					{
 						if (this->SelectCandy == CurCandy)
 						{
+
 							this->SelectCandy = nullptr;
 						}
 						else 
@@ -71,38 +78,64 @@ AMouse::AMouse()
 
 							int dx[4] = { 0,0,-1,1 };
 							int dy[4] = { 1,-1,0,0 };
-							int SelectRow= this->SelectCandy->GetCandyData().row;
-							int SelectCol= this->SelectCandy->GetCandyData().col;
 
-							int CurRow= CurCandy->GetCandyData().row;
-							int CurCol= CurCandy->GetCandyData().col;
+							FCandySpriteData& SelectCandyDataRef = this->SelectCandy->GetCandyData();
+							SelectCandyData = this->SelectCandy->CandyData;
+
+							FCandySpriteData& CurCandyDataRef = CurCandy->GetCandyData();
+							CurCandyData = CurCandy->CandyData;
+						
+							/*SelectCandyData = this->SelectCandy->CandyData;
+							CurCandyData = CurCandy->CandyData;*/
 
 							for (int i = 0; i < 4; ++i) {
-								int NextRow = SelectRow + dx[i];
-								int NextCol = SelectCol + dy[i];
 
-								/*if (NextRow >= 1 && NextRow <= MaxRow && NextCol >= 1 && NextCol <= MaxCol) {
-									
-								}*/
+								/*int NextRow = SelectCandyDataRef.row + dx[i];
+								int NextCol = SelectCandyDataRef.col + dy[i];*/
 
-								if (NextRow == CurRow && NextCol == CurCol)
+								int NextRow = this->SelectCandy->CandyData.row + dx[i];
+								int NextCol = this->SelectCandy->CandyData.col + dy[i];
+
+								if (NextRow == CurCandyData.row && NextCol == CurCandyData.col)
 								{
-									SelectCandy->GetCandyData().row = CurRow;
-									SelectCandy->GetCandyData().col = CurRow;
+									//TimeEventComponent->AddEndEvent(2.0f, std::bind(&AMouse::TestFunction,this,std::placeholders::_1), false);
+									/*TimeEventComponent->AddEndEvent(0.5f, [this]() {
+										SelectCandyDataRef.row = CurCandyData.row;
+										SelectCandyDataRef.col = CurCandyData.col;
+										SelectCandyDataRef.SetPos = CurCandyData.SetPos;
+
+										CurCandyDataRef.row = SelectCandyData.row;
+										CurCandyDataRef.col = SelectCandyData.col;
+										CurCandyDataRef.SetPos = SelectCandyData.SetPos;
 
 
-									FVector NextPos = SelectCandy->GetCandyData().SetPos;
+									});*/
 
-									CurCandy->GetCandyData().row = SelectRow;
-									CurCandy->GetCandyData().col = SelectCol;
-									CurCandy->GetCandyData().SetPos = { SelectCandy->GetCandyData().SetPos };
+									/*this->SelectCandy->GetCandyData().row = CurCandyData.row;
+									this->SelectCandy->GetCandyData().col = CurCandyData.col;
+									this->SelectCandy->GetCandyData().SetPos = CurCandyData.SetPos;
 
-									SelectCandy->GetCandyData().SetPos = NextPos;
+									CurCandy->GetCandyData().row = SelectCandyData.row;
+									CurCandy->GetCandyData().col = SelectCandyData.col;
+									CurCandy->GetCandyData().SetPos = SelectCandyData.SetPos;*/
+									
+									SelectCandyDataRef.row = CurCandyData.row;
+									SelectCandyDataRef.col = CurCandyData.col;
+									SelectCandyDataRef.SetPos = CurCandyData.SetPos;
+
+									CurCandyDataRef.row = SelectCandyData.row;
+									CurCandyDataRef.col = SelectCandyData.col;
+									CurCandyDataRef.SetPos = SelectCandyData.SetPos;
+									break;
+									
+
 								}
+
+								
 							}
 							
-							//일단 체인지 하게끔
 
+							this->SelectCandy = nullptr;
 							int a = 0;
 						}
 					}
@@ -121,7 +154,9 @@ AMouse::AMouse()
 AMouse::~AMouse()
 {
 }
+void AMouse::TestFunction(FCandySpriteData& _a)
 
+{ }
 //void AMouse::CollisionEnter(UCollision* _This, UCollision* _Other)
 //{
 //	int a = 0;

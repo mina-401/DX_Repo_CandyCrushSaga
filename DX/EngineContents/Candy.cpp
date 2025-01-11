@@ -67,7 +67,7 @@ ACandy::~ACandy()
 
 void ACandy::SetCandy(FVector RenderPos, FVector& _Pos, int _Index)
 {
-	AddActorLocation(_Pos);
+	//AddActorLocation(_Pos);
 
 	GetRenderer()->SetSprite("Candy", _Index);
 	CandyData.row = RenderPos.X;
@@ -88,6 +88,8 @@ void ACandy::BeginPlay()
 void ACandy::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
+
+	SetActorLocation(CandyData.SetPos);
 
 }
 

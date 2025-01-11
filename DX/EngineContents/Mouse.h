@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineCore/Actor.h>
+#include "Candy.h"
 // Ό³Έν :
 
 
@@ -11,6 +12,7 @@ public:
 	AMouse();
 	~AMouse();
 
+
 	// delete Function
 	AMouse(const AMouse& _Other) = delete;
 	AMouse(AMouse&& _Other) noexcept = delete;
@@ -19,10 +21,14 @@ public:
 
 	//void CollisionEnter(UCollision* _This, UCollision* _Other);
 	class ACandy* SelectCandy = nullptr;
+
+	void TestFunction(FCandySpriteData& _a);
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 private:
+	std::shared_ptr<class UTimeEventComponent> TimeEventComponent;
 	std::shared_ptr<class USpriteRenderer> Renderer;
 	std::shared_ptr<class UCollision> Collision;
 
@@ -31,5 +37,13 @@ private:
 
 	int MaxRow = 0;
 	int MaxCol = 0;
+
+	/*FCandySpriteData& SelectCandyDataRef;
+	FCandySpriteData& CurCandyDataRef;*/
+
+	FCandySpriteData SelectCandyData= FCandySpriteData();
+	FCandySpriteData CurCandyData= FCandySpriteData();
+	
+
 };
 
