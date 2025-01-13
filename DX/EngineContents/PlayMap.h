@@ -18,16 +18,12 @@ public:
 	{
 		return Renderer;
 	}
-	std::shared_ptr<class AHUD> GetGameHud(class AHUD* _Hud)
-	{
-		return GameMainHud;
-	}
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 private:
 	void PlayDirLoad();
-	std::shared_ptr<class AHUD> GameMainHud;
 
 	std::shared_ptr<class USpriteRenderer> Renderer;
 	std::shared_ptr<class USpriteRenderer> Child;

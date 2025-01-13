@@ -1,18 +1,19 @@
 #pragma once
 #include <EngineCore/Actor.h>
+#include <EngineCore/HUD.h>
 // Ό³Έν :
-class AHUD : public AActor
+class ACCSHUD : public AHUD
 {
 public:
 	// constrcuter destructer
-	AHUD();
-	~AHUD();
+	ACCSHUD();
+	~ACCSHUD();
 
 	// delete Function
-	AHUD(const AHUD& _Other) = delete;
-	AHUD(AHUD&& _Other) noexcept = delete;
-	AHUD& operator=(const AHUD& _Other) = delete;
-	AHUD& operator=(AHUD&& _Other) noexcept = delete;
+	ACCSHUD(const ACCSHUD& _Other) = delete;
+	ACCSHUD(ACCSHUD&& _Other) noexcept = delete;
+	ACCSHUD& operator=(const ACCSHUD& _Other) = delete;
+	ACCSHUD& operator=(ACCSHUD&& _Other) noexcept = delete;
 	
 protected:
 	void BeginPlay() override;

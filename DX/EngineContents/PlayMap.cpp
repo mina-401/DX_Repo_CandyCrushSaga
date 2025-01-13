@@ -3,7 +3,6 @@
 #include <EngineCore/DefaultSceneComponent.h>
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/EngineCore.h>
-#include "HUD.h"
 #include "CustomTestRenderer.h"
 
 APlayMap::APlayMap()
@@ -11,7 +10,7 @@ APlayMap::APlayMap()
 	PlayDirLoad();
 
 	
-	GameMainHud = GetWorld()->SpawnActor<AHUD>();
+	//GameMainHud = GetWorld()->SpawnActor<AHUD>();
 
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;

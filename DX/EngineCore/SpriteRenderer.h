@@ -120,7 +120,7 @@ public:
 	}
 
 
-	void SetSprite(UEngineSprite* _Sprite);
+	void SetSprite(class UEngineSprite* _Sprite);
 
 	ResultColor ColorData;
 	FUVValue UVValue;

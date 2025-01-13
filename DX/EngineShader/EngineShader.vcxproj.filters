@@ -3,5 +3,8 @@
   <ItemGroup>
     <FxCompile Include="EngineSpriteShader.fx" />
     <FxCompile Include="EngineTileMapShader.fx" />
+    <FxCompile Include="EngineDebugCollisionShader.fx" />
+    <FxCompile Include="EngineTargetMergeShader.fx" />
+    <FxCompile Include="TestEngineSpriteShader.fx" />
   </ItemGroup>
 </Project>

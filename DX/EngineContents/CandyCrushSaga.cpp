@@ -3,16 +3,18 @@
 #include <EngineCore/Level.h>
 #include <EngineCore/EngineTexture.h>
 #include <EngineCore/EngineSprite.h>
-#include "TitleGameMode.h"
 #include <EngineCore/EngineCore.h>
 #include <EngineCore/Pawn.h>
 #include <EngineCore/EngineShader.h>
 #include <EngineCore/EngineMaterial.h>
-
-#include "PlayGameMode.h"  
-#include "TileMapGameMode.h"  
+#include <EngineCore/HUD.h>
 #include <EngineCore/EngineGUI.h>
 #include "ContentsEditorGUI.h"
+
+#include "PlayGameMode.h"  
+#include "TileMapGameMode.h" 
+#include "TitleGameMode.h"
+#include "CCSHUD.h"
 
 // #define은 그냥 무조건 복붙
 CreateContentsCoreDefine(UCandyCrushSaga);
@@ -38,11 +40,9 @@ void UCandyCrushSaga::EngineStart(UEngineInitData& _Data)
 
 	//MyGSetting();
 
-	// UEngineCore::CreateLevel<APlayGameMode, APawn>("PlayLevel");
 
-	UEngineCore::CreateLevel<ATitleGameMode, APawn>("TitleLevel");
-
-	UEngineCore::CreateLevel<APlayGameMode, APawn>("PlayLevel");
+	UEngineCore::CreateLevel<ATitleGameMode, APawn, AHUD>("TitleLevel");
+	UEngineCore::CreateLevel<APlayGameMode, APawn, ACCSHUD>("PlayLevel");
 	//UEngineCore::CreateLevel<ATileMapGameMode, APawn>("TileMapEditor");
 	//UEngineCore::OpenLevel("TileMapEditor");
 	UEngineCore::OpenLevel("PlayLevel");

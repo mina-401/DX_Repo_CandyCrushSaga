@@ -18,6 +18,10 @@ public:
 	std::shared_ptr< class ACandyManager> GetCandyManager()
 	{
 		return CandyManager;
+	}	
+	std::shared_ptr<class ACCSHUD> GetGameHud(class AHUD* _Hud)
+	{
+		return GameMainHud;
 	}
 protected:
 
@@ -33,6 +37,9 @@ private:
 	 std::shared_ptr< class AMouse> CandyMouseObj;
 	void PlayDirLoad();
 	void SpritesInit();
+
+	std::shared_ptr<class ACCSHUD> GameMainHud;
+
 
 
 };

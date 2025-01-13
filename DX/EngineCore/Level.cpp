@@ -7,8 +7,9 @@
 #include "EngineCamera.h"
 #include "CameraActor.h"
 #include "EngineGUI.h"
+#include "EngineRenderTarget.h"
 
-
+\
 
 std::shared_ptr<class ACameraActor> ULevel::SpawnCamera(int _Order)
 {
@@ -27,8 +28,13 @@ std::shared_ptr<class ACameraActor> ULevel::SpawnCamera(int _Order)
 
 ULevel::ULevel()
 {
-	SpawnCamera(0);
+	SpawnCamera(EEngineCameraType::MainCamera);
 
+	SpawnCamera(EEngineCameraType::UICamera);
+
+	LastRenderTarget = std::make_shared<UEngineRenderTarget>();
+	LastRenderTarget->CreateTarget(UEngineCore::GetScreenScale());
+	LastRenderTarget->CreateDepth();
 }
 
 ULevel::~ULevel()
@@ -115,11 +121,30 @@ void ULevel::Render(float _DeltaTime)
 {
 	UEngineCore::GetDevice().RenderStart();
 
+	LastRenderTarget->Clear();
+
 	for (std::pair<const int, std::shared_ptr<ACameraActor>>& Camera : Cameras)
 	{
+		if (Camera.first == static_cast<int>(EEngineCameraType::UICamera))
+		{
+			continue;
+		}
+
 		Camera.second->Tick(_DeltaTime);
 		Camera.second->GetCameraComponent()->Render(_DeltaTime);
+		// 이 효과는 이 카메라 그려진 대상만 영향을 줄것이다.
+		// Camera.second->PostEffect();
+		// 난 다 그려졌으니 
+		Camera.second->GetCameraComponent()->CameraTarget->MergeTo(LastRenderTarget);
 	}
+
+
+
+
+	// LastRenderTarget->PostEffect();
+
+	std::shared_ptr<UEngineRenderTarget> BackBuffer = UEngineCore::GetDevice().GetBackBufferTarget();
+	LastRenderTarget->MergeTo(BackBuffer);
 
 
 	{
@@ -304,9 +329,11 @@ void ULevel::Release(float _DeltaTime)
 	}
 }
 
-void ULevel::InitLevel(AGameMode* _GameMode, APawn* _Pawn)
+void ULevel::InitLevel(AGameMode* _GameMode, APawn* _Pawn, AHUD* _HUD)
 {
 	GameMode = _GameMode;
 
 	MainPawn = _Pawn;
+
+	HUD = _HUD;
 }

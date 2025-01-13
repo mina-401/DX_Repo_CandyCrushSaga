@@ -88,36 +88,44 @@ AMouse::AMouse()
 							/*SelectCandyData = this->SelectCandy->CandyData;
 							CurCandyData = CurCandy->CandyData;*/
 
+
+							/*SelectCandyDataRef = this->SelectCandy->GetCandyData();
+							SelectCandyData = this->SelectCandy->CandyData;
+
+							CurCandyDataRef = CurCandy->GetCandyData();
+							CurCandyData = CurCandy->CandyData;*/
+
 							for (int i = 0; i < 4; ++i) {
 
 								/*int NextRow = SelectCandyDataRef.row + dx[i];
 								int NextCol = SelectCandyDataRef.col + dy[i];*/
 
-								int NextRow = this->SelectCandy->CandyData.row + dx[i];
-								int NextCol = this->SelectCandy->CandyData.col + dy[i];
+								int NextRow = SelectCandyData.row + dx[i];
+								int NextCol = SelectCandyData.col + dy[i];
 
 								if (NextRow == CurCandyData.row && NextCol == CurCandyData.col)
 								{
 									//TimeEventComponent->AddEndEvent(2.0f, std::bind(&AMouse::TestFunction,this,std::placeholders::_1), false);
 									/*TimeEventComponent->AddEndEvent(0.5f, [this]() {
-										SelectCandyDataRef.row = CurCandyData.row;
-										SelectCandyDataRef.col = CurCandyData.col;
-										SelectCandyDataRef.SetPos = CurCandyData.SetPos;
 
-										CurCandyDataRef.row = SelectCandyData.row;
-										CurCandyDataRef.col = SelectCandyData.col;
-										CurCandyDataRef.SetPos = SelectCandyData.SetPos;
+										int SelectCandyRow= SelectCandyData.row;
+										int SelectCandyCol= SelectCandyData.col;
+										FVector SelectCandyPos= SelectCandyData.SetPos;
 
+										int CurCandyRow = CurCandyData.row;
+										int CurCandyCol = CurCandyData.col;
+										FVector CurCandyPos = CurCandyData.SetPos;
 
-									});*/
+										SelectCandyDataRef.row = CurCandyRow;
+										SelectCandyDataRef.col = CurCandyCol;
+										SelectCandyDataRef.SetPos = CurCandyPos;
 
-									/*this->SelectCandy->GetCandyData().row = CurCandyData.row;
-									this->SelectCandy->GetCandyData().col = CurCandyData.col;
-									this->SelectCandy->GetCandyData().SetPos = CurCandyData.SetPos;
+										CurCandyDataRef.row = SelectCandyRow;
+										CurCandyDataRef.col = SelectCandyCol;
+										CurCandyDataRef.SetPos = SelectCandyPos;*/
 
-									CurCandy->GetCandyData().row = SelectCandyData.row;
-									CurCandy->GetCandyData().col = SelectCandyData.col;
-									CurCandy->GetCandyData().SetPos = SelectCandyData.SetPos;*/
+									//});
+
 									
 									SelectCandyDataRef.row = CurCandyData.row;
 									SelectCandyDataRef.col = CurCandyData.col;
@@ -126,6 +134,7 @@ AMouse::AMouse()
 									CurCandyDataRef.row = SelectCandyData.row;
 									CurCandyDataRef.col = SelectCandyData.col;
 									CurCandyDataRef.SetPos = SelectCandyData.SetPos;
+									
 									break;
 									
 

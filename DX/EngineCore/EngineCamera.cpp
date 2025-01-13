@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "EngineCamera.h"
 #include "Renderer.h"
+#include "EngineRenderTarget.h"
 #include "EngineCore.h"
 
 UEngineCamera::UEngineCamera()
@@ -19,6 +20,13 @@ void UEngineCamera::BeginPlay()
 	ViewPortInfo.TopLeftY = 0.0f;
 	ViewPortInfo.MinDepth = 0.0f;
 	ViewPortInfo.MaxDepth = 1.0f;
+
+	// 카메라 마다 타겟을 가지게 될것이므로 이쪽으로 이동합니다.
+	CameraTarget = std::make_shared<UEngineRenderTarget>();
+	CameraTarget->CreateTarget(UEngineCore::GetScreenScale());
+	CameraTarget->CreateDepth();
+
+	// 카메라를 여러개 만들고 그릴때 뎁스만큼은 다른 애를 쓰고 싶을때가 있는데.
 }
 
 UEngineCamera::~UEngineCamera()
@@ -37,6 +45,8 @@ void UEngineCamera::Render(float _DetlaTime)
 {
 	// 랜더링 진입하기 전에 한번 뷰포트 세팅하고 
 	UEngineCore::GetDevice().GetContext()->RSSetViewports(1, &ViewPortInfo);
+	CameraTarget->Clear();
+	CameraTarget->Setting();
 
 	//// Ranged for를 돌릴때는 복사가 일어나므로
 	for (std::pair<const int, std::list<std::shared_ptr<URenderer>>>& RenderGroup : Renderers)

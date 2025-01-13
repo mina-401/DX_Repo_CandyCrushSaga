@@ -20,23 +20,14 @@
     <ClCompile Include="Actor.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Object\Component\Contents</Filter>
-    </ClCompile>
     <ClCompile Include="EngineGraphicDevice.cpp">
       <Filter>Graphic</Filter>
     </ClCompile>
     <ClCompile Include="EngineResources.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
-    <ClCompile Include="EngineTexture.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
     <ClCompile Include="SpriteRenderer.cpp">
       <Filter>Object\Component\Contents</Filter>
-    </ClCompile>
-    <ClCompile Include="EngineSprite.cpp">
-      <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="imgui.cpp">
       <Filter>GUI\IMGUI\Cpp</Filter>
@@ -77,7 +68,6 @@
     <ClCompile Include="EngineGraphicDevice_Resources.cpp">
       <Filter>Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="EngineBlend.cpp" />
     <ClCompile Include="EngineCore.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -103,21 +93,57 @@
     <ClCompile Include="EngineShader.cpp">
       <Filter>Resources\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="EngineRasterizerState.cpp">
-      <Filter>Resources\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="EngineMaterial.cpp" />
     <ClCompile Include="EnginePixelShader.cpp">
       <Filter>Resources\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="EngineInputLayOutInfo.cpp" />
-    <ClCompile Include="EngineSampler.cpp" />
-    <ClCompile Include="EngineVertex.cpp" />
-    <ClCompile Include="EngineDepthStencilState.cpp" />
-    <ClCompile Include="TimeEventComponent.cpp" />
-    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="TransformObject.cpp" />
+    <ClCompile Include="Collision.cpp">
+      <Filter>Object\Component\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeEventComponent.cpp">
+      <Filter>Object\Component\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Object\Component\Render</Filter>
+    </ClCompile>
     <ClCompile Include="TileMapRenderer.cpp">
       <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineMaterial.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineDepthStencilState.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineBlend.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineTexture.cpp">
+      <Filter>Resources\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineVertex.cpp">
+      <Filter>Resources\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineInputLayOutInfo.cpp">
+      <Filter>Resources\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineRasterizerState.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineSprite.cpp">
+      <Filter>Resources\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineRenderTarget.cpp">
+      <Filter>Resources\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineSampler.cpp">
+      <Filter>Resources\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Widget.cpp">
+      <Filter>Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>Object\Actor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,9 +169,6 @@
     <ClInclude Include="Actor.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Object\Component\Contents</Filter>
-    </ClInclude>
     <ClInclude Include="EngineGraphicDevice.h">
       <Filter>Graphic</Filter>
     </ClInclude>
@@ -155,14 +178,8 @@
     <ClInclude Include="EngineResources.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="EngineTexture.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
     <ClInclude Include="SpriteRenderer.h">
       <Filter>Object\Component\Contents</Filter>
-    </ClInclude>
-    <ClInclude Include="EngineSprite.h">
-      <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="imgui.h">
       <Filter>GUI\IMGUI\Header</Filter>
@@ -206,7 +223,6 @@
     <ClInclude Include="RenderUnit.h">
       <Filter>Object\Render</Filter>
     </ClInclude>
-    <ClInclude Include="EngineBlend.h" />
     <ClInclude Include="EngineCore.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -236,21 +252,52 @@
     <ClInclude Include="EngineShader.h">
       <Filter>Resources\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="EngineRasterizerState.h">
-      <Filter>Resources\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="EngineMaterial.h" />
     <ClInclude Include="EnginePixelShader.h">
       <Filter>Resources\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="EngineInputLayOutInfo.h" />
-    <ClInclude Include="EngineSampler.h" />
-    <ClInclude Include="IndexBuffer.h" />
-    <ClInclude Include="EngineDepthStencilState.h" />
-    <ClInclude Include="TimeEventComponent.h" />
+    <ClInclude Include="TransformObject.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="TimeEventComponent.h">
+      <Filter>Object\Component\Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Object\Component\Render</Filter>
+    </ClInclude>
     <ClInclude Include="TileMapRenderer.h">
       <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineMaterial.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineDepthStencilState.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineBlend.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineTexture.h">
+      <Filter>Resources\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineInputLayOutInfo.h">
+      <Filter>Resources\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineRasterizerState.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineSprite.h">
+      <Filter>Resources\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineRenderTarget.h">
+      <Filter>Resources\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineSampler.h">
+      <Filter>Resources\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Widget.h">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>Object\Actor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -325,6 +372,15 @@
     </Filter>
     <Filter Include="Resources\Texture">
       <UniqueIdentifier>{3e7ad0c6-5e5f-4f51-a67c-63b95efae6b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Component\Collision">
+      <UniqueIdentifier>{1ecb3348-14ec-428f-bc24-4b5e356fbe28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Component\Render">
+      <UniqueIdentifier>{5f8fb23e-61c1-47a9-9ebc-2130fd3c105f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\UI">
+      <UniqueIdentifier>{94ff31eb-1f42-4687-8e8b-bf18bb3cf2d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

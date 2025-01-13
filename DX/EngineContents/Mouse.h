@@ -38,11 +38,12 @@ private:
 	int MaxRow = 0;
 	int MaxCol = 0;
 
-	/*FCandySpriteData& SelectCandyDataRef;
-	FCandySpriteData& CurCandyDataRef;*/
+	//FCandySpriteData& SelectCandyDataRef = SelectCandyData;
+	//FCandySpriteData& CurCandyDataRef = CurCandyData;
 
 	FCandySpriteData SelectCandyData= FCandySpriteData();
 	FCandySpriteData CurCandyData= FCandySpriteData();
+
 	
 
 };

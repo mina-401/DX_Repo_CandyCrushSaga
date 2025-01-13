@@ -2,6 +2,7 @@
 #include "PlayGameMode.h"
 #include <EngineCore/CameraActor.h>
 #include <EngineCore/Level.h>	
+#include <EngineCore/EngineCore.h>	
 #include <EngineCore/EngineCamera.h>
 #include <EngineCore/EngineGUIWindow.h>
 #include <EngineCore/EngineGUI.h>
@@ -42,6 +43,7 @@ APlayGameMode::APlayGameMode()
 	SpritesInit();
 	{
 		Map=GetWorld()->SpawnActor<APlayMap>();
+	
 	}
 
 }

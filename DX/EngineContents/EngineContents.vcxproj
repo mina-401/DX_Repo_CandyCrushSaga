@@ -187,7 +187,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="HUD.cpp">
+    <ClCompile Include="CCSHUD.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -241,7 +241,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GMConst.h" />
-    <ClInclude Include="HUD.h">
+    <ClInclude Include="CCSHUD.h">
       <SubType>
       </SubType>
     </ClInclude>

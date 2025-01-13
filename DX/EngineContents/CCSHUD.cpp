@@ -1,9 +1,9 @@
 #include "PreCompile.h"
-#include "HUD.h"
+#include "CCSHUD.h"
 #include <EngineCore/DefaultSceneComponent.h>
 #include <EngineCore/SpriteRenderer.h>
 
-AHUD::AHUD()
+ACCSHUD::ACCSHUD()
 {
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
@@ -45,16 +45,16 @@ AHUD::AHUD()
 
 }
 
-AHUD::~AHUD()
+ACCSHUD::~ACCSHUD()
 {
 }
 
-void AHUD::BeginPlay()
+void ACCSHUD::BeginPlay()
 {
 	AActor::BeginPlay();
 }
 
-void AHUD::Tick(float _DeltaTime)
+void ACCSHUD::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 }

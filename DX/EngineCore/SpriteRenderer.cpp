@@ -373,7 +373,7 @@ void USpriteRenderer::SetAnimationEvent(std::string_view _AnimationName, int _Fr
 
 
 
-void USpriteRenderer::SetSprite(UEngineSprite* _Sprite)
+void USpriteRenderer::SetSprite(class UEngineSprite* _Sprite)
 {
 	Sprite = _Sprite;
 
