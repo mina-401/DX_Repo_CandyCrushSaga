@@ -106,9 +106,8 @@ AMouse::AMouse()
 
 											bool CheckCombo = false;
 
+											CandyManager->CandyBFS(SelectCandy);
 											
-											//Queue<ACandy*> Q;
-											//Q.Push(SelectCandy);
 								
 											if (false== CheckCombo)
 											{
@@ -167,8 +166,12 @@ void AMouse::BeginPlay()
 	AActor::BeginPlay();
 
 	class APlayGameMode* PlayGameMode= dynamic_cast<APlayGameMode*>(GetWorld()->GetGameMode());
-	std::shared_ptr<class ACandyManager> CandyManager = PlayGameMode->GetCandyManager();
-	
+	CandyManager = PlayGameMode->GetCandyManager();
+	if (CandyManager == nullptr)
+	{
+		int a = 0;
+	}
+
 	int MaxRow= CandyManager->CandyRow;
 	int MaxCol= CandyManager->CandyCol;
 }

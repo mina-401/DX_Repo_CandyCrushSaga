@@ -31,7 +31,7 @@ protected:
 
 private:
 	std::shared_ptr<class APlayMap> Map;
-	std::vector<std::vector<std::shared_ptr<class ACandy>>> Candys;
+	//std::vector<std::vector<std::shared_ptr<class ACandy>>> Candys;
 
 	 std::shared_ptr< class ACandyManager> CandyManager;
 	 std::shared_ptr< class AMouse> CandyMouseObj;

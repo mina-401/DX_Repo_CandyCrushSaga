@@ -97,6 +97,7 @@ void APlayGameMode::BeginPlay()
 		CandyManager->CreateStage(3, 3);
 		//CandyManager->DeleteIndex(0, 0);
 		CandyManager->CandyCreate();
+		//CandyManager->CandyBFS();
 
 	}
 

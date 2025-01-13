@@ -23,9 +23,11 @@ public:
 	 void CreateStage(int X, int Y);
 	 void DeleteIndex(int X, int Y);
 	 void CandyCreate(); // 진짜 캔디 만들기
+	void CandyBFS(class ACandy* _Candy);
 
 
-	 std::vector<std::vector<std::shared_ptr<class ACandy>>> Candys;
+	 std::vector<std::vector<class ACandy*>> Candys;
+	 std::vector<std::vector<bool>> Visited;
 	 int CandyRow = 5;
 	 int CandyCol = 5;
 	 FVector CandyScale = { 50,50 };
@@ -35,7 +37,6 @@ protected:
 private:
 	 std::vector<std::vector<StageCandyData>> Data;
 	 
-	  
 
 private:
 

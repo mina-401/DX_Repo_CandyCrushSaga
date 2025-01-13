@@ -26,11 +26,11 @@ public:
 	void Push(T _data)
 	{
 		Arr[RearIdx] = _data;
-		FrontIdx++;
+		RearIdx++;
 		Size++;
 	}
 
-	void Pop(T _data)
+	void Pop()
 	{
 		if (Size != 0)
 		{
