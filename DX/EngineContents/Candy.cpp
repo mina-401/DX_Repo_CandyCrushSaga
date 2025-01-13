@@ -90,6 +90,5 @@ void ACandy::Tick(float _DeltaTime)
 	AActor::Tick(_DeltaTime);
 
 	SetActorLocation(CandyData.SetPos);
-
 }
 

@@ -11,6 +11,8 @@
 #include "PlayGameMode.h"
 #include "CandyManager.h"
 #include <EngineCore/TimeEventComponent.h>
+#include "CCSConst.h"
+#include "Queue.h"
 
 AMouse::AMouse()
 {
@@ -78,62 +80,52 @@ AMouse::AMouse()
 
 							int dx[4] = { 0,0,-1,1 };
 							int dy[4] = { 1,-1,0,0 };
-
-							FCandySpriteData& SelectCandyDataRef = this->SelectCandy->GetCandyData();
-							SelectCandyData = this->SelectCandy->CandyData;
-
-							FCandySpriteData& CurCandyDataRef = CurCandy->GetCandyData();
-							CurCandyData = CurCandy->CandyData;
 						
-							/*SelectCandyData = this->SelectCandy->CandyData;
-							CurCandyData = CurCandy->CandyData;*/
-
-
-							/*SelectCandyDataRef = this->SelectCandy->GetCandyData();
-							SelectCandyData = this->SelectCandy->CandyData;
-
-							CurCandyDataRef = CurCandy->GetCandyData();
-							CurCandyData = CurCandy->CandyData;*/
 
 							for (int i = 0; i < 4; ++i) {
 
-								/*int NextRow = SelectCandyDataRef.row + dx[i];
-								int NextCol = SelectCandyDataRef.col + dy[i];*/
+								int NextRow = SelectCandy->GetCandyData().row + dx[i];
+								int NextCol = SelectCandy->GetCandyData().col + dy[i];
 
-								int NextRow = SelectCandyData.row + dx[i];
-								int NextCol = SelectCandyData.col + dy[i];
-
-								if (NextRow == CurCandyData.row && NextCol == CurCandyData.col)
+								if (NextRow == CurCandy->GetCandyData().row && NextCol == CurCandy->GetCandyData().col)
 								{
-									//TimeEventComponent->AddEndEvent(2.0f, std::bind(&AMouse::TestFunction,this,std::placeholders::_1), false);
-									/*TimeEventComponent->AddEndEvent(0.5f, [this]() {
 
-										int SelectCandyRow= SelectCandyData.row;
-										int SelectCandyCol= SelectCandyData.col;
-										FVector SelectCandyPos= SelectCandyData.SetPos;
+									ACandy* SelectCandy = this->SelectCandy;
+									FVector StartPos = SelectCandy->GetCandyData().SetPos;
+									FVector EndPos = CurCandy->GetCandyData().SetPos;
 
-										int CurCandyRow = CurCandyData.row;
-										int CurCandyCol = CurCandyData.col;
-										FVector CurCandyPos = CurCandyData.SetPos;
+									TimeEventComponent->AddUpdateEvent(CCSConst::MoveTime, [this, SelectCandy, CurCandy,StartPos,EndPos](float _Delta, float _Acc)
+										{
+											CandyMove(_Delta, _Acc, SelectCandy, CurCandy, StartPos, EndPos, CCSConst::MoveTime);
+											
+										});
 
-										SelectCandyDataRef.row = CurCandyRow;
-										SelectCandyDataRef.col = CurCandyCol;
-										SelectCandyDataRef.SetPos = CurCandyPos;
+									TimeEventComponent->AddEndEvent(CCSConst::MoveTime, [this, SelectCandy, CurCandy, StartPos, EndPos]()
+										{
+											// if (검사를 했는데 터질게 없어)
 
-										CurCandyDataRef.row = SelectCandyRow;
-										CurCandyDataRef.col = SelectCandyCol;
-										CurCandyDataRef.SetPos = SelectCandyPos;*/
+											bool CheckCombo = false;
 
-									//});
+											
+											//Queue<ACandy*> Q;
+											//Q.Push(SelectCandy);
+								
+											if (false== CheckCombo)
+											{
+												TimeEventComponent->AddUpdateEvent(0.2f, [this, SelectCandy, CurCandy, StartPos, EndPos](float _Delta, float _Acc)
+													{
+														SelectCandy->GetCandyData().SetPos = FVector::Lerp(EndPos, StartPos, _Acc * 1 / 0.2f);
+
+														CurCandy->GetCandyData().SetPos = FVector::Lerp(StartPos, EndPos, _Acc * 1 / 0.2f);
+													});
+												// return;
+											}
+
+										});
+
+
 
 									
-									SelectCandyDataRef.row = CurCandyData.row;
-									SelectCandyDataRef.col = CurCandyData.col;
-									SelectCandyDataRef.SetPos = CurCandyData.SetPos;
-
-									CurCandyDataRef.row = SelectCandyData.row;
-									CurCandyDataRef.col = SelectCandyData.col;
-									CurCandyDataRef.SetPos = SelectCandyData.SetPos;
 									
 									break;
 									
@@ -192,3 +184,9 @@ void AMouse::Tick(float _DeltaTime)
 	SetActorLocation(Pos);
 }
 
+
+void AMouse::CandyMove(float _Delta, float _Acc, class ACandy* _SelectCandyPtr, class ACandy* _CurCandyPtr, FVector _StartPos, FVector _EndPos, float _MoveTime)
+{
+	_SelectCandyPtr->GetCandyData().SetPos = FVector::Lerp(_StartPos, _EndPos, _Acc * 1 / _MoveTime);
+	_CurCandyPtr->GetCandyData().SetPos = FVector::Lerp(_EndPos, _StartPos, _Acc * 1 / _MoveTime);
+}

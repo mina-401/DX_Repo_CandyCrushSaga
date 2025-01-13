@@ -33,9 +33,6 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 private:
-
-
-
 	 std::vector<std::vector<StageCandyData>> Data;
 	 
 	  

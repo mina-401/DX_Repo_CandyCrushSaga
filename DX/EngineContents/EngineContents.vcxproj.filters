@@ -35,6 +35,7 @@
     </ClCompile>
     <ClCompile Include="CandyManager.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="Queue.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -59,7 +60,7 @@
       <Filter>GameMap</Filter>
     </ClInclude>
     <ClInclude Include="Candy.h" />
-    <ClInclude Include="GMConst.h" />
+    <ClInclude Include="CCSConst.h" />
     <ClInclude Include="CCSHUD.h">
       <Filter>HUD</Filter>
     </ClInclude>
@@ -71,6 +72,7 @@
     </ClInclude>
     <ClInclude Include="CandyManager.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Queue.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameMode">

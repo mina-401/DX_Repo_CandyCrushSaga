@@ -38,13 +38,8 @@ private:
 	int MaxRow = 0;
 	int MaxCol = 0;
 
-	//FCandySpriteData& SelectCandyDataRef = SelectCandyData;
-	//FCandySpriteData& CurCandyDataRef = CurCandyData;
 
-	FCandySpriteData SelectCandyData= FCandySpriteData();
-	FCandySpriteData CurCandyData= FCandySpriteData();
-
-	
+	void CandyMove(float _Delta, float _Acc, class ACandy* _SelectCandyPtr, class ACandy* _CurCandyPtr, FVector _StartPos, FVector _EndPos, float _MoveTime);
 
 };
 

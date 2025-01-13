@@ -36,6 +36,8 @@ void ACandyManager::CreateStage(int X, int Y)
 	{
 		Data[i].resize(Y);
 	}
+
+	//
 	
 }
 
