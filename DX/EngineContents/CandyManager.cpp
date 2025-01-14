@@ -93,21 +93,22 @@ void ACandyManager::BeginPlay()
 	
 
 }
-void ACandyManager::CandyBFS(class ACandy* _Candy)
+void ACandyManager::CandyBFS(class ACandy* _SelectCandy,class ACandy* _ChangedCandy)
 {
 
 	int dx[4] = { 1, 0, -1, 0 };
 	int dy[4] = { 0, 1, 0, -1 };
 
-	Queue<ACandy*> Q;
-	//if( Visited[0][0])
+	Queue<ACandy*> Q(CandyCol*CandyRow);
 
-	Visited[0][0];
+	EColor CurColor = _SelectCandy->CandyData.CandyColor;
+	int row = _ChangedCandy->CandyData.row;
+	int col = _ChangedCandy->CandyData.col;
 
-	Visited[0][0] = true;
-	Q.Push(_Candy);
+	Visited[row][col] = true;
 
-	//
+	Q.Push(_ChangedCandy);
+
 	while (!Q.Emtpy())
 	{
 		ACandy* Cur = Q.Front();
@@ -115,18 +116,21 @@ void ACandyManager::CandyBFS(class ACandy* _Candy)
 
 		for (int dir = 0; dir < 4; dir++)
 		{
-			int nx = Cur->GetCandyData().row + dx[dir];
-			int ny = Cur->GetCandyData().col + dy[dir];
+			int nx = Cur->CandyData.row + dx[dir];
+			int ny = Cur->CandyData.col + dy[dir];
 
 			if (nx < 0 || nx >= CandyRow || ny < 0 || ny >= CandyCol)
 			{
 				continue;
 			}
 
+			EColor NextColor = Candys[nx][ny]->CandyData.CandyColor;
+
+			bool IsDiff = CurColor == NextColor ? false : true;
 
 
 			//캔디끼리 색깔이 다르다, 방문한 노드이다.
-			if (true == Visited[nx][ny] )
+			if (true == Visited[nx][ny] || true==IsDiff)
 			{
 				continue;
 			}

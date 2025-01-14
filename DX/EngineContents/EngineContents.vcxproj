@@ -239,6 +239,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="CCSEnums.h" />
     <ClInclude Include="ContentsEditorGUI.h" />
     <ClInclude Include="CustomTestRenderer.h">
       <SubType>

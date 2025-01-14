@@ -145,6 +145,7 @@
     <ClCompile Include="HUD.cpp">
       <Filter>Object\Actor</Filter>
     </ClCompile>
+    <ClCompile Include="EngineFont.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -299,6 +300,11 @@
     <ClInclude Include="HUD.h">
       <Filter>Object\Actor</Filter>
     </ClInclude>
+    <ClInclude Include="EngineDataStruct.h" />
+    <ClInclude Include="EngineFont.h" />
+    <ClInclude Include="ThirdParty\FW1FontWrapper\Inc\FW1FontWrapper.h">
+      <Filter>ThirdParty\FW1FontWrapper\Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">
@@ -381,6 +387,12 @@
     </Filter>
     <Filter Include="Object\UI">
       <UniqueIdentifier>{94ff31eb-1f42-4687-8e8b-bf18bb3cf2d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\FW1FontWrapper">
+      <UniqueIdentifier>{c5bedc8f-3385-4b9c-a6ec-86dc314d242f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\FW1FontWrapper\Inc">
+      <UniqueIdentifier>{1db230f7-eee4-4811-b1b7-485108836e84}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

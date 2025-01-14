@@ -35,9 +35,9 @@ AMouse::AMouse()
 
 	Collision->SetCollisionEnter([](UCollision* _This, UCollision* _Other)
 		{
-			class ACandy* CurCandy = dynamic_cast<ACandy*>(_Other->GetActor());
-			UEngineDebug::OutPutString("End");
-			CurCandy->GetCandyData();
+			
+			
+			
 
 		});
 
@@ -106,7 +106,7 @@ AMouse::AMouse()
 
 											bool CheckCombo = false;
 
-											CandyManager->CandyBFS(SelectCandy);
+											CandyManager->CandyBFS(SelectCandy,CurCandy);
 											
 								
 											if (false== CheckCombo)
@@ -118,6 +118,10 @@ AMouse::AMouse()
 														CurCandy->GetCandyData().SetPos = FVector::Lerp(StartPos, EndPos, _Acc * 1 / 0.2f);
 													});
 												// return;
+											}
+
+											else {
+
 											}
 
 										});

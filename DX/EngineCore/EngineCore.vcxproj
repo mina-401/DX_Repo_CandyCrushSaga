@@ -182,6 +182,7 @@
     <ClCompile Include="EngineCore.cpp" />
     <ClCompile Include="EngineDepthStencilState.cpp" />
     <ClCompile Include="EngineDeviceBuffer.cpp" />
+    <ClCompile Include="EngineFont.cpp" />
     <ClCompile Include="EngineGraphicDevice.cpp" />
     <ClCompile Include="EngineGraphicDevice_Resources.cpp" />
     <ClCompile Include="EngineGUI.cpp" />
@@ -241,9 +242,11 @@
     <ClInclude Include="EngineCamera.h" />
     <ClInclude Include="EngineConstantBuffer.h" />
     <ClInclude Include="EngineCore.h" />
+    <ClInclude Include="EngineDataStruct.h" />
     <ClInclude Include="EngineDepthStencilState.h" />
     <ClInclude Include="EngineDeviceBuffer.h" />
     <ClInclude Include="EngineEnums.h" />
+    <ClInclude Include="EngineFont.h" />
     <ClInclude Include="EngineGraphicDevice.h" />
     <ClInclude Include="EngineGUI.h" />
     <ClInclude Include="EngineGUIWindow.h" />
@@ -282,6 +285,7 @@
     <ClInclude Include="SceneComponent.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="ThirdParty\DirectxTex\Inc\DirectXTex.h" />
+    <ClInclude Include="ThirdParty\FW1FontWrapper\Inc\FW1FontWrapper.h" />
     <ClInclude Include="TileMapRenderer.h" />
     <ClInclude Include="TimeEventComponent.h" />
     <ClInclude Include="TransformObject.h" />

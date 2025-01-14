@@ -23,7 +23,7 @@ public:
 	 void CreateStage(int X, int Y);
 	 void DeleteIndex(int X, int Y);
 	 void CandyCreate(); // 진짜 캔디 만들기
-	void CandyBFS(class ACandy* _Candy);
+	void CandyBFS(class ACandy* _Candy, class ACandy* _CurCandy);
 
 
 	 std::vector<std::vector<class ACandy*>> Candys;

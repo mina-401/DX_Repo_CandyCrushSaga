@@ -96,7 +96,7 @@ void USpriteRenderer::Render(UEngineCamera* _Camera, float _DeltaTime)
 	}
 }
 
-void USpriteRenderer::RenderTransUpdate(UEngineCamera* _Camera)
+void USpriteRenderer::CameraTransUpdate(UEngineCamera* _Camera)
 {
 	FTransform& CameraTrans = _Camera->GetTransformRef();
 	FTransform& RendererTrans = GetTransformRef();
@@ -373,7 +373,7 @@ void USpriteRenderer::SetAnimationEvent(std::string_view _AnimationName, int _Fr
 
 
 
-void USpriteRenderer::SetSprite(class UEngineSprite* _Sprite)
+void USpriteRenderer::SetSprite(UEngineSprite* _Sprite)
 {
 	Sprite = _Sprite;
 

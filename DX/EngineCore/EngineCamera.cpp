@@ -10,6 +10,8 @@ UEngineCamera::UEngineCamera()
 
 void UEngineCamera::BeginPlay()
 {
+	USceneComponent::BeginPlay();
+
 	FVector Scale = UEngineCore::GetScreenScale();
 
 	ProjectionScale = Scale;
@@ -36,6 +38,7 @@ UEngineCamera::~UEngineCamera()
 
 void UEngineCamera::Tick(float _DetlaTime)
 {
+	USceneComponent::ComponentTick(_DetlaTime);
 	// 카메라는 틱에서 자신의 뷰와 프로젝트를 계산한다음 랜더러들에게 전달해줄 겁니다.
 	Transform.View;
 	Transform.Projection;

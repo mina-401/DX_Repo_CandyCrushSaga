@@ -51,8 +51,8 @@ FTileIndex UTileMapRenderer::WorldPosToTileIndex(FVector _Pos)
 	}
 	case Iso:
 	{
-		Result.X = (_Pos.X / TileSize.hX() + _Pos.Y / TileSize.hY()) / 2;
-		Result.Y = (_Pos.Y / TileSize.hY() - _Pos.X / TileSize.hX()) / 2;
+		Result.X = static_cast<int>((_Pos.X / TileSize.hX() + _Pos.Y / TileSize.hY()) / 2.0f);
+		Result.Y = static_cast<int>((_Pos.Y / TileSize.hY() - _Pos.X / TileSize.hX()) / 2.0f);
 		break;
 	}
 	default:
@@ -162,6 +162,7 @@ void UTileMapRenderer::SetTile(int _X, int _Y, int _Spriteindex)
 
 	FTileData& NewTile = Tiles[Index.Key];
 
+	NewTile.Index = Index;
 	NewTile.SpriteIndex = _Spriteindex;
 	NewTile.SpriteData.CuttingPos = { 0.0f, 0.0f };
 	NewTile.SpriteData.CuttingSize = { 1.0f, 1.0f };
@@ -182,11 +183,47 @@ void UTileMapRenderer::RemoveTile(int _X, int _Y)
 	Tiles.erase(Index.Key);
 }
 
-void UTileMapRenderer::RenderTransUpdate(UEngineCamera* _Camera)
-{
-}
 
 void UTileMapRenderer::ComponentTick(float _DeltaTime)
 {
 	URenderer::ComponentTick(_DeltaTime);
+}
+
+
+void UTileMapRenderer::Serialize(UEngineSerializer& _Ser)
+{
+	_Ser << static_cast<int>(TileMapType);
+	_Ser << TileSize;
+	_Ser << ImageSize;
+	_Ser << TilePivot;
+	std::string Name = Sprite->GetName();
+	_Ser << Name;
+
+	_Ser << static_cast<int>(Tiles.size());
+	for (std::pair<const __int64, FTileData>& Pair : Tiles)
+	{
+		_Ser.Write(&Pair.second, sizeof(FTileData));
+	}
+}
+// 데이터를 복구(할때)
+void UTileMapRenderer::DeSerialize(UEngineSerializer& _Ser)
+{
+	Tiles.clear();
+
+	_Ser.Read(&TileMapType, sizeof(int));
+	_Ser >> TileSize;
+	_Ser >> ImageSize;
+	_Ser >> TilePivot;
+	std::string Name;
+	_Ser >> Name;
+
+
+	int Count = 0;
+	_Ser >> Count;
+	for (size_t i = 0; i < Count; i++)
+	{
+		FTileData TileData;
+		_Ser.Read(&TileData, sizeof(TileData));
+		Tiles.insert({ TileData.Index.Key, TileData });
+	}
 }

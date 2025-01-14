@@ -1,7 +1,7 @@
 #pragma once
 
 // Ό³Έν :
-class UTransformObject 
+class UTransformObject
 {
 public:
 	// constrcuter destructer
@@ -91,6 +91,7 @@ public:
 		return Transform;
 	}
 
+	ENGINEAPI virtual void CameraTransUpdate(class UEngineCamera* _Camera);
 
 	ENGINEAPI void SetupAttachment(std::shared_ptr<UTransformObject> _Parent);
 

@@ -35,6 +35,11 @@ public:
 		return MainPawn;
 	}
 
+	class AHUD* GetHUD()
+	{
+		return HUD;
+	}
+
 
 
 	void Tick(float _DeltaTime);
@@ -45,6 +50,12 @@ public:
 	std::shared_ptr<class ACameraActor> GetMainCamera()
 	{
 		return GetCamera(0);
+	}
+
+	template<typename EnumType>
+	std::shared_ptr<class ACameraActor> GetCamera(EnumType _Order)
+	{
+		return GetCamera(static_cast<int>(_Order));
 	}
 
 	std::shared_ptr<class ACameraActor> GetCamera(int _Order)
@@ -179,7 +190,6 @@ private:
 
 	std::map<std::string, std::list<std::string>> CollisionLinks;
 
-	std::map<int, std::list<std::shared_ptr<class UWidget>>> Widgets;
 
 	ENGINEAPI void InitLevel(AGameMode* _GameMode, APawn* _Pawn, AHUD* _HUD);
 };

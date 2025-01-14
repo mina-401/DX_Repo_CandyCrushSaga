@@ -37,6 +37,19 @@ void UEngineGraphicDevice::DepthStencilInit()
 
 	{
 		D3D11_DEPTH_STENCIL_DESC Desc = { 0 };
+		Desc.DepthEnable = false;
+		Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+		// 깊이값이 더 작으면 통과시켜
+		Desc.DepthFunc = D3D11_COMPARISON_LESS;
+		Desc.StencilEnable = false;
+		// Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+
+		UEngineDepthStencilState::Create("UIDepth", Desc);
+	}
+
+
+	{
+		D3D11_DEPTH_STENCIL_DESC Desc = { 0 };
 		Desc.DepthEnable = true;
 		Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 		// 깊이값이 더 작으면 통과시켜
@@ -233,6 +246,14 @@ void UEngineGraphicDevice::MaterialInit()
 	}
 
 	{
+		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("WidgetMaterial");
+		Mat->SetVertexShader("EngineSpriteShader.fx");
+		Mat->SetPixelShader("EngineSpriteShader.fx");
+		Mat->SetDepthStencilState("UIDepth");
+	}
+
+
+	{
 		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("CollisionDebugMaterial");
 		Mat->SetVertexShader("EngineDebugCollisionShader.fx");
 		Mat->SetPixelShader("EngineDebugCollisionShader.fx");
@@ -253,5 +274,7 @@ void UEngineGraphicDevice::MaterialInit()
 		Mat->SetPixelShader("EngineTargetMergeShader.fx");
 		Mat->SetDepthStencilState("TargetMerge");
 	}
+
+
 
 }

@@ -5,12 +5,12 @@ class Queue
 {
 public:
 	// constrcuter destructer
-	Queue()
+	Queue(int size=1)
 	{
 		Size = 0;
-		Arr =new T[200];
-		FrontIdx = 100;
-		RearIdx = 100;
+		Arr =new T[size];
+		FrontIdx = 0;
+		RearIdx = 0;
 	}
 	~Queue()
 	{
@@ -23,6 +23,7 @@ public:
 	Queue& operator=(const Queue& _Other) = delete;
 	Queue& operator=(Queue&& _Other) noexcept = delete;
 
+	
 	void Push(T _data)
 	{
 		Arr[RearIdx] = _data;

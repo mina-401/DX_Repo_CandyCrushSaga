@@ -73,6 +73,7 @@
     <ClInclude Include="CandyManager.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Queue.h" />
+    <ClInclude Include="CCSEnums.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameMode">
