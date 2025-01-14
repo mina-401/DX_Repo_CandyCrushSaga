@@ -1,6 +1,8 @@
 #pragma once
 #include <EngineCore/Actor.h>
 #include <random>
+//#include "Queue.h"
+#include <queue>
 
 class StageCandyData
 {
@@ -39,26 +41,25 @@ public:
 	void CandyBFS();
 	void ShowOff();
 	void ShowON();
-
+	void RowCheck(int X, int Y);
+	void ColCheck(int X, int Y);
 
 	 std::vector<std::vector<class ACandy*>> Candys;
 	 std::vector<std::vector<bool>> Visited;
 	 int CandyRow = 5;
 	 int CandyCol = 5;
+	 int Combo = 1;
 	 FVector CandyScale = { 50,50 };
 protected:
 	void BeginPlay() override;
+
 	void Tick(float _DeltaTime) override;
 private:
 	 std::vector<std::vector<StageCandyData>> Data;
-	 int ComboCount = 0;
-
-
-
-
-
-
-
+	 //int initSize = 0;
+	 
+	 std::list<ACandy*> DestroyCandy;
+	
 
 
 
