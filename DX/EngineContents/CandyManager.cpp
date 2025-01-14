@@ -71,7 +71,7 @@ void ACandyManager::CandyCreate()
 				if (false == Data[row][col].IsActive) {}
 				else {
 					// Äµµð ½ºÆù
-					int RandomIndx = RandomInt(1, 46);
+					int RandomIndx = RandomInt(1, 55);
 					//NewCandy =GetWorld()->SpawnActor<ACandy*>();
 					NewCandy = GetWorld()->SpawnActor<ACandy>();
 					

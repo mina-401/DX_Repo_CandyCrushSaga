@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="EngineMath.cpp" />
     <ClCompile Include="PreCompile.cpp" />
     <ClCompile Include="EngineDebug.cpp" />
     <ClCompile Include="EngineDirectory.cpp">
@@ -26,9 +25,11 @@
     <ClCompile Include="EngineTimer.cpp">
       <Filter>Time</Filter>
     </ClCompile>
+    <ClCompile Include="EngineMath.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EngineMath.h" />
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="EngineDefine.h" />
     <ClInclude Include="EngineDebug.h" />
@@ -53,6 +54,9 @@
     </ClInclude>
     <ClInclude Include="EngineTimer.h">
       <Filter>Time</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineMath.h">
+      <Filter>Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

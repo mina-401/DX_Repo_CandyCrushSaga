@@ -49,12 +49,12 @@ AMouse::AMouse()
 
 			if (nullptr == this->SelectCandy)
 			{
-				UEngineDebug::OutPutString("Not Candy");
+				//UEngineDebug::OutPutString("Not Candy");
 				
 
 			}
 			else {
-				UEngineDebug::OutPutString("Candy Select");
+				//UEngineDebug::OutPutString("Candy Select");
 			}
 
 			if (CurCandy != nullptr) {
