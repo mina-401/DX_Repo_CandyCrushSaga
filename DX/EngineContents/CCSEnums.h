@@ -20,3 +20,11 @@ enum class EColor
 	Choco,
 	None,
 };
+
+enum class EComboVector
+{
+	Right,
+	Left,
+	Up,
+	Down,
+};

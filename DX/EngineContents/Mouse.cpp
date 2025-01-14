@@ -106,7 +106,7 @@ AMouse::AMouse()
 
 											bool CheckCombo = false;
 
-											CandyManager->CandyBFS(SelectCandy,CurCandy);
+											
 											
 								
 											if (false== CheckCombo)
@@ -117,11 +117,10 @@ AMouse::AMouse()
 
 														CurCandy->GetCandyData().SetPos = FVector::Lerp(StartPos, EndPos, _Acc * 1 / 0.2f);
 													});
-												// return;
 											}
 
 											else {
-
+												//row, col ¹Ù²Ù±â
 											}
 
 										});

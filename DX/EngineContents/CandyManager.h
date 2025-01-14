@@ -7,6 +7,19 @@ class StageCandyData
 public:
 	bool IsActive = true;
 };
+
+class CandyCombo
+{
+public:
+	
+};
+
+class StageCombo
+{
+public:
+
+};
+
 class ACandyManager : public AActor
 {
 public:
@@ -23,7 +36,9 @@ public:
 	 void CreateStage(int X, int Y);
 	 void DeleteIndex(int X, int Y);
 	 void CandyCreate(); // 진짜 캔디 만들기
-	void CandyBFS(class ACandy* _Candy, class ACandy* _CurCandy);
+	void CandyBFS();
+	void ShowOff();
+	void ShowON();
 
 
 	 std::vector<std::vector<class ACandy*>> Candys;
@@ -36,7 +51,18 @@ protected:
 	void Tick(float _DeltaTime) override;
 private:
 	 std::vector<std::vector<StageCandyData>> Data;
-	 
+	 int ComboCount = 0;
+
+
+
+
+
+
+
+
+
+
+
 
 private:
 

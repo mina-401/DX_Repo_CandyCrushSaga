@@ -93,26 +93,26 @@ void ACandyManager::BeginPlay()
 	
 
 }
-void ACandyManager::CandyBFS(class ACandy* _SelectCandy,class ACandy* _ChangedCandy)
+void ACandyManager::CandyBFS()
 {
+
 
 	int dx[4] = { 1, 0, -1, 0 };
 	int dy[4] = { 0, 1, 0, -1 };
 
 	Queue<ACandy*> Q(CandyCol*CandyRow);
 
-	EColor CurColor = _SelectCandy->CandyData.CandyColor;
-	int row = _ChangedCandy->CandyData.row;
-	int col = _ChangedCandy->CandyData.col;
+	Visited[0][0] = true;
 
-	Visited[row][col] = true;
-
-	Q.Push(_ChangedCandy);
-
+	Q.Push(Candys[0][0]);
+	
 	while (!Q.Emtpy())
 	{
 		ACandy* Cur = Q.Front();
 		Q.Pop();
+
+		EColor CurColor = Cur->CandyData.CandyColor;
+
 
 		for (int dir = 0; dir < 4; dir++)
 		{
@@ -124,29 +124,74 @@ void ACandyManager::CandyBFS(class ACandy* _SelectCandy,class ACandy* _ChangedCa
 				continue;
 			}
 
-			EColor NextColor = Candys[nx][ny]->CandyData.CandyColor;
-
-			bool IsDiff = CurColor == NextColor ? false : true;
-
-
-			//캔디끼리 색깔이 다르다, 방문한 노드이다.
-			if (true == Visited[nx][ny] || true==IsDiff)
+			// 방문한 노드이다.
+			if (true == Visited[nx][ny])
 			{
 				continue;
 			}
+			EColor NextColor = Candys[nx][ny]->CandyData.CandyColor;
 
+			if (CurColor == NextColor)
+			{
+				
+				Candys[nx][ny]->CandyData.Combo=Cur->CandyData.Combo+1;
+				Candys[nx][ny]->CandyData.IsCombo = true;
+			}
+			else
+			{
+				
+			}
 			Visited[nx][ny] = true;
 			Q.Push(Candys[nx][ny]);
 		}
 	}
-	int a = 0;
 
 }
+
+void ACandyManager::ShowOff()
+{
+
+	
+	for (int i = 0; i < CandyRow; i++)
+	{
+		for (int j = 0; j < CandyCol; j++)
+		{
+			if (Candys[i][j]->CandyData.IsCombo == true)
+			{
+				Candys[i][j]->SetActive(false);
+			}
+		}
+	}
+}
+
+void ACandyManager::ShowON()
+{
+	for (int i = 0; i < CandyRow; i++)
+	{
+		for (int j = 0; j < CandyCol; j++)
+		{
+			if (Candys[i][j]->CandyData.Combo >= 1)
+			{
+				Candys[i][j]->SetActive(true);
+			}
+		}
+	}
+}
+
 
 void ACandyManager::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
-	
+	if (true == UEngineInput::IsDown('Q'))
+	{
+
+		ShowOff();
+	}
+	if (true == UEngineInput::IsDown('W'))
+	{
+
+		ShowON();
+	}
 }
 

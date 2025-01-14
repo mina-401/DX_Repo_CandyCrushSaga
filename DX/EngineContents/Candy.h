@@ -5,6 +5,11 @@
 class FCandySpriteData
 {
 public:
+
+	int Combo = 0;
+	bool IsCombo = false;
+
+	//EComboVector ComboVectpr;
 	ESpriteType CandySpriteType;
 	EColor CandyColor;
 

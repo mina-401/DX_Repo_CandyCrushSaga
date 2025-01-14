@@ -2,11 +2,12 @@
 
 class CCSConst
 {
-	// 상수들은 다 여기에다가 몰아넣기
-	// const char* 
 public:
-	static const float MoveTime;
+	static inline float MoveTime = 0.2f;
+	static inline float Horizontal = 1;
+	static inline float Vertical= 2;
+	static inline float Wrapped= 3;
+
 
 	
 };
-const float CCSConst::MoveTime = 0.2f; 
