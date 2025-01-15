@@ -12,7 +12,7 @@
 #include "CandyManager.h"
 #include <EngineCore/TimeEventComponent.h>
 #include "CCSConst.h"
-#include "Queue.h"
+
 
 AMouse::AMouse()
 {
@@ -106,7 +106,9 @@ AMouse::AMouse()
 
 											bool CheckCombo = false;
 
-											
+
+											CandyManager->CandyBFS();
+
 											
 								
 											if (false== CheckCombo)
@@ -121,14 +123,11 @@ AMouse::AMouse()
 
 											else {
 												//row, col ¹Ù²Ù±â
+
 											}
 
 										});
 
-
-
-									
-									
 									break;
 									
 

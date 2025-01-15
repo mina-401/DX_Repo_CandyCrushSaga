@@ -145,7 +145,15 @@
     <ClCompile Include="HUD.cpp">
       <Filter>Object\Actor</Filter>
     </ClCompile>
-    <ClCompile Include="EngineFont.cpp" />
+    <ClCompile Include="EngineFont.cpp">
+      <Filter>Font</Filter>
+    </ClCompile>
+    <ClCompile Include="FontWidget.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageWidget.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -301,9 +309,17 @@
       <Filter>Object\Actor</Filter>
     </ClInclude>
     <ClInclude Include="EngineDataStruct.h" />
-    <ClInclude Include="EngineFont.h" />
     <ClInclude Include="ThirdParty\FW1FontWrapper\Inc\FW1FontWrapper.h">
       <Filter>ThirdParty\FW1FontWrapper\Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineFont.h">
+      <Filter>Font</Filter>
+    </ClInclude>
+    <ClInclude Include="FontWidget.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageWidget.h">
+      <Filter>HUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -394,18 +410,42 @@
     <Filter Include="ThirdParty\FW1FontWrapper\Inc">
       <UniqueIdentifier>{1db230f7-eee4-4811-b1b7-485108836e84}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="ThirdParty\DirectxTex\Debug\DirectXTex_Debug.lib">
-      <Filter>ThirdParty\DirectxTex\Debug</Filter>
-    </Library>
-    <Library Include="ThirdParty\DirectxTex\Release\DirectXTex_Release.lib">
-      <Filter>ThirdParty\DirectxTex\Release</Filter>
-    </Library>
+    <Filter Include="ThirdParty\FW1FontWrapper\Debug">
+      <UniqueIdentifier>{86a7cf2e-b256-4e43-9ef2-cef9c32ea4aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\FW1FontWrapper\Release">
+      <UniqueIdentifier>{b33c4320-8655-4112-ac83-33cfa8f56fda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Font">
+      <UniqueIdentifier>{2b47bf7b-881f-402b-b8dc-647f0ba91a61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HUD">
+      <UniqueIdentifier>{86ba4431-2b23-4cf2-812f-b22c2362f022}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ThirdParty\DirectxTex\Inc\DirectXTex.inl">
       <Filter>ThirdParty\DirectxTex\Inc</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="ThirdParty\FW1FontWrapper\Debug\FW1FontWrapper.lib">
+      <Filter>ThirdParty\FW1FontWrapper\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\DirectxTex\Debug\DirectXTex_Debug.lib">
+      <Filter>ThirdParty\DirectxTex\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FW1FontWrapper\Debug\FW1FontWrapper.dll">
+      <Filter>ThirdParty\FW1FontWrapper\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\DirectxTex\Release\DirectXTex_Release.lib">
+      <Filter>ThirdParty\DirectxTex\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FW1FontWrapper\Release\FW1FontWrapper.dll">
+      <Filter>ThirdParty\FW1FontWrapper\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FW1FontWrapper\Release\FW1FontWrapper.lib">
+      <Filter>ThirdParty\FW1FontWrapper\Release</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

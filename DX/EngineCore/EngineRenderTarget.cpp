@@ -49,8 +49,8 @@ void UEngineRenderTarget::CreateTarget(float4 _Scale, float4 _ClearColor /*= flo
 
 void UEngineRenderTarget::CreateTarget(Microsoft::WRL::ComPtr<ID3D11Texture2D> _Texture2D)
 {
-	std::shared_ptr<class UEngineTexture> NewTarget = std::make_shared<UEngineTexture>();
-	NewTarget->ResCreate(_Texture2D);
+    std::shared_ptr<class UEngineTexture> NewTarget = std::make_shared<UEngineTexture>();
+    NewTarget->ResCreate(_Texture2D);
 
 
     if (nullptr == NewTarget->GetRTV())
@@ -125,4 +125,5 @@ void UEngineRenderTarget::MergeTo(std::shared_ptr<UEngineRenderTarget> _Target)
     _Target->Setting();
     TargetUnit.SetTexture("MergeTex", ArrTexture[0]);
     TargetUnit.Render(nullptr, 0.0f);
+    TargetUnit.Reset();
 }

@@ -8,6 +8,7 @@ public:
 	static inline float Vertical= 2;
 	static inline float Wrapped= 3;
 
+	static inline float Combo = 2;
 
 	
 };

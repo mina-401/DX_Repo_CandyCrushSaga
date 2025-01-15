@@ -10,16 +10,11 @@ public:
 	bool IsActive = true;
 };
 
-class CandyCombo
-{
-public:
-	
-};
 
 class StageCombo
 {
 public:
-
+	int Combo = 0;
 };
 
 class ACandyManager : public AActor
@@ -35,9 +30,9 @@ public:
 	ACandyManager& operator=(const ACandyManager& _Other) = delete;
 	ACandyManager& operator=(ACandyManager&& _Other) noexcept = delete;
 
-	 void CreateStage(int X, int Y);
-	 void DeleteIndex(int X, int Y);
-	 void CandyCreate(); // 진짜 캔디 만들기
+	void CreateStage(int X, int Y);
+	void DeleteIndex(int X, int Y);
+	void CandyCreate(); // 진짜 캔디 만들기
 	void CandyBFS();
 	void ShowOff();
 	void ShowON();
@@ -45,10 +40,12 @@ public:
 	void ColCheck(int X, int Y);
 
 	 std::vector<std::vector<class ACandy*>> Candys;
-	 std::vector<std::vector<bool>> Visited;
-	 int CandyRow = 5;
-	 int CandyCol = 5;
-	 int Combo = 1;
+	 //std::vector<std::vector<bool>> Visited;
+	 int CandyRow = 0;
+	 int CandyCol = 0;
+	 int Combo = 0;
+
+	 StageCombo CandyCombo;
 	 FVector CandyScale = { 50,50 };
 protected:
 	void BeginPlay() override;
@@ -63,7 +60,7 @@ private:
 
 
 
-
+//
 
 private:
 
