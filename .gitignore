@@ -397,3 +397,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /API/App/EnginePlatform.lib
+/DX/EngineCore/ThirdParty/FW1FontWrapper/Debug/FW1FontWrapper.lib
