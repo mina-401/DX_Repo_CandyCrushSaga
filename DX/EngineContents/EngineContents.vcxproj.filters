@@ -35,7 +35,6 @@
     </ClCompile>
     <ClCompile Include="CandyManager.cpp" />
     <ClCompile Include="Mouse.cpp" />
-    <ClCompile Include="Queue.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -72,7 +71,7 @@
     </ClInclude>
     <ClInclude Include="CandyManager.h" />
     <ClInclude Include="Mouse.h" />
-    <ClInclude Include="Queue.h" />
+    <ClInclude Include="MyQueue.h" />
     <ClInclude Include="CCSEnums.h" />
   </ItemGroup>
   <ItemGroup>

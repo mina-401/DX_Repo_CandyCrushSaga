@@ -5,7 +5,14 @@ class Queue
 {
 public:
 	// constrcuter destructer
-	Queue(int size=1)
+	Queue()
+	{
+		Size = 0;
+		Arr = new T[0];
+		FrontIdx = 0;
+		RearIdx = 0;
+	}
+	Queue(int size)
 	{
 		Size = 0;
 		Arr =new T[size];
@@ -60,6 +67,7 @@ public:
 	{
 		return Size;
 	}
+
 protected:
 
 private:
