@@ -398,3 +398,5 @@ FodyWeavers.xsd
 *.sln.iml
 /API/App/EnginePlatform.lib
 /DX/EngineCore/ThirdParty/FW1FontWrapper/Debug/FW1FontWrapper.lib
+/DX/EngineCore/ThirdParty/FW1FontWrapper/Inc/FW1FontWrapper.h
+/DX/EngineCore/ThirdParty/FW1FontWrapper/Inc/FW1FontWrapper.h
