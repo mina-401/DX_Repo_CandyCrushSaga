@@ -93,11 +93,16 @@ void APlayGameMode::BeginPlay()
 		
 	}
 	{
-		CandyManager = GetWorld()->SpawnActor<ACandyManager>();
+		// CandyManager = GetWorld()->SpawnActor<ACandyManager>();
+
+		CandyManager = dynamic_cast<ACandyManager*>(GetWorld()->GetMainPawn());
+
 		CandyManager->CreateStage(5, 5);
-		//CandyManager->DeleteIndex(0, 0);
+		CandyManager->DeleteIndex(0, 0);
 		CandyManager->CandyCreate();
-		//CandyManager->CandyBFS();
+
+		CandyManager->CandyFindConsec();
+		CandyManager->CandyDestroy();
 
 	}
 

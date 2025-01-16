@@ -33,7 +33,7 @@ private:
 	std::shared_ptr<class USpriteRenderer> Renderer;
 	std::shared_ptr<class UCollision> Collision;
 
-	std::shared_ptr<class ACandyManager> CandyManager;
+	class ACandyManager* CandyManager;
 
 
 	int MaxRow = 0;

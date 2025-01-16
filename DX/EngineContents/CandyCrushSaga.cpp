@@ -15,6 +15,7 @@
 #include "TileMapGameMode.h" 
 #include "TitleGameMode.h"
 #include "CCSHUD.h"
+#include "CandyManager.h"
 
 // #define은 그냥 무조건 복붙
 CreateContentsCoreDefine(UCandyCrushSaga);
@@ -42,7 +43,7 @@ void UCandyCrushSaga::EngineStart(UEngineInitData& _Data)
 
 
 	UEngineCore::CreateLevel<ATitleGameMode, APawn, AHUD>("TitleLevel");
-	UEngineCore::CreateLevel<APlayGameMode, APawn, ACCSHUD>("PlayLevel");
+	UEngineCore::CreateLevel<APlayGameMode, ACandyManager, ACCSHUD>("PlayLevel");
 	//UEngineCore::CreateLevel<ATileMapGameMode, APawn>("TileMapEditor");
 	//UEngineCore::OpenLevel("TileMapEditor");
 	UEngineCore::OpenLevel("PlayLevel");

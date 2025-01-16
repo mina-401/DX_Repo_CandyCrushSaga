@@ -44,6 +44,11 @@ AMouse::AMouse()
 
 	Collision->SetCollisionStay([this](UCollision* _This, UCollision* _Other)
 		{
+			if (CandyManager->GetCandyState() != ECandyManagerState::Select)
+			{
+				return;
+			}
+
 			class ACandy* CurCandy = dynamic_cast<ACandy*>(_Other->GetActor());
 			class AMouse* me = dynamic_cast<AMouse*>(_This->GetActor());
 
@@ -96,33 +101,41 @@ AMouse::AMouse()
 
 									TimeEventComponent->AddUpdateEvent(CCSConst::MoveTime, [this, SelectCandy, CurCandy,StartPos,EndPos](float _Delta, float _Acc)
 										{
+											CandyManager->ChangeCandyState(ECandyManagerState::Move);
+
 											CandyMove(_Delta, _Acc, SelectCandy, CurCandy, StartPos, EndPos, CCSConst::MoveTime);
 											
 										});
 
 									TimeEventComponent->AddEndEvent(CCSConst::MoveTime, [this, SelectCandy, CurCandy, StartPos, EndPos]()
 										{
-		
-
 											CandyManager->CandyChange(SelectCandy, CurCandy);
 											CandyManager->CandyFindConsec();
-
-										
+									
 											if (false == CandyManager->IsCandyDestroy())
 											{
-												// ÄÞº¸ Äµµð°¡ ¾ø´Ù. ´Ù½Ã Á¦ÀÚ¸®·Î
-												TimeEventComponent->AddUpdateEvent(0.2f, [this, SelectCandy, CurCandy, StartPos, EndPos](float _Delta, float _Acc)
+												// ÄÞº¸ Äµµð°¡ ¾ø´Ù.
+												TimeEventComponent->AddUpdateEvent(CCSConst::MoveTime, [this, SelectCandy, CurCandy, StartPos, EndPos](float _Delta, float _Acc)
 													{
+														CandyManager->ChangeCandyState(ECandyManagerState::Move);
 														CandyMove(_Delta, _Acc, SelectCandy, CurCandy, EndPos, StartPos, CCSConst::MoveTime);
 													});
 
+												TimeEventComponent->AddEndEvent(CCSConst::MoveTime, [this, SelectCandy, CurCandy, StartPos, EndPos]()
+													{
+														CandyManager->ChangeCandyState(ECandyManagerState::Select);
+													});
 												CandyManager->CandyChange(SelectCandy, CurCandy);
-
+											}
+											else {
+												CandyManager->ChangeCandyState(ECandyManagerState::Destroy);
 											}
 											
-											CandyManager->CandyDestroy();
-											
+											// CandyManager->ChangeCandyState(ECandyManagerState::CandyCheck);
 
+											// CandyManager->CandyDestroy();
+
+											
 										});
 									break;
 								}

@@ -181,25 +181,25 @@ void ACandyManager::RowCheck(int X, int Y)
 
 bool ACandyManager::IsCandyDestroy()
 {
+    // 
     return DestroyCandy.size() !=0 ? true : false ;
 }
 void ACandyManager::CandyFindConsec()
 { 
-
-    //int dx[4] = { 1, 0, -1, 0 };
-    //int dy[4] = { 0, 1, 0, -1 };
-
-    //std::list<ACandy*> DestroyCandy;
-
-
     for (int row = 0; row < CandyRow; row++)
     {
         for (int col = 0; col < CandyCol; col++)
         {
+            if (false == Data[row][col].IsActive)
+            {
+                continue;
+            }
             RowCheck(row, col);
             ColCheck(row, col);
         }
     }
+
+    int a = DestroyCandy.size();
 }
 void ACandyManager::CandyChange(class ACandy* SelectCandy, class ACandy* CurCandy)
 {
@@ -224,12 +224,35 @@ void ACandyManager::CandyChange(class ACandy* SelectCandy, class ACandy* CurCand
     CurCandyDataRef.col = SelectCandyData.col;
     CurCandyDataRef.SetPos = CurCandyData.SetPos;
 
-    int a = 0;
+}
+void ACandyManager::CandyClear()
+{
+    DestroyCandy.clear();
 }
 void ACandyManager::CandyDestroy()
 {
     
+    
+    for (ACandy* Candy : DestroyCandy)
+    {
+        Candy->Destroy();
 
+        /*int row = Candy->CandyData.row;
+        int col = Candy->CandyData.col;*/  
+        //ACandy* AboveCandy = Candys[row-1][col];
+        //Candys[]
+
+       // Candy->SetActive(false);
+
+        
+    }
+    
+    CandyClear();
+
+    //int dx[4] = { 1, 0, -1, 0 };
+   //int dy[4] = { 0, 1, 0, -1 };
+
+   //std::list<ACandy*> DestroyCandy;
     //while (!Q.Emtpy())
     //{
     //   ACandy* Cur = Q.Front();
@@ -278,5 +301,19 @@ void ACandyManager::Tick(float _DeltaTime)
 {
     AActor::Tick(_DeltaTime);
 
+    switch (CandyState)
+    {
+    case ECandyManagerState::Select:
+        break;
+    case ECandyManagerState::Move:
+        break;
+    case ECandyManagerState::Destroy:
+        CandyDestroy();
+        break;
+    case ECandyManagerState::NewCandyDrop:
+        break;
+    default:
+        break;
+    }
 }
 

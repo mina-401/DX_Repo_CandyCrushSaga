@@ -1,5 +1,5 @@
 #pragma once
-#include <EngineCore/Actor.h>
+#include <EngineCore/Pawn.h>
 #include <random>
 //#include "Queue.h"
 #include <queue>
@@ -19,7 +19,15 @@ public:
 
 };
 
-class ACandyManager : public AActor
+enum class ECandyManagerState
+{
+	Select,
+	Move,
+	Destroy,
+	NewCandyDrop
+};
+
+class ACandyManager : public APawn
 {
 public:
 	// constrcuter destructer
@@ -37,7 +45,8 @@ public:
 	void CandyCreate();
 	bool IsCandyDestroy();
 	void CandyFindConsec();
-	void CandyChange(ACandy* SelectCandy, ACandy* CurCandy);
+	void CandyChange(class  ACandy* SelectCandy, class ACandy* CurCandy);
+	void CandyClear();
 	// 진짜 캔디 만들기
 	void CandyDestroy();
 
@@ -68,9 +77,20 @@ private:
 //
 
 private:
+	ECandyManagerState CandyState = ECandyManagerState::Select;
 
 	std::mt19937_64 MtGen = std::mt19937_64(time(nullptr));
 public:
+	ECandyManagerState GetCandyState()
+	{
+		return CandyState;
+	}
+
+	void ChangeCandyState(ECandyManagerState _CandyState)
+	{
+		CandyState = _CandyState;
+	}
+
 	void SetSeed(__int64 _Seed)
 	{
 		MtGen = std::mt19937_64(_Seed);
@@ -91,5 +111,6 @@ public:
 		// std::mt19937_64 메르헨 트위스터 알고리즘 써서 만들어줘.
 		return RandomCreate.operator()(MtGen);
 	}
+
 };
 
