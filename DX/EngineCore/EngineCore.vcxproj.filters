@@ -154,6 +154,7 @@
     <ClCompile Include="ImageWidget.cpp">
       <Filter>HUD</Filter>
     </ClCompile>
+    <ClCompile Include="GameInstance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -321,6 +322,7 @@
     <ClInclude Include="ImageWidget.h">
       <Filter>HUD</Filter>
     </ClInclude>
+    <ClInclude Include="GameInstance.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">

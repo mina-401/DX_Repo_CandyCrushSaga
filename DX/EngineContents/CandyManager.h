@@ -47,6 +47,7 @@ public:
 	void CandyFindConsec();
 	void CandyChange(class  ACandy* SelectCandy, class ACandy* CurCandy);
 	void CandyClear();
+	void NewCandyDrop();
 	// 진짜 캔디 만들기
 	void CandyDestroy();
 
@@ -70,6 +71,7 @@ private:
 	 //int initSize = 0;
 	 
 	 std::list<ACandy*> DestroyCandy;
+	 std::vector<std::vector<int>> DestroyCandyPosList;
 	
 
 

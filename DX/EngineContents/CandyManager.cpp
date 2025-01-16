@@ -229,25 +229,36 @@ void ACandyManager::CandyClear()
 {
     DestroyCandy.clear();
 }
+void ACandyManager::NewCandyDrop()
+{
+
+
+    for (int row = CandyRow - 1; row > 0; row--)
+    {
+        for (int col = 0; col < CandyCol; col++)
+        {
+             
+        }
+    }
+}
 void ACandyManager::CandyDestroy()
 {
     
     
     for (ACandy* Candy : DestroyCandy)
     {
+        DestroyCandyPosList.push_back({ Candy->CandyData.row,Candy->CandyData.col });
         Candy->Destroy();
 
         /*int row = Candy->CandyData.row;
         int col = Candy->CandyData.col;*/  
         //ACandy* AboveCandy = Candys[row-1][col];
         //Candys[]
-
-       // Candy->SetActive(false);
-
         
     }
     
     CandyClear();
+    ACandyManager::ChangeCandyState(ECandyManagerState::NewCandyDrop);
 
     //int dx[4] = { 1, 0, -1, 0 };
    //int dy[4] = { 0, 1, 0, -1 };
