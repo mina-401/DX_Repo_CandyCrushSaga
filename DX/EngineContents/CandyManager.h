@@ -15,6 +15,8 @@ class StageCombo
 {
 public:
 	int Combo = 0;
+
+
 };
 
 class ACandyManager : public AActor
@@ -32,10 +34,13 @@ public:
 
 	void CreateStage(int X, int Y);
 	void DeleteIndex(int X, int Y);
-	void CandyCreate(); // 진짜 캔디 만들기
-	void CandyBFS();
-	void ShowOff();
-	void ShowON();
+	void CandyCreate();
+	bool IsCandyDestroy();
+	void CandyFindConsec();
+	void CandyChange(ACandy* SelectCandy, ACandy* CurCandy);
+	// 진짜 캔디 만들기
+	void CandyDestroy();
+
 	void RowCheck(int X, int Y);
 	void ColCheck(int X, int Y);
 

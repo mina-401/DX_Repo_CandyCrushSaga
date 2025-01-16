@@ -23,6 +23,7 @@ public:
 	class ACandy* SelectCandy = nullptr;
 
 	void TestFunction(FCandySpriteData& _a);
+	void CandyChange(ACandy* SelectCandy, ACandy* CurCandy);
 
 protected:
 	void BeginPlay() override;

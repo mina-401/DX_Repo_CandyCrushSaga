@@ -6,9 +6,6 @@ class FCandySpriteData
 {
 public:
 
-	int Combo = 0;
-	bool IsCombo = false;
-
 	//EComboVector ComboVectpr;
 	ESpriteType CandySpriteType;
 	EColor CandyColor;
@@ -55,7 +52,7 @@ public:
 		{
 			SetCandyColor(EColor::Red);
 		}
-		else if (46 <= _index && _index < 54)
+		else if (46 <= _index && _index < 55)
 		{
 			SetCandyColor(EColor::Yellow);
 		}

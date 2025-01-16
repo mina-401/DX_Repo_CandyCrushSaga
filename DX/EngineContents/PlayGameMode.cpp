@@ -94,7 +94,7 @@ void APlayGameMode::BeginPlay()
 	}
 	{
 		CandyManager = GetWorld()->SpawnActor<ACandyManager>();
-		CandyManager->CreateStage(3, 3);
+		CandyManager->CreateStage(5, 5);
 		//CandyManager->DeleteIndex(0, 0);
 		CandyManager->CandyCreate();
 		//CandyManager->CandyBFS();

@@ -102,38 +102,31 @@ AMouse::AMouse()
 
 									TimeEventComponent->AddEndEvent(CCSConst::MoveTime, [this, SelectCandy, CurCandy, StartPos, EndPos]()
 										{
-											// if (검사를 했는데 터질게 없어)
+		
 
-											bool CheckCombo = false;
+											CandyManager->CandyChange(SelectCandy, CurCandy);
+											CandyManager->CandyFindConsec();
 
-
-											CandyManager->CandyBFS();
-
-											
-								
-											if (false== CheckCombo)
+										
+											if (false == CandyManager->IsCandyDestroy())
 											{
+												// 콤보 캔디가 없다. 다시 제자리로
 												TimeEventComponent->AddUpdateEvent(0.2f, [this, SelectCandy, CurCandy, StartPos, EndPos](float _Delta, float _Acc)
 													{
-														SelectCandy->GetCandyData().SetPos = FVector::Lerp(EndPos, StartPos, _Acc * 1 / 0.2f);
-
-														CurCandy->GetCandyData().SetPos = FVector::Lerp(StartPos, EndPos, _Acc * 1 / 0.2f);
+														CandyMove(_Delta, _Acc, SelectCandy, CurCandy, EndPos, StartPos, CCSConst::MoveTime);
 													});
-											}
 
-											else {
-												//row, col 바꾸기
+												CandyManager->CandyChange(SelectCandy, CurCandy);
 
 											}
+											
+											CandyManager->CandyDestroy();
+											
 
 										});
-
 									break;
-									
-
 								}
 
-								
 							}
 							
 

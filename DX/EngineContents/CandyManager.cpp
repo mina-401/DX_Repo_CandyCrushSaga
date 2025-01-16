@@ -9,6 +9,7 @@
 #include "CCSConst.h"
 #include "Candy.h"
 #include <queue>
+#include "Mouse.h"
 
 
 ACandyManager::ACandyManager()
@@ -90,76 +91,57 @@ void ACandyManager::ColCheck(int X, int Y)
 {
 
 
+    int Combo = 0;
     std::list<ACandy*> CandyList;
-    EColor CurColor = Candys[X][Y]->CandyData.CandyColor;
+
+    ACandy* CurTarget = Candys[X][Y];
+    ACandy* DiffTarget = nullptr;
+
+    CandyList.push_back(CurTarget);
 
     int col = Y;
-    CandyList.push_back(Candys[X][Y]); // 맨 처음 기준이 되는 캔디 보관
-
     for (int row = X; row < CandyRow; row++)
     {
-        if (X == row) {
-            continue;
+        if (X == row) continue;
 
+        DiffTarget = Candys[row][col];
+
+        EColor CurColor = CurTarget->CandyData.CandyColor;
+        EColor DiffColor = DiffTarget->CandyData.CandyColor;
+
+        if (CurColor == DiffColor)
+        {
+            CandyList.push_back(DiffTarget);
+            Combo++;
         }
-       ACandy* Target = Candys[row][col];
-       EColor DiffColor= Target->CandyData.CandyColor;
+        else
+        {
+            break; // 색상이 다르면 루프 종료
+        }
 
-       if (CurColor == DiffColor)
-       {
-           CandyList.push_back(Target);
-           CandyCombo.Combo++;
-       }
-       else
-       {
-           if (false == CandyList.empty())
-           {
-               // 1,2개만 연속해서 연결되 있다.
-
-               if (CCSConst::Combo > CandyCombo.Combo)
-               {
-                   if (false == CandyList.empty())
-                   {
-                       CandyList.clear();
-                   }
-               }
-               else
-               {
-                   for (ACandy* candy : CandyList)
-                   {
-                       if (std::find(DestroyCandy.begin(), DestroyCandy.end(), Candys[X][Y]) == DestroyCandy.end()) {
-                           //3개 연속해서 연결됬으면 삭제캔디 리스트에 추가한다.
-
-                           DestroyCandy.push_back(candy);
-                       }
-                   }
-               }
-               CandyCombo.Combo = 0;
-           }
-           
-
-       }
+        CurTarget = Candys[row][col];
     }
-   /* if (false == CandyList.empty())
+
+    // 3개 이상의 콤보가 발생한 경우에만 DestroyCandy에 추가
+    if (Combo >= CCSConst::Combo)
     {
         for (ACandy* candy : CandyList)
         {
-            if (std::find(DestroyCandy.begin(), DestroyCandy.end(), Candys[X][Y]) == DestroyCandy.end()) {
-
+            if (std::find(DestroyCandy.begin(), DestroyCandy.end(), candy) == DestroyCandy.end()) {
                 DestroyCandy.push_back(candy);
-
             }
         }
-    }*/
+    }
 }
 void ACandyManager::RowCheck(int X, int Y)
 {
-    
+    int Combo = 0;
     std::list<ACandy*> CandyList;
 
-    ACandy* DiffTarget = nullptr;
     ACandy* CurTarget = Candys[X][Y];
-    EColor CurColor = CurTarget->CandyData.CandyColor;
+    ACandy* DiffTarget = nullptr;
+
+    CandyList.push_back(CurTarget);
 
     int row = X;
 
@@ -168,65 +150,47 @@ void ACandyManager::RowCheck(int X, int Y)
         if (Y == col) continue;
 
         DiffTarget = Candys[row][col];
+
+        EColor CurColor = CurTarget->CandyData.CandyColor;
         EColor DiffColor = DiffTarget->CandyData.CandyColor;
 
         if (CurColor == DiffColor)
         {
             CandyList.push_back(DiffTarget);
-            CandyCombo.Combo++;
+            Combo++;
         }
         else
         {
-            // 비교 색깔이 다르다.  
-            if (false == CandyList.empty())
-            {
-                // 1,2개만 연속해서 연결되 있다.
-
-                if (CCSConst::Combo > CandyCombo.Combo)
-                {
-                   CandyList.clear();  
-                }
-                else
-                {
-                    for (ACandy* candy : CandyList)
-                    {
-                        if (std::find(DestroyCandy.begin(), DestroyCandy.end(), Candys[X][Y]) == DestroyCandy.end()) {
-                            //3개 연속해서 연결됬으면 삭제캔디 리스트에 추가한다.
-
-                            DestroyCandy.push_back(candy);
-
-                        }
-                    }
-                }
-                CandyCombo.Combo = 0;
-            }
-           
-
+            break; // 색상이 다르면 루프 종료
         }
 
         CurTarget = Candys[row][col];
-        
     }
- /*   if (false == CandyList.empty())
+
+    // 3개 이상의 콤보가 발생한 경우에만 DestroyCandy에 추가
+    if (Combo >= CCSConst::Combo)
     {
         for (ACandy* candy : CandyList)
         {
-            if (std::find(DestroyCandy.begin(), DestroyCandy.end(), Candys[X][Y]) == DestroyCandy.end()) {
-
+            if (std::find(DestroyCandy.begin(), DestroyCandy.end(), candy) == DestroyCandy.end()) {
                 DestroyCandy.push_back(candy);
-
             }
         }
-    }*/
+    }
 }
 
-void ACandyManager::CandyBFS()
+bool ACandyManager::IsCandyDestroy()
 {
-    int dx[4] = { 1, 0, -1, 0 };
-    int dy[4] = { 0, 1, 0, -1 };
+    return DestroyCandy.size() !=0 ? true : false ;
+}
+void ACandyManager::CandyFindConsec()
+{ 
+
+    //int dx[4] = { 1, 0, -1, 0 };
+    //int dy[4] = { 0, 1, 0, -1 };
 
     //std::list<ACandy*> DestroyCandy;
-    
+
 
     for (int row = 0; row < CandyRow; row++)
     {
@@ -234,12 +198,37 @@ void ACandyManager::CandyBFS()
         {
             RowCheck(row, col);
             ColCheck(row, col);
-
-            
         }
     }
+}
+void ACandyManager::CandyChange(class ACandy* SelectCandy, class ACandy* CurCandy)
+{
+    FCandySpriteData& SelectCandyDataRef = SelectCandy->GetCandyData();
+    FCandySpriteData& CurCandyDataRef = CurCandy->GetCandyData();
 
-    int a = DestroyCandy.size();
+
+    FCandySpriteData SelectCandyData = SelectCandy->CandyData;
+    FCandySpriteData CurCandyData = CurCandy->CandyData;
+
+    //자료 바꾸기
+ 
+    //캔디 보드 위치 바꾸기
+    Candys[SelectCandyData.row][SelectCandyData.col] = CurCandy;
+    Candys[CurCandyData.row][CurCandyData.col] = SelectCandy;
+
+    //setpos를 제외한 건 바뀌지 않은 상태
+    SelectCandyDataRef.row = CurCandyData.row;
+    SelectCandyDataRef.col = CurCandyData.col;
+    SelectCandyDataRef.SetPos = SelectCandyData.SetPos;
+    CurCandyDataRef.row = SelectCandyData.row;
+    CurCandyDataRef.col = SelectCandyData.col;
+    CurCandyDataRef.SetPos = CurCandyData.SetPos;
+
+    int a = 0;
+}
+void ACandyManager::CandyDestroy()
+{
+    
 
     //while (!Q.Emtpy())
     //{
@@ -283,50 +272,11 @@ void ACandyManager::CandyBFS()
 
 }
 
-void ACandyManager::ShowOff()
-{
-
-
-    for (int i = 0; i < CandyRow; i++)
-    {
-        for (int j = 0; j < CandyCol; j++)
-        {
-            if (Candys[i][j]->CandyData.IsCombo == true)
-            {
-                Candys[i][j]->SetActive(false);
-            }
-        }
-    }
-}
-
-void ACandyManager::ShowON()
-{
-    for (int i = 0; i < CandyRow; i++)
-    {
-        for (int j = 0; j < CandyCol; j++)
-        {
-            if (Candys[i][j]->CandyData.Combo >= 1)
-            {
-                Candys[i][j]->SetActive(true);
-            }
-        }
-    }
-}
 
 
 void ACandyManager::Tick(float _DeltaTime)
 {
     AActor::Tick(_DeltaTime);
 
-    if (true == UEngineInput::IsDown('Q'))
-    {
-
-        ShowOff();
-    }
-    if (true == UEngineInput::IsDown('W'))
-    {
-
-        ShowON();
-    }
 }
 
