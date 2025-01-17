@@ -101,9 +101,15 @@ void ACandyManager::ColCheck(int X, int Y)
     int col = Y;
     for (int row = X; row < CandyRow; row++)
     {
+
         if (X == row) continue;
 
         DiffTarget = Candys[row][col];
+
+        if (nullptr == CurTarget || nullptr == DiffTarget)
+        {
+            continue;
+        }
 
         EColor CurColor = CurTarget->CandyData.CandyColor;
         EColor DiffColor = DiffTarget->CandyData.CandyColor;
@@ -147,9 +153,12 @@ void ACandyManager::RowCheck(int X, int Y)
     for (int col = Y; col < CandyCol; col++)
     {
         if (Y == col) continue;
-
+        
         DiffTarget = Candys[row][col];
-
+        if (nullptr == CurTarget || nullptr == DiffTarget)
+        {
+            continue;
+        }
         EColor CurColor = CurTarget->CandyData.CandyColor;
         EColor DiffColor = DiffTarget->CandyData.CandyColor;
 
@@ -180,11 +189,13 @@ void ACandyManager::RowCheck(int X, int Y)
 
 bool ACandyManager::IsCandyDestroy()
 {
-    // 
+    // 리스트에 쓰레기값 들어옴
     return DestroyCandy.size() !=0 ? true : false ;
 }
 void ACandyManager::CandyFindConsec()
 { 
+    CandyClear();
+
     for (int row = 0; row < CandyRow; row++)
     {
         for (int col = 0; col < CandyCol; col++)
@@ -193,6 +204,7 @@ void ACandyManager::CandyFindConsec()
             {
                 continue;
             }
+            
             RowCheck(row, col);
             ColCheck(row, col);
         }
@@ -228,18 +240,29 @@ void ACandyManager::CandyChange(class ACandy* SelectCandy, class ACandy* CurCand
 void ACandyManager::CandyClear()
 {
     DestroyCandy.clear();
+    //DestroyCandy.resize(0);
 }
 void ACandyManager::NewCandyDrop()
 {
 
-
-    for (int row = CandyRow - 1; row > 0; row--)
+    for (std::pair IndexPair : DestroyCandyIndexList)
     {
-        for (int col = 0; col < CandyCol; col++)
+        int NullRow = IndexPair.first;
+        int NullCol = IndexPair.second;
+
+        for (int row = CandyRow - 1; row > 0; row--)
         {
-             
+            //맨 마지막 줄 부터 캔디를 내린다.
+            for (int col = 0; col < CandyCol; col++)
+            {
+
+            }
         }
     }
+    
+    //다 내린 후에도 없으면 빈 곳에 뉴캔디 만들기
+
+    
 
     ChangeCandyState(ECandyManagerState::Select);
 }
@@ -249,62 +272,18 @@ void ACandyManager::CandyDestroy()
     
     for (ACandy* Candy : DestroyCandy)
     {
-        DestroyCandyPosList.push_back({ Candy->CandyData.row,Candy->CandyData.col });
+        DestroyCandyIndexList.push_back({ Candy->CandyData.row,Candy->CandyData.col });
+        Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
         Candy->Destroy();
+        Candy = nullptr;
 
-        /*int row = Candy->CandyData.row;
-        int col = Candy->CandyData.col;*/  
-        //ACandy* AboveCandy = Candys[row-1][col];
-        //Candys[]
+        
         
     }
     
     CandyClear();
     ChangeCandyState(ECandyManagerState::NewCandyDrop);
-
-    //int dx[4] = { 1, 0, -1, 0 };
-   //int dy[4] = { 0, 1, 0, -1 };
-
-   //std::list<ACandy*> DestroyCandy;
-    //while (!Q.Emtpy())
-    //{
-    //   ACandy* Cur = Q.Front();
-    //   Q.Pop();
-
-    //   EColor CurColor = Cur->CandyData.CandyColor;
-
-
-    //   for (int dir = 0; dir < 4; dir++)
-    //   {
-    //      int nx = Cur->CandyData.row + dx[dir];
-    //      int ny = Cur->CandyData.col + dy[dir];
-
-    //      if (nx < 0 || nx >= CandyRow || ny < 0 || ny >= CandyCol)
-    //      {
-    //         continue;
-    //      }
-
-    //      // 방문한 노드이다.
-    //      if (true == Visited[nx][ny])
-    //      {
-    //         continue;
-    //      }
-    //      EColor NextColor = Candys[nx][ny]->CandyData.CandyColor;
-
-    //      if (CurColor == NextColor)
-    //      {
-    //         
-    //         /*Candys[nx][ny]->CandyData.Combo=Cur->CandyData.Combo+1;
-    //         Candys[nx][ny]->CandyData.IsCombo = true;*/
-    //      }
-    //      else
-    //      {
-    //         
-    //      }
-    //      Visited[nx][ny] = true;
-    //      Q.Push(Candys[nx][ny]);
-    //   }
-    //}
+    //ChangeCandyState(ECandyManagerState::Select);
 
 }
 

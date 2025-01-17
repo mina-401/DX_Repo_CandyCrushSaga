@@ -173,11 +173,12 @@ void AMouse::BeginPlay()
 {
 	AActor::BeginPlay();
 
-	class APlayGameMode* PlayGameMode= dynamic_cast<APlayGameMode*>(GetWorld()->GetGameMode());
-	CandyManager = PlayGameMode->GetCandyManager();
+	//class APlayGameMode* PlayGameMode= dynamic_cast<APlayGameMode*>(GetWorld()->GetGameMode());
+	CandyManager = dynamic_cast<ACandyManager*>( GetWorld()->GetMainPawn());
+	
 	if (CandyManager == nullptr)
 	{
-		int a = 0;
+		return;
 	}
 
 	int MaxRow= CandyManager->CandyRow;
