@@ -5,6 +5,7 @@
 #include <EnginePlatform/EngineWindow.h>
 #include "EngineGraphicDevice.h"
 #include "IContentsCore.h"
+#include <EnginePlatform/EngineWorkThreadPool.h>
 #include "Level.h"
 #include <memory>
 
@@ -50,16 +51,22 @@ public:
 
 	ENGINEAPI static class UGameInstance* GetGameInstance();
 
+	ENGINEAPI static class UEngineWorkThreadPool& GetThreadPool();
+
 	template<typename Type>
 	static void CreateGameInstance()
 	{
-		GameInstance = std::make_shared<Type>();
+		SetGameInstance(std::make_shared<Type>());
 	}
+
+
 
 protected:
 
 private:
 	std::shared_ptr<class UGameInstance> GameInstance;
+
+	UEngineWorkThreadPool ThreadPool;
 
 	UEngineWindow MainWindow;
 
@@ -84,6 +91,8 @@ private:
 	std::map<std::string, std::shared_ptr<class ULevel>> LevelMap;
 	std::shared_ptr<class ULevel> CurLevel;
 	std::shared_ptr<class ULevel> NextLevel;
+
+	ENGINEAPI static void SetGameInstance(std::shared_ptr<UGameInstance> _Inst);
 
 	// constrcuter destructer
 	ENGINEAPI UEngineCore();

@@ -109,33 +109,33 @@ AMouse::AMouse()
 
 									TimeEventComponent->AddEndEvent(CCSConst::MoveTime, [this, SelectCandy, CurCandy, StartPos, EndPos]()
 										{
-											CandyManager->CandyChange(SelectCandy, CurCandy);
+											// ÀÚ¸®¹Ù²Ù±â
+											CandyManager->CandyChange(SelectCandy, CurCandy); 
+											
+											// ¿¬¼ÓÇÏ´Â Äµµð Ã£±â
 											CandyManager->CandyFindConsec();
 									
+											
 											if (false == CandyManager->IsCandyDestroy())
 											{
-												// ÄÞº¸ Äµµð°¡ ¾ø´Ù.
+												//ÄÞº¸ Äµµð°¡ ¾ø´Ù.
 												TimeEventComponent->AddUpdateEvent(CCSConst::MoveTime, [this, SelectCandy, CurCandy, StartPos, EndPos](float _Delta, float _Acc)
 													{
-														CandyManager->ChangeCandyState(ECandyManagerState::Move);
+														//CandyManager->ChangeCandyState(ECandyManagerState::Move);
 														CandyMove(_Delta, _Acc, SelectCandy, CurCandy, EndPos, StartPos, CCSConst::MoveTime);
 													});
 
 												TimeEventComponent->AddEndEvent(CCSConst::MoveTime, [this, SelectCandy, CurCandy, StartPos, EndPos]()
 													{
+														CandyManager->CandyChange(SelectCandy, CurCandy);
 														CandyManager->ChangeCandyState(ECandyManagerState::Select);
 													});
-												CandyManager->CandyChange(SelectCandy, CurCandy);
 											}
+
 											else {
+												//ÄÞº¸ Äµµð°¡ ÀÖ´Ù.
 												CandyManager->ChangeCandyState(ECandyManagerState::Destroy);
 											}
-											
-											// CandyManager->ChangeCandyState(ECandyManagerState::CandyCheck);
-
-											// CandyManager->CandyDestroy();
-
-											
 										});
 									break;
 								}

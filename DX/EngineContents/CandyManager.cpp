@@ -65,10 +65,9 @@ void ACandyManager::CandyCreate()
                 else {
                     // 캔디 스폰
                     int RandomIndx = RandomInt(1, 55);
-                    //NewCandy =GetWorld()->SpawnActor<ACandy*>();
                     NewCandy = GetWorld()->SpawnActor<ACandy>();
-
                     NewCandy->SetCandy({ row,col }, SetPos, RandomIndx);
+
                     Candys[row][col] = NewCandy.get();
                 }
             }
@@ -190,7 +189,7 @@ void ACandyManager::CandyFindConsec()
     {
         for (int col = 0; col < CandyCol; col++)
         {
-            if (false == Data[row][col].IsActive)
+            if (false == Data[row][col].IsActive) //빈자리는 체크 안함
             {
                 continue;
             }
@@ -199,7 +198,7 @@ void ACandyManager::CandyFindConsec()
         }
     }
 
-    int a = DestroyCandy.size();
+   // int a = DestroyCandy.size();
 }
 void ACandyManager::CandyChange(class ACandy* SelectCandy, class ACandy* CurCandy)
 {
@@ -217,6 +216,7 @@ void ACandyManager::CandyChange(class ACandy* SelectCandy, class ACandy* CurCand
     Candys[CurCandyData.row][CurCandyData.col] = SelectCandy;
 
     //setpos를 제외한 건 바뀌지 않은 상태
+    // row, col 바꾸기
     SelectCandyDataRef.row = CurCandyData.row;
     SelectCandyDataRef.col = CurCandyData.col;
     SelectCandyDataRef.SetPos = SelectCandyData.SetPos;
@@ -240,6 +240,8 @@ void ACandyManager::NewCandyDrop()
              
         }
     }
+
+    ChangeCandyState(ECandyManagerState::Select);
 }
 void ACandyManager::CandyDestroy()
 {
@@ -258,7 +260,7 @@ void ACandyManager::CandyDestroy()
     }
     
     CandyClear();
-    ACandyManager::ChangeCandyState(ECandyManagerState::NewCandyDrop);
+    ChangeCandyState(ECandyManagerState::NewCandyDrop);
 
     //int dx[4] = { 1, 0, -1, 0 };
    //int dy[4] = { 0, 1, 0, -1 };
@@ -322,6 +324,7 @@ void ACandyManager::Tick(float _DeltaTime)
         CandyDestroy();
         break;
     case ECandyManagerState::NewCandyDrop:
+        NewCandyDrop();
         break;
     default:
         break;
