@@ -244,21 +244,59 @@ void ACandyManager::CandyClear()
 }
 void ACandyManager::NewCandyDrop()
 {
+    int NullRow = 0;
+    int NullCol = 0;
+    int MoveCol = 0;
 
-    for (std::pair IndexPair : DestroyCandyIndexList)
+
+    for (int col = 0; col < CandyCol; col++)
     {
-        int NullRow = IndexPair.first;
-        int NullCol = IndexPair.second;
-
-        for (int row = CandyRow - 1; row > 0; row--)
+        //제일 아래칸부터 시작한다
+        for (int row = CandyRow - 1; row >= 0; row--)
         {
-            //맨 마지막 줄 부터 캔디를 내린다.
-            for (int col = 0; col < CandyCol; col++)
+
+            if (nullptr == Candys[row][col])
+            {
+                NullRow = row;
+                NullCol = col;
+                continue;
+            }
+            // 한칸 위에있고, 캔디가 있다.
+            if (Candys[row][col] != nullptr && row == NullRow - 1 && col == NullCol)
+            {
+                MoveCol = col;
+                break;
+            }
+            if (MoveCol == NullCol)
             {
 
             }
+            //Candys[row][NullCol] = Candys[row][FullCol];
         }
+
+
     }
+    for (std::pair<int, int> IndexPair : DestroyCandyIndexList)
+    {
+        //비어있는 인덱스
+        int NullRow = IndexPair.first;
+        int NullCol = IndexPair.second;
+        int MoveCol = NullCol;
+        
+        if (nullptr != Candys[NullRow][NullCol])
+        {
+            // 캔디가 존재한다.
+            continue;
+        }
+        
+        
+    }
+
+    //int NullRow = 0;
+    //int NullCol = 0;
+    //int FullCol = 0;
+
+    
     
     //다 내린 후에도 없으면 빈 곳에 뉴캔디 만들기
 

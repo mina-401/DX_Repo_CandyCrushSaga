@@ -79,7 +79,8 @@ private:
 	std::vector<std::vector<StageCandyData>> Data;
 	std::list<ACandy*> DestroyCandy;
 
-	std::vector<std::pair<int,int>> DestroyCandyIndexList;
+	// std::vector<std::pair<int,int>> DestroyCandyIndexList;
+	std::list < std:: pair<int, int >> DestroyCandyIndexList;
 
 	
 
