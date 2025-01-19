@@ -102,7 +102,6 @@ AMouse::AMouse()
 									TimeEventComponent->AddUpdateEvent(CCSConst::MoveTime, [this, SelectCandy, CurCandy,StartPos,EndPos](float _Delta, float _Acc)
 										{
 											CandyManager->ChangeCandyState(ECandyManagerState::Move);
-
 											CandyMove(_Delta, _Acc, SelectCandy, CurCandy, StartPos, EndPos, CCSConst::MoveTime);
 											
 										});
@@ -121,7 +120,7 @@ AMouse::AMouse()
 												//ÄÞº¸ Äµµð°¡ ¾ø´Ù.
 												TimeEventComponent->AddUpdateEvent(CCSConst::MoveTime, [this, SelectCandy, CurCandy, StartPos, EndPos](float _Delta, float _Acc)
 													{
-														//CandyManager->ChangeCandyState(ECandyManagerState::Move);
+														CandyManager->ChangeCandyState(ECandyManagerState::Move);
 														CandyMove(_Delta, _Acc, SelectCandy, CurCandy, EndPos, StartPos, CCSConst::MoveTime);
 													});
 

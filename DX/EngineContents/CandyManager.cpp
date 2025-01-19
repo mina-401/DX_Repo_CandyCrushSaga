@@ -10,11 +10,12 @@
 #include "Candy.h"
 #include <queue>
 #include "Mouse.h"
+#include <EngineCore/TimeEventComponent.h>
 
 
 ACandyManager::ACandyManager()
 {
-
+    TimeEventComponent = CreateDefaultSubObject<UTimeEventComponent>();
 }
 
 ACandyManager::~ACandyManager()
@@ -33,10 +34,17 @@ void ACandyManager::CreateStage(int X, int Y)
         Candys[i].resize(Y);
     }
 
+    FVector SetPos = { -100,100 };
     Data.resize(X);
     for (int i = 0; i < X; i++)
     {
         Data[i].resize(Y);
+        for (int y = 0; y < Y; y++)
+        {
+            Data[i][y].Pos = { (SetPos.X += CandyScale.X),SetPos.Y };
+        }
+        SetPos.X = -100;
+        SetPos.Y -= CandyScale.Y;
     }
 
     //
@@ -53,26 +61,27 @@ void ACandyManager::DeleteIndex(int X, int Y)
 void ACandyManager::CandyCreate()
 {
     {
-        FVector SetPos = { -100,100 };
+        //FVector SetPos = { -100,100 };
         for (int row = 0; row < CandyRow; row++)
         {
 
             std::shared_ptr< ACandy> NewCandy = nullptr;
             for (int col = 0; col < CandyCol; col++)
             {
-                SetPos.X += CandyScale.X;
+                //SetPos.X += CandyScale.X;
                 if (false == Data[row][col].IsActive) {}
                 else {
                     // 캔디 스폰
                     int RandomIndx = RandomInt(1, 55);
+                    FVector Index = { row,col };
                     NewCandy = GetWorld()->SpawnActor<ACandy>();
-                    NewCandy->SetCandy({ row,col }, SetPos, RandomIndx);
+                    NewCandy->SetCandy(Index, Data[row][col].Pos, RandomIndx);
 
                     Candys[row][col] = NewCandy.get();
                 }
             }
-            SetPos.X = -100;
-            SetPos.Y -= CandyScale.Y;
+           // SetPos.X = -100;
+            //SetPos.Y -= CandyScale.Y;
 
 
         }
@@ -210,7 +219,6 @@ void ACandyManager::CandyFindConsec()
         }
     }
 
-   // int a = DestroyCandy.size();
 }
 void ACandyManager::CandyChange(class ACandy* SelectCandy, class ACandy* CurCandy)
 {
@@ -242,11 +250,21 @@ void ACandyManager::CandyClear()
     DestroyCandy.clear();
     //DestroyCandy.resize(0);
 }
+ACandy* ACandyManager::NewCandyCreate()
+{
+    ACandy* NewCandy = (GetWorld()->SpawnActor<ACandy>()).get();
+    
+    return NewCandy;
+}
+void ACandyManager::CandyDropAt(ACandy* candy, const FVector pos) {
+
+    Candys[pos.X][pos.Y] = candy; 
+    candy->SetPos(pos.X, pos.Y); 
+
+}
 void ACandyManager::NewCandyDrop()
 {
-    int NullRow = 0;
-    int NullCol = 0;
-    int MoveCol = 0;
+    int EmptyRow = -1;
 
 
     for (int col = 0; col < CandyCol; col++)
@@ -254,55 +272,89 @@ void ACandyManager::NewCandyDrop()
         //제일 아래칸부터 시작한다
         for (int row = CandyRow - 1; row >= 0; row--)
         {
+            if (false == Data[row][col].IsActive) {
+                
+                continue;
+            }
 
             if (nullptr == Candys[row][col])
             {
-                NullRow = row;
-                NullCol = col;
-                continue;
+                // 처음으로 비어있는 칸
+                if(-1 == EmptyRow) EmptyRow = row;
             }
-            // 한칸 위에있고, 캔디가 있다.
-            if (Candys[row][col] != nullptr && row == NullRow - 1 && col == NullCol)
-            {
-                MoveCol = col;
-                break;
-            }
-            if (MoveCol == NullCol)
+
+            else if (-1 != EmptyRow)
             {
 
+               // 위에서 가장 가까운 캔디, 아래로 내린다.
+                Candys[EmptyRow][col] = Candys[row][col];
+                TimeEventComponent->AddUpdateEvent(CCSConst::MoveTime, [this, EmptyRow,row,col](float _Delta, float _Acc)
+                {
+                    ChangeCandyState(ECandyManagerState::Move);
+                    
+
+                    FVector StartPos = Data[row][col].Pos;
+                    FVector EndPos = Data[EmptyRow][col].Pos;
+
+                    Candys[EmptyRow][col]->GetCandyData().SetPos = FVector::Lerp(StartPos, EndPos, _Acc * 1 / CCSConst::MoveTime);
+                });
+
+                TimeEventComponent->AddEndEvent(CCSConst::MoveTime, [this, EmptyRow,row, col]()
+                {
+                    
+                    Candys[EmptyRow][col]->CandyData.row = EmptyRow;
+                    Candys[EmptyRow][col]->CandyData.col = col;
+
+                    Candys[row][col] = nullptr;
+                });
+
+                EmptyRow -= 1;
+
             }
-            //Candys[row][NullCol] = Candys[row][FullCol];
         }
 
+        if (-1 != EmptyRow) {
 
-    }
-    for (std::pair<int, int> IndexPair : DestroyCandyIndexList)
-    {
-        //비어있는 인덱스
-        int NullRow = IndexPair.first;
-        int NullCol = IndexPair.second;
-        int MoveCol = NullCol;
-        
-        if (nullptr != Candys[NullRow][NullCol])
-        {
-            // 캔디가 존재한다.
-            continue;
+            int row = EmptyRow;
+            while (row >= 0)
+            {
+
+                if (Data[row][col].IsActive == false) {}
+                else {
+                    ACandy* NewCandy = NewCandyCreate();
+                    int RandSpriteIndex = RandomInt(1, 55);
+                    NewCandy->SetCandy({ row,col }, Data[row][col].Pos, 0);
+
+                    Candys[row][col] = NewCandy;
+                }
+                row--;
+            }
+
         }
-        
-        
+        EmptyRow = -1;
     }
 
-    //int NullRow = 0;
-    //int NullCol = 0;
-    //int FullCol = 0;
 
-    
-    
-    //다 내린 후에도 없으면 빈 곳에 뉴캔디 만들기
+    //CandyFindConsec();
+    //
 
+    //if (false == IsCandyDestroy())
+    //{
+    //    //콤보 캔디가 없다.
+    //   
+
+    //   
+    //}
+
+    //else {
+    //    //콤보 캔디가 있다.
+    //    ChangeCandyState(ECandyManagerState::Destroy);
+    //}
     
 
     ChangeCandyState(ECandyManagerState::Select);
+    return;
+
 }
 void ACandyManager::CandyDestroy()
 {
@@ -310,7 +362,7 @@ void ACandyManager::CandyDestroy()
     
     for (ACandy* Candy : DestroyCandy)
     {
-        DestroyCandyIndexList.push_back({ Candy->CandyData.row,Candy->CandyData.col });
+      //  DestroyCandyList.push_back({ Candy->CandyData.row,Candy->CandyData.col });
         Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
         Candy->Destroy();
         Candy = nullptr;
@@ -321,6 +373,7 @@ void ACandyManager::CandyDestroy()
     
     CandyClear();
     ChangeCandyState(ECandyManagerState::NewCandyDrop);
+    return;
     //ChangeCandyState(ECandyManagerState::Select);
 
 }

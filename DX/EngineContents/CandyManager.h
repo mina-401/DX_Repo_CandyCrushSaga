@@ -8,6 +8,7 @@ class StageCandyData
 {
 public:
 	bool IsActive = true;
+	FVector Pos;
 };
 
 
@@ -49,6 +50,10 @@ public:
 	void CandyClear();
 	void NewCandyDrop();
 	void CandyDestroy();
+	ACandy* NewCandyCreate();
+
+	void CandyDropAt(ACandy* candy, const FVector pos);
+
 
 	void RowCheck(int X, int Y);
 	void ColCheck(int X, int Y);
@@ -75,13 +80,13 @@ protected:
 
 	void Tick(float _DeltaTime) override;
 private:
+	std::shared_ptr<class UTimeEventComponent> TimeEventComponent;
 	ECandyManagerState CandyState = ECandyManagerState::Select;
 	std::vector<std::vector<StageCandyData>> Data;
 	std::list<ACandy*> DestroyCandy;
 
-	// std::vector<std::pair<int,int>> DestroyCandyIndexList;
-	std::list < std:: pair<int, int >> DestroyCandyIndexList;
-
+	std::vector<FVector> DestroyCandyList;
+	
 	
 
 

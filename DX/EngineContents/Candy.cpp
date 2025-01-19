@@ -34,7 +34,7 @@ ACandy::~ACandy()
 {
 }
 
-void ACandy::SetCandy(FVector RenderPos, FVector& _Pos, int _Index)
+void ACandy::SetCandy(FVector RenderPos, FVector _Pos, int _Index)
 {
 	//AddActorLocation(_Pos);
 
@@ -49,6 +49,10 @@ void ACandy::SetCandy(FVector RenderPos, FVector& _Pos, int _Index)
 	CandyData.SetSpriteType(_Index);
 
 	//SetName("Candy");
+}
+void ACandy::SetPos(int X, int Y)
+{
+	CandyData.SetPos = { X,Y };
 }
 void ACandy::BeginPlay()
 {
