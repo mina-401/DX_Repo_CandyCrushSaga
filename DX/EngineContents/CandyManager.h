@@ -49,10 +49,10 @@ public:
 	void CandyChange(class  ACandy* SelectCandy, class ACandy* CurCandy);
 	void CandyClear();
 	void NewCandyDrop();
+	void CandyPlaceAt(int EmptyRow,int Col);
+	void CandyDropAt(ACandy* candy, FVector pos);
 	void CandyDestroy();
 	ACandy* NewCandyCreate();
-
-	void CandyDropAt(ACandy* candy, FVector pos);
 
 
 	void RowCheck(int X, int Y);
