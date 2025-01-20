@@ -44,11 +44,11 @@ public:
 		{
 			SetCandyColor(EColor::Orange);
 		}
-		else if (28 <= _index && _index < 36)
+		else if (28 <= _index && _index < 37)
 		{
 			SetCandyColor(EColor::Purple);
 		}
-		else if (36 <= _index && _index < 46)
+		else if (37 <= _index && _index < 46)
 		{
 			SetCandyColor(EColor::Red);
 		}

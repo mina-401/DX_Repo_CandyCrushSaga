@@ -155,6 +155,7 @@
       <Filter>HUD</Filter>
     </ClCompile>
     <ClCompile Include="GameInstance.cpp" />
+    <ClCompile Include="FontRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -323,6 +324,7 @@
       <Filter>HUD</Filter>
     </ClInclude>
     <ClInclude Include="GameInstance.h" />
+    <ClInclude Include="FontRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">

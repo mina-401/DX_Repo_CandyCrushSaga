@@ -52,7 +52,7 @@ public:
 	void CandyDestroy();
 	ACandy* NewCandyCreate();
 
-	void CandyDropAt(ACandy* candy, const FVector pos);
+	void CandyDropAt(ACandy* candy, FVector pos);
 
 
 	void RowCheck(int X, int Y);

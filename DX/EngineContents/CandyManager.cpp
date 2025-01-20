@@ -256,7 +256,7 @@ ACandy* ACandyManager::NewCandyCreate()
     
     return NewCandy;
 }
-void ACandyManager::CandyDropAt(ACandy* candy, const FVector pos) {
+void ACandyManager::CandyDropAt(ACandy* candy, FVector pos) {
 
     Candys[pos.X][pos.Y] = candy; 
     candy->SetPos(pos.X, pos.Y); 
@@ -264,8 +264,10 @@ void ACandyManager::CandyDropAt(ACandy* candy, const FVector pos) {
 }
 void ACandyManager::NewCandyDrop()
 {
-    int EmptyRow = -1;
+    
+    ChangeCandyState(ECandyManagerState::Move);
 
+    int EmptyRow = -1;
 
     for (int col = 0; col < CandyCol; col++)
     {
@@ -285,35 +287,34 @@ void ACandyManager::NewCandyDrop()
 
             else if (-1 != EmptyRow)
             {
+                Candys[EmptyRow][col] = Candys[row][col];
 
                // 위에서 가장 가까운 캔디, 아래로 내린다.
-                Candys[EmptyRow][col] = Candys[row][col];
-                TimeEventComponent->AddUpdateEvent(CCSConst::MoveTime, [this, EmptyRow,row,col](float _Delta, float _Acc)
-                {
-                    ChangeCandyState(ECandyManagerState::Move);
-                    
+               TimeEventComponent->AddUpdateEvent(CCSConst::MoveTime, [this, EmptyRow,row,col](float _Delta, float _Acc)
+                {  
 
                     FVector StartPos = Data[row][col].Pos;
                     FVector EndPos = Data[EmptyRow][col].Pos;
 
-                    Candys[EmptyRow][col]->GetCandyData().SetPos = FVector::Lerp(StartPos, EndPos, _Acc * 1 / CCSConst::MoveTime);
+                   Candys[EmptyRow][col]->GetCandyData().SetPos = FVector::Lerp(StartPos, EndPos, _Acc * 1 / CCSConst::MoveTime);
                 });
 
                 TimeEventComponent->AddEndEvent(CCSConst::MoveTime, [this, EmptyRow,row, col]()
                 {
-                    
                     Candys[EmptyRow][col]->CandyData.row = EmptyRow;
                     Candys[EmptyRow][col]->CandyData.col = col;
-
+                    //Candys[EmptyRow][col]->CandyData.SetPos= Data[EmptyRow][col].Pos;
                     Candys[row][col] = nullptr;
-                });
+
+
+               });
 
                 EmptyRow -= 1;
 
             }
         }
 
-        if (-1 != EmptyRow) {
+       /* if (-1 != EmptyRow) {
 
             int row = EmptyRow;
             while (row >= 0)
@@ -330,7 +331,7 @@ void ACandyManager::NewCandyDrop()
                 row--;
             }
 
-        }
+        }*/
         EmptyRow = -1;
     }
 
