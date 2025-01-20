@@ -8,8 +8,8 @@ class UEngineThread
 {
 public:
 	// constrcuter destructer
-	UEngineThread();
-	virtual ~UEngineThread();
+	ENGINEAPI UEngineThread();
+	ENGINEAPI virtual ~UEngineThread();
 
 	// delete Function
 	UEngineThread(const UEngineThread& _Other) = delete;
@@ -17,8 +17,8 @@ public:
 	UEngineThread& operator=(const UEngineThread& _Other) = delete;
 	UEngineThread& operator=(UEngineThread&& _Other) noexcept = delete;
 
-	bool Start(std::string _Name, std::function<void()> _Function);
-	void Join();
+	ENGINEAPI bool Start(std::string _Name, std::function<void()> _Function);
+	ENGINEAPI void Join();
 
 protected:
 
@@ -27,6 +27,6 @@ private:
 	std::thread ThreadInst;
 	std::function<void()> ThreadFunction;
 
-	static void ThreadBaseFunction();
+	static void ThreadBaseFunction(UEngineThread* _Thread);
 };
 

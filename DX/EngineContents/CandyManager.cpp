@@ -334,9 +334,10 @@ void ACandyManager::NewCandyDrop()
     }
     else
     {
-        CandyDestroy();
+        ChangeCandyState(ECandyManagerState::Destroy);
+        return;
     }
-    
+
 
 }
 void ACandyManager::CandyPlaceAt(int EmptyRow, int Col)
@@ -373,7 +374,7 @@ void ACandyManager::CandyDestroy()
     }
     
     CandyClear();
-    ChangeCandyState(ECandyManagerState::NewCandyDrop);
+    //ChangeCandyState(ECandyManagerState::NewCandyDrop);
     return;
     //ChangeCandyState(ECandyManagerState::Select);
 
