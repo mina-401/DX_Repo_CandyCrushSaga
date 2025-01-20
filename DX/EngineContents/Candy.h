@@ -106,7 +106,7 @@ public:
 	{
 		return Renderer;
 	}
-	void SetCandy(FVector RenderPos, FVector _Pos, int _Index);
+	void SetCandy(FIntPoint RenderPos, FVector _Pos, int _Index);
 	void SetPos(int X, int Y);
 	/*void SetSpriteColor(int _index)
 	{

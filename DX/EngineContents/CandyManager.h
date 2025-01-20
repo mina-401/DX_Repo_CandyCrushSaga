@@ -25,7 +25,8 @@ enum class ECandyManagerState
 	Select,
 	Move,
 	Destroy,
-	NewCandyDrop
+	NewCandyDrop,
+	Update,
 };
 
 class ACandyManager : public APawn
@@ -54,6 +55,12 @@ public:
 	void CandyDestroy();
 	ACandy* NewCandyCreate();
 
+	void NewCandyDropStart();
+	void UpdateStart();
+
+	void CandyDestroyStart();
+	
+
 
 	void RowCheck(int X, int Y);
 	void ColCheck(int X, int Y);
@@ -71,10 +78,8 @@ public:
 		 return CandyState;
 	 }
 
-	 void ChangeCandyState(ECandyManagerState _CandyState)
-	 {
-		 CandyState = _CandyState;
-	 }
+	 void ChangeCandyState(ECandyManagerState _CandyState);
+
 protected:
 	void BeginPlay() override;
 
@@ -84,8 +89,7 @@ private:
 	ECandyManagerState CandyState = ECandyManagerState::Select;
 	std::vector<std::vector<StageCandyData>> Data;
 	std::list<ACandy*> DestroyCandy;
-
-	std::vector<FVector> DestroyCandyList;
+	std::vector<FIntPoint> Empty;
 	
 	
 

@@ -103,7 +103,7 @@ void APlayGameMode::BeginPlay()
 
 		CandyManager->CandyFindConsec();
 		CandyManager->CandyDestroy();
-		CandyManager->NewCandyDrop();
+		//CandyManager->NewCandyDrop();
 
 	}
 
