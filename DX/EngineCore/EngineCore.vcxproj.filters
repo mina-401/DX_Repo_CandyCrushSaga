@@ -156,6 +156,7 @@
     </ClCompile>
     <ClCompile Include="GameInstance.cpp" />
     <ClCompile Include="FontRenderer.cpp" />
+    <ClCompile Include="EngineStructuredBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -325,6 +326,7 @@
     </ClInclude>
     <ClInclude Include="GameInstance.h" />
     <ClInclude Include="FontRenderer.h" />
+    <ClInclude Include="EngineStructuredBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">

@@ -7,6 +7,7 @@
     <ClCompile Include="EngineWinImage.cpp" />
     <ClCompile Include="EngineThread.cpp" />
     <ClCompile Include="EngineWorkThreadPool.cpp" />
+    <ClCompile Include="EngineSound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineWindow.h" />
@@ -15,5 +16,37 @@
     <ClInclude Include="EngineWinImage.h" />
     <ClInclude Include="EngineThread.h" />
     <ClInclude Include="EngineWorkThreadPool.h" />
+    <ClInclude Include="EngineSound.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{3fdf2353-1013-420c-96a2-6b8ba28449cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\FMOD">
+      <UniqueIdentifier>{8536e54b-4970-4cd6-a1bc-acf7fc3a59e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\FMOD\Release">
+      <UniqueIdentifier>{e99fa2a7-ae57-47db-9153-981c1228ded1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\FMOD\Debug">
+      <UniqueIdentifier>{7b4b1893-edeb-4597-b7ec-f5be57120f48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\FMOD\Inc">
+      <UniqueIdentifier>{1e53a5ea-a672-47ea-8d92-696971baf0c2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="ThirdParty\FMOD\Debug\fmodL.dll">
+      <Filter>ThirdParty\FMOD\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FMOD\Debug\fmodL_vc.lib">
+      <Filter>ThirdParty\FMOD\Debug</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FMOD\Release\fmod.dll">
+      <Filter>ThirdParty\FMOD\Release</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FMOD\Release\fmod_vc.lib">
+      <Filter>ThirdParty\FMOD\Release</Filter>
+    </CopyFileToFolders>
   </ItemGroup>
 </Project>

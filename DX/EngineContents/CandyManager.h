@@ -9,6 +9,23 @@ class StageCandyData
 public:
 	bool IsActive = true;
 	FVector Pos;
+
+	bool operator==(std::nullptr_t) const
+	{
+		return !IsActive; // IsActive가 false일 때 nullptr로 간주
+	}
+
+	bool operator==(const StageCandyData& other) const
+	{
+		return (IsActive == other.IsActive) && (Pos == other.Pos);
+	}
+
+
+	// operator!= 오버로드
+	bool operator!=(const StageCandyData& other) const
+	{
+		return !(*this == other); 
+	}
 };
 
 

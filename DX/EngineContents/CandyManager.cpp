@@ -325,12 +325,14 @@ void ACandyManager::NewCandyDropStart()
        FVector Pos = Data[TargetIndex.X][TargetIndex.Y].Pos; // 위치
 
        {
-           ACandy* NewCandy = NewCandyCreate();
-           int X = TargetIndex.X; //뉴캔디 인덱스
+           int X = TargetIndex.X ; //뉴캔디 인덱스
            int Y = static_cast<int>(Candys[X].size());
 
+
+           
            Pos.Y += static_cast<int>(CandyScale.Y * (X + 1)); // 뉴캔디 위치
 
+           ACandy* NewCandy = NewCandyCreate();
            {
                StageCandyData StageCandy;
 
@@ -346,11 +348,16 @@ void ACandyManager::NewCandyDropStart()
        }
 
        //{
-       //    ACandy* NewCandy = NewCandyCreate();
-       //    int X = static_cast<int>(Candys.size());
-       //    int Y = TargetIndex.Y;
+       //   ACandy* NewCandy = NewCandyCreate();
+       //    int X = static_cast<int>(Candys.size()); //3
+       //    int Y = TargetIndex.Y; // 1
 
-       //    Pos.X += static_cast<int>(CandyScale.X * (Y + 1));
+ 
+       //    int EXCandy = X - CandyRow ;
+
+       //    
+       //    Pos.Y += static_cast<int>(CandyScale.Y * (EXCandy+1));
+       //    
        //    {
        //        StageCandyData StageCandy;
        //        StageCandy.IsActive = true;
@@ -358,31 +365,33 @@ void ACandyManager::NewCandyDropStart()
 
        //        if (X >= Data.size())
        //        {
-       //            Data.resize(X+1); // X 인덱스에 해당하는 벡터를 생성
-       //            Data[X].resize(CandyCol);
-       //        }
+       //             Data.resize(X+1); // X 인덱스에 해당하는 벡터를 생성
 
-       //         //if (Y >= Data[X].size())
-       //         //{
-       //         //    Data[X].resize(CandyCol); // CandyCol 크기로 리사이즈
-       //         //}
+       //            if (Data[X].empty())
+       //            {
+       //                Data[X].resize(CandyCol);
+       //            }
+       //        }
 
        //        Data[X][Y] = StageCandy;
        //    }
 
-       //    NewCandy->SetCandy({ X,Y }, Pos, SpriteIndex);
-       //    if (X >=Candys.size())
+       //    if (X >=Candys.size() )
        //    {
        //       Candys.resize(X+1); // X 인덱스에 해당하는 벡터를 생성
-       //       Candys[X].resize(CandyCol);
-
+       //       if (Candys[X].empty())
+       //       {
+       //           Candys[X].resize(CandyCol);
+       //       }
        //    }
+       //     
+       //    NewCandy->SetCandy({ X,Y }, Pos, SpriteIndex);
        //    Candys[X][Y] = NewCandy;
        //}
        
     }
 
-
+    Empty.clear();
 }
 
 void ACandyManager::NewCandyDrop()
