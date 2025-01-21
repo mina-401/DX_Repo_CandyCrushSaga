@@ -305,6 +305,12 @@ void ACandyManager::ChangeCandyState(ECandyManagerState _CandyState)
     }
 
 }
+
+FIntPoint TopIndexCheck()
+{
+    return FIntPoint();
+}
+
 void ACandyManager::NewCandyDropStart()
 {
     //ChangeCandyState(ECandyManagerState::Move);
@@ -315,49 +321,92 @@ void ACandyManager::NewCandyDropStart()
         return;
     }
 
-    for (int i = 0; i < Empty.size(); i++)
-    {
-
-       int SpriteIndex = RandomInt(1, 55);
-       //int SpriteIndex =0;
-
-       FIntPoint TargetIndex = Empty[i]; //ÅÍÁú ÄµµðÀÇ ÀÎµ¦½º
-       FVector Pos = Data[0][TargetIndex.Y].Pos; // À§Ä¡
-
-       {
-           int NewX = (CandyRow-1) - TargetIndex.X ; //´ºÄµµð ÀÎµ¦½º
-
-           int X = TargetIndex.X;
-           int Y = static_cast<int>(Candys[X].size());
-
- 
-           Pos.Y += static_cast<float>(CandyScale.Y * (NewX + 1)); // ´ºÄµµð À§Ä¡
-          // FVector TargetPos = Data[TargetIndex.X][TargetIndex.Y].Pos;
-           ACandy* NewCandy = NewCandyCreate();
-           {
-               StageCandyData StageCandy;
-
-               StageCandy.IsActive = true;
-               StageCandy.Pos = Pos;
-              // StageCandy. = TargetPos;
-
-               Data[X].push_back(StageCandy);
-           }
-
-           NewCandy->SetCandy({ X,Y }, Pos, SpriteIndex);
-           NewCandy->CandyData.TargetIndex = TargetIndex;
-
-           Candys[X].push_back(NewCandy);
-       }
-       
-    }
 
     Empty.clear();
+
+    for (int col = 0; col < CandyCol; col++)
+    {
+        //Á¦ÀÏ ¾Æ·¡Ä­ºÎÅÍ ½ÃÀÛÇÑ´Ù
+        for (int row = CandyRow - 1; row >= 0; row--)
+        {
+            if (false == Data[row][col].IsActive) {
+                
+                continue;
+            }
+    
+            if (nullptr == Candys[row][col])
+            {
+                if (0 > row - 1)
+                {
+                    continue;
+                }
+
+                for (int Newrow = row - 1; Newrow >= 0; Newrow--)
+                {
+                    if (false == Data[Newrow][col].IsActive)
+                    {
+                        continue;
+                    }
+
+                    if (nullptr == Candys[Newrow][col])
+                    {
+                        continue;
+                    }
+
+                    // Candys[Newrow][col]->CandyData = Candys[row][col];
+
+                    Candys[row][col] = Candys[Newrow][col];
+                    Candys[Newrow][col] = nullptr;
+                    Candys[Newrow][col];
+                    Candys[Newrow][col]->CandyData.SetPos = Data[Newrow][col].Pos;
+                }
+            }
+        }
+    }
+
+
+    //for (int i = 0; i < Empty.size(); i++)
+    //{
+    //   int SpriteIndex = RandomInt(1, 55);
+
+    //   FIntPoint TargetIndex = Empty[i]; //ÅÍÁú ÄµµðÀÇ ÀÎµ¦½º
+    //   FVector Pos = Data[0][TargetIndex.Y].Pos; // À§Ä¡
+
+    //   {
+    //       int NewX = (CandyRow-1) - TargetIndex.X ; //´ºÄµµð ÀÎµ¦½º
+
+    //       int X = TargetIndex.X;
+    //       int Y = static_cast<int>(Candys[X].size());
+
+ 
+    //       Pos.Y += static_cast<float>(CandyScale.Y * (NewX + 1)); // ´ºÄµµð À§Ä¡
+    //      // FVector TargetPos = Data[TargetIndex.X][TargetIndex.Y].Pos;
+    //       ACandy* NewCandy = NewCandyCreate();
+    //       {
+    //           StageCandyData StageCandy;
+
+    //           StageCandy.IsActive = true;
+    //           StageCandy.Pos = Pos;
+    //          // StageCandy. = TargetPos;
+
+    //           Data[X].push_back(StageCandy);
+    //       }
+
+    //       NewCandy->SetCandy({ X,Y }, Pos, SpriteIndex);
+    //       NewCandy->CandyData.TargetIndex = TargetIndex;
+
+    //       Candys[X].push_back(NewCandy);
+    //   }
+    //   
+    //}
+
+    // Empty.clear();
 }
 
 void ACandyManager::NewCandyDrop(float _Delta)
 {
 
+    int a = 0;
     //for (int row = 0; row < Candys.size(); row++)
     //{
     //    for (int col = CandyCol; col < Candys[row].size(); col++)
@@ -380,7 +429,7 @@ void ACandyManager::NewCandyDrop(float _Delta)
     //}
 
     //ChangeCandyState(ECandyManagerState::Update);
-    ChangeCandyState(ECandyManagerState::Select);
+    // ChangeCandyState(ECandyManagerState::Select);
     return;
 
    
