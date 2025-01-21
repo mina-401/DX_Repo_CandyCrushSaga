@@ -44,6 +44,7 @@ void ACandy::SetCandy(FIntPoint RenderPos, FVector _Pos, int _Index)
 	CandyData.col = RenderPos.Y;
 	CandyData.SpriteIndex = _Index;
 	CandyData.SetPos = _Pos;
+	
 
 	CandyData.SetSpriteColor(_Index);
 	CandyData.SetSpriteType(_Index);
