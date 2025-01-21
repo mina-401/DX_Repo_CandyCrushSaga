@@ -1,6 +1,6 @@
 #include "PreCompile.h"
 #include "CandyManager.h"   
-#include <EngineCore/Level.h>
+#include <EngineCore/Level.h >
 #include <EngineCore/EngineCore.h>
 #include <EngineCore/CameraActor.h>
 #include <EngineCore/SpriteRenderer.h>
@@ -256,12 +256,12 @@ ACandy* ACandyManager::NewCandyCreate()
     
     return NewCandy;
 }
-void ACandyManager::CandyDropAt(ACandy* candy, FVector pos) {
-
-    Candys[pos.X][pos.Y] = candy; 
-    candy->SetPos(pos.X, pos.Y); 
-
-}
+//void ACandyManager::CandyDropAt(ACandy* candy, FVector pos) {
+//
+//    Candys[pos.X][pos.Y] = candy; 
+//    candy->SetPos(pos.X, pos.Y); 
+//
+//}
 void ACandyManager::CandyPlaceAt(int EmptyRow, int Col)
 {
     int row = EmptyRow;
@@ -308,9 +308,7 @@ void ACandyManager::ChangeCandyState(ECandyManagerState _CandyState)
 void ACandyManager::NewCandyDropStart()
 {
 
-    // 빈공간을 일단 찾는다.
-    //ChangeCandyState(ECandyManagerState::Select);
-    //return;
+ 
     if (0 == Empty.size())
     {
         ChangeCandyState(ECandyManagerState::Select);
@@ -319,18 +317,71 @@ void ACandyManager::NewCandyDropStart()
 
     for (int i = 0; i < Empty.size(); i++)
     {
-        ACandy* NewCandy = NewCandyCreate();
 
-        FIntPoint RenderIndex = Empty[i];
-        int SpriteIndex = RandomInt(1, 55);
-        //FVector Pos = Data[RenderIndex.X][RenderIndex.Y].Pos;
-        FVector Pos = Data[RenderIndex.X][RenderIndex.Y].Pos;
+       //int SpriteIndex = RandomInt(1, 55);
+       int SpriteIndex =0;
 
-        NewCandy->SetCandy(RenderIndex, Pos, SpriteIndex);
+       FIntPoint TargetIndex = Empty[i]; //터질 캔디의 인덱스
+       FVector Pos = Data[TargetIndex.X][TargetIndex.Y].Pos; // 위치
+
+       {
+           ACandy* NewCandy = NewCandyCreate();
+           int X = TargetIndex.X; //뉴캔디 인덱스
+           int Y = static_cast<int>(Candys[X].size());
+
+           Pos.Y += static_cast<int>(CandyScale.Y * (X + 1)); // 뉴캔디 위치
+
+           {
+               StageCandyData StageCandy;
+
+               StageCandy.IsActive = true;
+               StageCandy.Pos = Pos;
+
+               Data[X].push_back(StageCandy);
+           }
+
+           NewCandy->SetCandy({ X,Y }, Pos, SpriteIndex);
+
+           Candys[X].push_back(NewCandy);
+       }
+
+       //{
+       //    ACandy* NewCandy = NewCandyCreate();
+       //    int X = static_cast<int>(Candys.size());
+       //    int Y = TargetIndex.Y;
+
+       //    Pos.X += static_cast<int>(CandyScale.X * (Y + 1));
+       //    {
+       //        StageCandyData StageCandy;
+       //        StageCandy.IsActive = true;
+       //        StageCandy.Pos = Pos; 
+
+       //        if (X >= Data.size())
+       //        {
+       //            Data.resize(X+1); // X 인덱스에 해당하는 벡터를 생성
+       //            Data[X].resize(CandyCol);
+       //        }
+
+       //         //if (Y >= Data[X].size())
+       //         //{
+       //         //    Data[X].resize(CandyCol); // CandyCol 크기로 리사이즈
+       //         //}
+
+       //        Data[X][Y] = StageCandy;
+       //    }
+
+       //    NewCandy->SetCandy({ X,Y }, Pos, SpriteIndex);
+       //    if (X >=Candys.size())
+       //    {
+       //       Candys.resize(X+1); // X 인덱스에 해당하는 벡터를 생성
+       //       Candys[X].resize(CandyCol);
+
+       //    }
+       //    Candys[X][Y] = NewCandy;
+       //}
+       
     }
 
-
-    int a = 0;
 
 }
 

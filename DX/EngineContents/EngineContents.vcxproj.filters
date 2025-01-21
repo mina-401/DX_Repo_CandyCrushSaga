@@ -35,6 +35,11 @@
     </ClCompile>
     <ClCompile Include="CandyManager.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="LightGameMode.cpp" />
+    <ClCompile Include="MeshActor.cpp" />
+    <ClCompile Include="MyCustomRenderer.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -73,6 +78,11 @@
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="MyQueue.h" />
     <ClInclude Include="CCSEnums.h" />
+    <ClInclude Include="LightGameMode.h" />
+    <ClInclude Include="MeshActor.h" />
+    <ClInclude Include="MyCustomRenderer.h">
+      <Filter>Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameMode">

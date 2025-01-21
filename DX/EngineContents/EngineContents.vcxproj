@@ -191,7 +191,13 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="LightGameMode.cpp" />
+    <ClCompile Include="MeshActor.cpp" />
     <ClCompile Include="Mouse.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MyCustomRenderer.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -246,7 +252,13 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="LightGameMode.h" />
+    <ClInclude Include="MeshActor.h" />
     <ClInclude Include="Mouse.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="MyCustomRenderer.h">
       <SubType>
       </SubType>
     </ClInclude>

@@ -24,6 +24,10 @@ public:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime);
 
+	ENGINEAPI FVector ScreenMousePosToWorldPosWithOutPos(float _PosZ);
+
+	ENGINEAPI FVector ScreenPosToWorldPosWithOutPos(FVector _Pos, float _PosZ);
+
 	ENGINEAPI FVector ScreenMousePosToWorldPos();
 
 	// 항상 중심을 0,0 으로 보는 마우스 포스 얻는법
@@ -49,6 +53,11 @@ public:
 	void SetFreeCameraSpeed(float _Speed)
 	{
 		FreeSpeed = _Speed;
+	}
+
+	void SetFreeCameraRotSpeed(float _Speed)
+	{
+		RotSpeed = _Speed;
 	}
 	// #endif
 
