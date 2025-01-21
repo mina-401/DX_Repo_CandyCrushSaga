@@ -34,7 +34,7 @@ void ACandyManager::CreateStage(int X, int Y)
         Candys[i].resize(Y);
     }
 
-    FVector SetPos = { -100,100 };
+    
     Data.resize(X);
     for (int i = 0; i < X; i++)
     {
@@ -322,15 +322,16 @@ void ACandyManager::NewCandyDropStart()
        int SpriteIndex =0;
 
        FIntPoint TargetIndex = Empty[i]; //ÅÍÁú ÄµµðÀÇ ÀÎµ¦½º
-       FVector Pos = Data[TargetIndex.X][TargetIndex.Y].Pos; // À§Ä¡
+       FVector Pos = Data[0][TargetIndex.Y].Pos; // À§Ä¡
 
        {
-           int X = TargetIndex.X ; //´ºÄµµð ÀÎµ¦½º
+           int NewX = (CandyRow-1) - TargetIndex.X ; //´ºÄµµð ÀÎµ¦½º
+
+           int X = TargetIndex.X;
            int Y = static_cast<int>(Candys[X].size());
 
-
-           
-           Pos.Y += static_cast<int>(CandyScale.Y * (X + 1)); // ´ºÄµµð À§Ä¡
+ 
+           Pos.Y += static_cast<float>(CandyScale.Y * (NewX + 1)); // ´ºÄµµð À§Ä¡
 
            ACandy* NewCandy = NewCandyCreate();
            {

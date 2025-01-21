@@ -108,7 +108,7 @@ private:
 	std::list<ACandy*> DestroyCandy;
 	std::vector<FIntPoint> Empty;
 	
-	
+	FVector SetPos = { -100,100 };
 
 
 
