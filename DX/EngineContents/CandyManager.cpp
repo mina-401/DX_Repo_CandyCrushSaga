@@ -248,7 +248,6 @@ void ACandyManager::CandyChange(class ACandy* SelectCandy, class ACandy* CurCand
 void ACandyManager::CandyClear()
 {
     DestroyCandy.clear();
-    //DestroyCandy.resize(0);
 }
 ACandy* ACandyManager::NewCandyCreate()
 {
@@ -256,12 +255,7 @@ ACandy* ACandyManager::NewCandyCreate()
     
     return NewCandy;
 }
-//void ACandyManager::CandyDropAt(ACandy* candy, FVector pos) {
-//
-//    Candys[pos.X][pos.Y] = candy; 
-//    candy->SetPos(pos.X, pos.Y); 
-//
-//}
+
 void ACandyManager::CandyPlaceAt(int EmptyRow, int Col)
 {
     int row = EmptyRow;
@@ -318,16 +312,6 @@ FIntPoint TopIndexCheck()
 
 void ACandyManager::NewCandyDropStart()
 {
-    //ChangeCandyState(ECandyManagerState::Move);
- 
-    /*if (0 == Empty.size())
-    {
-        ChangeCandyState(ECandyManagerState::Select);
-        return;
-    }
-
-
-    Empty.clear();*/
 
     for (int col = 0; col < CandyCol; col++)
     {
@@ -357,6 +341,7 @@ void ACandyManager::NewCandyDropStart()
                     {
                         continue;
                     }
+
                     DropData NewData;
                     NewData.Candy = Candys[Newrow][col];
                     NewData.StartPos = Data[Newrow][col].Pos;
@@ -405,7 +390,7 @@ void ACandyManager::NewCandyDropStart()
     }
 
 
-    // 빈공간에 떨어질 캔디
+    // 빈공간애 캔디 드롭
     if (0 != DropCandy.size())
     {
         TimeEventComponent->AddUpdateEvent(1.0f, [this](float _Delta, float _Acc)
@@ -421,106 +406,20 @@ void ACandyManager::NewCandyDropStart()
                 DropCandy.clear();
             });
     }
-
+      
 }
 
 void ACandyManager::NewCandyDrop(float _Delta)
 {
     if (0 == DropCandy.size())
     {
-        int a = 0;
+        ChangeCandyState(ECandyManagerState::Update);
+        return;
+        
     }
 
-    //if (드랍이 끝날때까지 기다리다)
-    //{
-    //}
-
-    int a = 0;
-    //for (int row = 0; row < Candys.size(); row++)
-    //{
-    //    for (int col = CandyCol; col < Candys[row].size(); col++)
-    //    {
-    //        if (nullptr != Candys[row][col])
-    //        {
-    //            ACandy* NewCandy = Candys[row][col];
-    //            FIntPoint TargetIndex = NewCandy->CandyData.TargetIndex;
-    //            FVector Dir = Data[TargetIndex.X][TargetIndex.Y].Pos;
-    //            Dir.Normalize();
-    //            //FIntPoint Pos = Candys[]
-
-    //            NewCandy->SetActorLocation(Dir * DropSpeed * _Delta);
-    // 
-    // 
-    //        }
-
-    //    }
-
-    //}
-
-    //ChangeCandyState(ECandyManagerState::Update);
-     ChangeCandyState(ECandyManagerState::Select);
-    return;
-
    
-    //int EmptyRow = -1;
-
-    //for (int col = 0; col < CandyCol; col++)
-    //{
-    //    //제일 아래칸부터 시작한다
-    //    for (int row = CandyRow - 1; row >= 0; row--)
-    //    {
-    //        if (false == Data[row][col].IsActive) {
-    //            
-    //            continue;
-    //        }
-
-    //        if (nullptr == Candys[row][col])
-    //        {
-    //            // 처음으로 비어있는 칸
-    //            if(-1 == EmptyRow) EmptyRow = row;
-    //        }
-
-    //        else if (-1 != EmptyRow)
-    //        {
-    //            Candys[EmptyRow][col] = Candys[row][col];
-
-    //           // 위에서 가장 가까운 캔디, 아래로 내린다.
-    //           /*TimeEventComponent->AddUpdateEvent(CCSConst::MoveTime, [this, EmptyRow,row,col](float _Delta, float _Acc)
-    //            { */ 
-
-    //                //FVector StartPos = Data[row][col].Pos;
-    //               // FVector EndPos = Data[EmptyRow][col].Pos;
-
-    //              // Candys[EmptyRow][col]->GetCandyData().SetPos = FVector::Lerp(StartPos, EndPos, _Acc * 1 / CCSConst::MoveTime);
-    //            //});
-
-    //            //TimeEventComponent->AddEndEvent(CCSConst::MoveTime, [this, EmptyRow,row, col]()
-    //            //{
-    //                Candys[EmptyRow][col]->CandyData.row = EmptyRow;
-    //                Candys[EmptyRow][col]->CandyData.col = col;
-    //                Candys[EmptyRow][col]->CandyData.SetPos= Data[EmptyRow][col].Pos;
-    //                Candys[row][col] = nullptr;
-
-
-    //           //});
-
-    //            EmptyRow -= 1;
-
-    //        }
-    //    }
-
-    //   if (-1 != EmptyRow) {
-
-
-    //       // 비어있는 칸에 배치
-    //       CandyPlaceAt(EmptyRow,col);
-    //       
-
-    //    }
-    //    EmptyRow = -1;
-    //}
-
-    //CandyFindConsec();
+    
 
     //if (false == IsCandyDestroy())
     //{
@@ -538,11 +437,25 @@ void ACandyManager::NewCandyDrop(float _Delta)
 }
 void ACandyManager::UpdateStart()
 {
+    CandyFindConsec();
+
+    if (true == IsCandyDestroy())
+    {
+        //콤보 캔디가 있다.
+        ChangeCandyState(ECandyManagerState::Destroy);
+        return;
+    }
 
 }
 void ACandyManager::Update(float _DeltaTime)
 {
-    
+    if (false == IsCandyDestroy())
+    {
+        ChangeCandyState(ECandyManagerState::Select);
+        return;
+    }
+
+   
 }
 void ACandyManager::CandyDestroyStart()
 {
