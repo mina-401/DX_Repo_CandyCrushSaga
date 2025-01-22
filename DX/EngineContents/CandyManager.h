@@ -125,7 +125,7 @@ private:
 	//FVector LeftTop = { -50,-100 };
 
 	float DropSpeed = 50.0f;
-	bool IsChange = false;
+	bool IsDropCandy = false;
 
 
 

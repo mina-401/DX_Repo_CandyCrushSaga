@@ -357,9 +357,6 @@ void ACandyManager::NewCandyDropStart()
                     {
                         continue;
                     }
-
-
-                    // Candys[row][col]->CandyData.SetPos = Data[row][col].Pos;
                     DropData NewData;
                     NewData.Candy = Candys[Newrow][col];
                     NewData.StartPos = Data[Newrow][col].Pos;
@@ -375,24 +372,40 @@ void ACandyManager::NewCandyDropStart()
             }
         }
     }
+    int NewCandyRow=CandyRow;
 
-    for (int col = 0; col < CandyCol; col++)
+    // 새로운 캔디를 맨위에 생성한다
+    for (int row = 0; row < CandyRow; row++)
+    
     {
 
-        for (int row = 0; row < CandyRow; row++)
+        for (int col = 0; col < CandyCol; col++)
+        
         {
             if (nullptr == Candys[row][col] && Data[row][col].IsActive == true)
             {
                 int Index = RandomInt(1, 55);
                 ACandy* NewCandy = NewCandyCreate();
-                NewCandy->SetCandy({ row,col }, IndexToWorldPos({ CandyRow, col }), Index);
+                NewCandy->SetCandy({ row,col }, IndexToWorldPos({ NewCandyRow, col }), Index);
+
+                DropData NewData;
+                NewData.Candy = NewCandy;
+                NewData.StartPos = NewCandy->CandyData.SetPos;
+                NewData.EndPos = Data[row][col].Pos;
+                DropCandy.push_back(NewData);
                 
+                IsDropCandy = true;                      
             }
         }
-        
+        if (IsDropCandy == true)
+        {
+            NewCandyRow++;
+            IsDropCandy = false;
+        }
     }
 
 
+    // 빈공간에 떨어질 캔디
     if (0 != DropCandy.size())
     {
         TimeEventComponent->AddUpdateEvent(1.0f, [this](float _Delta, float _Acc)
