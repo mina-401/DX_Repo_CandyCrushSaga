@@ -92,8 +92,8 @@ public:
 	void ColCheck(int X, int Y);
 
 	 std::vector<std::vector<class ACandy*>> Candys;
-	 int CandyRow = 0;
-	 int CandyCol = 0;
+	 int CandyRow = 0; //Y
+	 int CandyCol = 0; //X
 	 int Combo = 0;
 
 	 StageCombo CandyCombo;
@@ -121,7 +121,8 @@ private:
 
 	std::vector<DropData> DropCandy;
 	
-	FVector LeftTop = { -50,100 };
+	FVector LeftBottom = { -50,-100 };
+	//FVector LeftTop = { -50,-100 };
 
 	float DropSpeed = 50.0f;
 	bool IsChange = false;

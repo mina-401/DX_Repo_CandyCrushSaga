@@ -35,7 +35,7 @@ void ACandyManager::CreateStage(int X, int Y)
     }
 
     
-    FVector SetPos = LeftTop;
+    FVector SetPos = LeftBottom;
 
     Data.resize(X);
     for (int i = 0; i < X; i++)
@@ -43,11 +43,11 @@ void ACandyManager::CreateStage(int X, int Y)
         Data[i].resize(Y);
         for (int y = 0; y < Y; y++)
         {
-            Data[i][y].Pos = { (SetPos.X),SetPos.Y };
+            Data[i][y].Pos = { SetPos.X,SetPos.Y };
             SetPos.X += CandyScale.X;
         }
-        SetPos.X = LeftTop.X;
-        SetPos.Y -= CandyScale.Y;
+        SetPos.X = LeftBottom.X;
+        SetPos.Y += CandyScale.Y;
     }
 
     // SetPos = { -100,100 };
@@ -283,7 +283,7 @@ void ACandyManager::CandyPlaceAt(int EmptyRow, int Col)
 
 FVector ACandyManager::IndexToWorldPos(FIntPoint _Index)
 {
-    return LeftTop + float4(_Index.X * CandyScale.X, -_Index.Y * CandyScale.Y);
+    return LeftBottom + float4(_Index.Y * CandyScale.Y, _Index.X * CandyScale.X);
 }
 
 void ACandyManager::ChangeCandyState(ECandyManagerState _CandyState)
@@ -332,21 +332,21 @@ void ACandyManager::NewCandyDropStart()
     for (int col = 0; col < CandyCol; col++)
     {
         //제일 아래칸부터 시작한다
-        for (int row = CandyRow - 1; row >= 0; row--)
+        for (int row = 0; row < CandyRow; row++)
         {
             if (false == Data[row][col].IsActive) {
                 
                 continue;
-            }
+            }  
     
             if (nullptr == Candys[row][col])
             {
-                if (0 > row - 1)
+                if (CandyRow < row + 1)
                 {
                     continue;
                 }
 
-                for (int Newrow = row - 1; Newrow >= 0; Newrow--)
+                for (int Newrow = row + 1; Newrow < CandyRow; Newrow++)
                 {
                     if (false == Data[Newrow][col].IsActive)
                     {
@@ -376,20 +376,20 @@ void ACandyManager::NewCandyDropStart()
         }
     }
 
-
-
     for (int col = 0; col < CandyCol; col++)
     {
-        //제일 아래칸부터 시작한다
-        for (int row = CandyRow - 1; row >= 0; row--)
+
+        for (int row = 0; row < CandyRow; row++)
         {
             if (nullptr == Candys[row][col] && Data[row][col].IsActive == true)
             {
                 int Index = RandomInt(1, 55);
                 ACandy* NewCandy = NewCandyCreate();
-                NewCandy->SetCandy({ row,col }, IndexToWorldPos({-1, col  }), Index);
+                NewCandy->SetCandy({ row,col }, IndexToWorldPos({ CandyRow, col }), Index);
+                
             }
         }
+        
     }
 
 
