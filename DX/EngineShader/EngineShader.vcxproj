@@ -20,10 +20,15 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="EngineDebugCollisionShader.fx" />
+    <FxCompile Include="EngineMeshLightShader.fx" />
     <FxCompile Include="EngineSpriteShader.fx" />
     <FxCompile Include="EngineTargetMergeShader.fx" />
     <FxCompile Include="EngineTileMapShader.fx" />
     <FxCompile Include="TestEngineSpriteShader.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Light.hlsli" />
+    <None Include="Transform.hlsli" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

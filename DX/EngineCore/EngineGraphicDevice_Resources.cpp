@@ -11,6 +11,7 @@
 #include "EngineFont.h"
 #include "EngineDepthStencilState.h"
 
+
 void UEngineGraphicDevice::DefaultResourcesInit()
 {
 	DepthStencilInit();
@@ -456,17 +457,23 @@ void UEngineGraphicDevice::MaterialInit()
 		Mat->SetPixelShader("EngineTileMapShader.fx");
 	}
 
-	//{
-	//	std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("TileMapInst");
-	//	Mat->SetVertexShader("EngineTileMapInstShader.fx");
-	//	Mat->SetPixelShader("EngineTileMapInstShader.fx");
-	//}
+	{
+		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("TileMapInst");
+		Mat->SetVertexShader("EngineTileMapInstShader.fx");
+		Mat->SetPixelShader("EngineTileMapInstShader.fx");
+	}
 
 	{
 		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("TargetMerge");
 		Mat->SetVertexShader("EngineTargetMergeShader.fx");
 		Mat->SetPixelShader("EngineTargetMergeShader.fx");
 		Mat->SetDepthStencilState("TargetMerge");
+	}
+
+	{
+		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("LightMesh");
+		Mat->SetVertexShader("EngineMeshLightShader.fx");
+		Mat->SetPixelShader("EngineMeshLightShader.fx");
 	}
 
 

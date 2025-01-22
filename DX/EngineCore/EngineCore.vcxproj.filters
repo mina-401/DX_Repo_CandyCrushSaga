@@ -157,6 +157,8 @@
     <ClCompile Include="GameInstance.cpp" />
     <ClCompile Include="FontRenderer.cpp" />
     <ClCompile Include="EngineStructuredBuffer.cpp" />
+    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="LightActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -327,6 +329,8 @@
     <ClInclude Include="GameInstance.h" />
     <ClInclude Include="FontRenderer.h" />
     <ClInclude Include="EngineStructuredBuffer.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="LightActor.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">

@@ -37,6 +37,8 @@ void URenderUnit::MaterialResourcesCheck()
 
 	if (nullptr != TransformObject)
 	{
+		// 트랜스폼
+
 		for (EShaderType i = EShaderType::VS; i < EShaderType::MAX; i = static_cast<EShaderType>(static_cast<int>(i) + 1))
 		{
 			if (false == Resources.contains(i))
@@ -49,9 +51,25 @@ void URenderUnit::MaterialResourcesCheck()
 				continue;
 			}
 
-
 			FTransform& Ref = TransformObject->GetTransformRef();
 			Resources[i].ConstantBufferLinkData("FTransform", Ref);
+		}
+
+
+		for (EShaderType i = EShaderType::VS; i < EShaderType::MAX; i = static_cast<EShaderType>(static_cast<int>(i) + 1))
+		{
+			if (false == Resources.contains(i))
+			{
+				continue;
+			}
+
+			if (false == Resources[i].IsConstantBuffer("FLightDatas"))
+			{
+				continue;
+			}
+
+			FLightDatas& Data = ParentRenderer->GetWorld()->GetLightDatasRef();
+			Resources[i].ConstantBufferLinkData("FLightDatas", Data);
 		}
 
 	}
@@ -72,6 +90,25 @@ void URenderUnit::ConstantBufferLinkData(std::string_view _Name, void* _Data)
 		}
 
 		Resources[i].ConstantBufferLinkData(_Name, _Data);
+	}
+}
+
+
+void URenderUnit::StructuredBufferLinkData(std::string_view _Name, UINT _Count, void* _Data)
+{
+	for (EShaderType i = EShaderType::VS; i < EShaderType::MAX; i = static_cast<EShaderType>(static_cast<int>(i) + 1))
+	{
+		if (false == Resources.contains(i))
+		{
+			continue;
+		}
+
+		if (false == Resources[i].IsStructuredBuffer(_Name))
+		{
+			continue;
+		}
+
+		Resources[i].StructuredBufferLinkData(_Name, _Count, _Data);
 	}
 }
 
@@ -229,6 +266,43 @@ void URenderUnit::Render(class UEngineCamera* _Camera, float _DeltaTime)
 	Material->GetDepthStencilState()->Setting();
 
 	UEngineCore::GetDevice().GetContext()->DrawIndexed(Mesh->GetIndexBuffer()->GetIndexCount(), 0, 0);
+}
+
+void URenderUnit::RenderInst(class UEngineCamera* _Camera, UINT _InstCount, float _DeltaTime)
+{
+
+	for (std::pair<const EShaderType, UEngineShaderResources>& Pair : Resources)
+	{
+		Pair.second.Setting();
+	}
+
+	//	InputAssembler1Setting();
+	Mesh->GetVertexBuffer()->Setting();
+
+	//	VertexShaderSetting();
+	Material->GetVertexShader()->Setting();
+
+	//	InputAssembler2Setting();
+	Mesh->GetIndexBuffer()->Setting();
+	Material->PrimitiveTopologySetting();
+
+	UEngineCore::GetDevice().GetContext()->IASetInputLayout(InputLayOut.Get());
+
+	//	RasterizerSetting();
+	Material->GetRasterizerState()->Setting();
+
+	//	PixelShaderSetting();
+	Material->GetPixelShader()->Setting();
+
+	//	OutPutMergeSetting();
+	// 랜더타겟이라는 것을 바뀔겁니다.
+	Material->GetBlend()->Setting();
+
+	Material->GetDepthStencilState()->Setting();
+
+	// FBX 매쉬특성
+	// 애니메이션 인스턴싱
+	UEngineCore::GetDevice().GetContext()->DrawIndexedInstanced(Mesh->GetIndexBuffer()->GetIndexCount(), _InstCount, 0, 0, 0);
 }
 
 void URenderUnit::InputLayOutCreate()

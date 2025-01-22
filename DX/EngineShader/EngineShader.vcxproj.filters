@@ -6,5 +6,10 @@
     <FxCompile Include="EngineDebugCollisionShader.fx" />
     <FxCompile Include="EngineTargetMergeShader.fx" />
     <FxCompile Include="TestEngineSpriteShader.fx" />
+    <FxCompile Include="EngineMeshLightShader.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Light.hlsli" />
+    <None Include="Transform.hlsli" />
   </ItemGroup>
 </Project>

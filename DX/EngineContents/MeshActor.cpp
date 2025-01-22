@@ -13,16 +13,17 @@ AMeshActor::AMeshActor()
 
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
-
+	RootComponent->Parent;
 
 	// 사이드 이펙트.
 	std::shared_ptr<URenderer> Renderer = CreateDefaultSubObject<URenderer>();
 	Renderer->SetupAttachment(RootComponent);
 	Renderer->CreateRenderUnit();
+	Renderer->Parent;
 
 	URenderUnit& Unit = Renderer->GetRenderUnit();
 	Unit.SetMesh("Sphere");
-	Unit.SetMaterial("Test");
+	Unit.SetMaterial("LightMesh");
 
 	// 
 
@@ -51,4 +52,4 @@ void AMeshActor::Tick(float _DeltaTime)
 	}
 
 	// AddActorRotation({0.0f, 0.0f, 360.0f * _DeltaTime });
-}	
+}

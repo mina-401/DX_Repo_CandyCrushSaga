@@ -95,6 +95,11 @@ public:
 		return Transform.WorldLocation;
 	}
 
+	FVector GetWorldForwardVector()
+	{
+		return Transform.GetWorldFoward();
+	}
+
 	FTransform& GetTransformRef()
 	{
 		return Transform;
@@ -108,12 +113,12 @@ public:
 
 	ENGINEAPI void TransformUpdate();
 
+	UTransformObject* Parent = nullptr;
 protected:
 	bool IsAbsolute = false;
 
 	FTransform Transform;
 	void ParentMatrixCheck();
-	UTransformObject* Parent = nullptr;
 	std::list<UTransformObject*> Childs;
 };
 

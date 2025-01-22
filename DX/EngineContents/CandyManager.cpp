@@ -61,7 +61,6 @@ void ACandyManager::DeleteIndex(int X, int Y)
 void ACandyManager::CandyCreate()
 {
     {
-        //FVector SetPos = { -100,100 };
         for (int row = 0; row < CandyRow; row++)
         {
 
@@ -80,8 +79,6 @@ void ACandyManager::CandyCreate()
                     Candys[row][col] = NewCandy.get();
                 }
             }
-           // SetPos.X = -100;
-            //SetPos.Y -= CandyScale.Y;
 
 
         }
@@ -315,14 +312,14 @@ void ACandyManager::NewCandyDropStart()
 {
     //ChangeCandyState(ECandyManagerState::Move);
  
-    if (0 == Empty.size())
+    /*if (0 == Empty.size())
     {
         ChangeCandyState(ECandyManagerState::Select);
         return;
     }
 
 
-    Empty.clear();
+    Empty.clear();*/
 
     for (int col = 0; col < CandyCol; col++)
     {
@@ -353,13 +350,14 @@ void ACandyManager::NewCandyDropStart()
                         continue;
                     }
 
-                    // Candys[Newrow][col]->CandyData = Candys[row][col];
-
-                    Candys[row][col] = Candys[Newrow][col];
+                    Candys[row][col] = Candys[Newrow][col];                  
+                    Candys[row][col]->CandyData.SetPos = Data[row][col].Pos;
                     Candys[Newrow][col] = nullptr;
-                    Candys[Newrow][col];
-                    Candys[Newrow][col]->CandyData.SetPos = Data[Newrow][col].Pos;
+                    
+                    break;
+                    
                 }
+
             }
         }
     }
@@ -429,7 +427,7 @@ void ACandyManager::NewCandyDrop(float _Delta)
     //}
 
     //ChangeCandyState(ECandyManagerState::Update);
-    // ChangeCandyState(ECandyManagerState::Select);
+     ChangeCandyState(ECandyManagerState::Select);
     return;
 
    
@@ -523,7 +521,7 @@ void ACandyManager::CandyDestroy()
 {
     for (ACandy* Candy : DestroyCandy)
     {
-        Empty.push_back({ Candy->CandyData.row,Candy->CandyData.col });
+       // Empty.push_back({ Candy->CandyData.row,Candy->CandyData.col });
 
         Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
         Candy->Destroy();

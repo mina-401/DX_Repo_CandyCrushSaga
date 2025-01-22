@@ -11,12 +11,6 @@
 #include "EngineFont.h"
 #include "EngineRenderTarget.h"
 
-// 플레이어 Renderer
-
-// 카메라 1 Renderer
-// 카메라 2 Renderer
-
-
 
 std::shared_ptr<class ACameraActor> ULevel::SpawnCamera(int _Order)
 {
@@ -37,7 +31,8 @@ ULevel::ULevel()
 {
 	SpawnCamera(EEngineCameraType::MainCamera);
 
-	SpawnCamera(EEngineCameraType::UICamera);
+	std::shared_ptr<ACameraActor> UICamera = SpawnCamera(EEngineCameraType::UICamera);
+	UICamera->GetCameraComponent()->SetProjectionType(EProjectionType::Orthographic);
 
 	LastRenderTarget = std::make_shared<UEngineRenderTarget>();
 	LastRenderTarget->CreateTarget(UEngineCore::GetScreenScale());
@@ -130,6 +125,9 @@ void ULevel::Render(float _DeltaTime)
 
 	LastRenderTarget->Clear();
 
+	// 레벨이 카메라로 랜더하기 전에
+
+
 	for (std::pair<const int, std::shared_ptr<ACameraActor>>& Camera : Cameras)
 	{
 		if (Camera.first == static_cast<int>(EEngineCameraType::UICamera))
@@ -142,10 +140,20 @@ void ULevel::Render(float _DeltaTime)
 			continue;
 		}
 
+		LightDatas.Count = 0;
+		// 랜더링하기 직전에 라이트들을 그 카메라 맞춰서 다 업데이트 시켜준다.
+		for (size_t i = 0; i < Lights.size(); i++)
+		{
+			Lights[i]->LightUpdate(Camera.second->GetCameraComponent().get(), _DeltaTime);
+			++LightDatas.Count;
+			LightDatas.LightArr[i] = Lights[i]->LightData;
+		}
+
 		Camera.second->Tick(_DeltaTime);
 		Camera.second->GetCameraComponent()->Render(_DeltaTime);
 
 		// 난 다 그려졌으니 
+		// MainCamera RenderTarget
 		Camera.second->GetCameraComponent()->CameraTarget->MergeTo(LastRenderTarget);
 	}
 
@@ -225,6 +233,11 @@ void ULevel::ChangeRenderGroup(int _CameraOrder, int _PrevGroupOrder, std::share
 	std::shared_ptr<ACameraActor> Camera = Cameras[_CameraOrder];
 
 	Camera->GetCameraComponent()->ChangeRenderGroup(_PrevGroupOrder, _Renderer);
+}
+
+void ULevel::PushLight(std::shared_ptr<ULight> _Light)
+{
+	Lights.push_back(_Light);
 }
 
 void ULevel::CreateCollisionProfile(std::string_view _ProfileName)

@@ -2,12 +2,15 @@
 
 #include <EngineBase/Object.h>
 #include <EngineBase/EngineDebug.h>
+#include "Light.h"
 
 // 설명 :
 class ULevel : public UObject
 {
+	friend class URenderUnit;
 	friend class UCollision;
 	friend class UEngineCore;
+	friend class ULight;
 
 public:
 	// constrcuter destructer
@@ -142,6 +145,9 @@ public:
 
 	ENGINEAPI void LinkCollisionProfile(std::string_view _LeftProfileName, std::string_view _RightProfileName);
 
+	// light를 가지고 있는 LightActor가 Level을 가지고 있지 않기 때문에 위험하지는
+	ENGINEAPI void PushLight(std::shared_ptr<class ULight> _Light);
+
 	// #ifdef _DEBUG
 		// 에디터에서는 빠른지 느린지를 따지지 않는다.
 		// 에디터기능을 만들때는 최적화를 신경안쓰는 경우가 많다.
@@ -201,6 +207,10 @@ private:
 	// 모든 카메라가 바라본 이미지를 섞은 타겟
 	std::shared_ptr<class UEngineRenderTarget> LastRenderTarget;
 
+	// 빛은 order가 필요없습니다. 빛의 최종결과물은 모든 빛의 연산결과의 +
+	std::vector<std::shared_ptr<class ULight>> Lights;
+	FLightDatas LightDatas;
+
 	// 빌드하기전에 string Hash화 라는 작업을 통해서 다 숫자로 
 	// 면접때 하기 좋은 이야기
 	std::map<std::string, std::list<std::shared_ptr<class UCollision>>> Collisions;
@@ -211,6 +221,12 @@ private:
 	std::map<std::string, std::list<std::string>> CollisionLinks;
 
 
+
 	ENGINEAPI void InitLevel(AGameMode* _GameMode, APawn* _Pawn, AHUD* _HUD);
+
+	FLightDatas& GetLightDatasRef()
+	{
+		return LightDatas;
+	}
 };
 

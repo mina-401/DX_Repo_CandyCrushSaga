@@ -112,6 +112,7 @@ private:
 	
 	FVector SetPos = { -100,100 };
 	float DropSpeed = 50.0f;
+	bool IsChange = false;
 
 
 
