@@ -35,19 +35,22 @@ void ACandyManager::CreateStage(int X, int Y)
     }
 
     
+    FVector SetPos = LeftTop;
+
     Data.resize(X);
     for (int i = 0; i < X; i++)
     {
         Data[i].resize(Y);
         for (int y = 0; y < Y; y++)
         {
-            Data[i][y].Pos = { (SetPos.X += CandyScale.X),SetPos.Y };
+            Data[i][y].Pos = { (SetPos.X),SetPos.Y };
+            SetPos.X += CandyScale.X;
         }
-        SetPos.X = -100;
+        SetPos.X = LeftTop.X;
         SetPos.Y -= CandyScale.Y;
     }
 
-    //
+    // SetPos = { -100,100 };
     
 
 }
@@ -278,6 +281,11 @@ void ACandyManager::CandyPlaceAt(int EmptyRow, int Col)
     }
 }
 
+FVector ACandyManager::IndexToWorldPos(FIntPoint _Index)
+{
+    return LeftTop + float4(_Index.X * CandyScale.X, -_Index.Y * CandyScale.Y);
+}
+
 void ACandyManager::ChangeCandyState(ECandyManagerState _CandyState)
 {
 
@@ -350,10 +358,16 @@ void ACandyManager::NewCandyDropStart()
                         continue;
                     }
 
+
+                    // Candys[row][col]->CandyData.SetPos = Data[row][col].Pos;
+                    DropData NewData;
+                    NewData.Candy = Candys[Newrow][col];
+                    NewData.StartPos = Data[Newrow][col].Pos;
+                    NewData.EndPos = Data[row][col].Pos;
+                    DropCandy.push_back(NewData);
+
                     Candys[row][col] = Candys[Newrow][col];                  
-                    Candys[row][col]->CandyData.SetPos = Data[row][col].Pos;
                     Candys[Newrow][col] = nullptr;
-                    
                     break;
                     
                 }
@@ -363,46 +377,50 @@ void ACandyManager::NewCandyDropStart()
     }
 
 
-    //for (int i = 0; i < Empty.size(); i++)
-    //{
-    //   int SpriteIndex = RandomInt(1, 55);
 
-    //   FIntPoint TargetIndex = Empty[i]; //터질 캔디의 인덱스
-    //   FVector Pos = Data[0][TargetIndex.Y].Pos; // 위치
+    for (int col = 0; col < CandyCol; col++)
+    {
+        //제일 아래칸부터 시작한다
+        for (int row = CandyRow - 1; row >= 0; row--)
+        {
+            if (nullptr == Candys[row][col] && Data[row][col].IsActive == true)
+            {
+                int Index = RandomInt(1, 55);
+                ACandy* NewCandy = NewCandyCreate();
+                NewCandy->SetCandy({ row,col }, IndexToWorldPos({-1, col  }), Index);
+            }
+        }
+    }
 
-    //   {
-    //       int NewX = (CandyRow-1) - TargetIndex.X ; //뉴캔디 인덱스
 
-    //       int X = TargetIndex.X;
-    //       int Y = static_cast<int>(Candys[X].size());
+    if (0 != DropCandy.size())
+    {
+        TimeEventComponent->AddUpdateEvent(1.0f, [this](float _Delta, float _Acc)
+            {
+                for (size_t i = 0; i < DropCandy.size(); i++)
+                {
+                    DropCandy[i].Candy->CandyData.SetPos = FVector::Lerp(DropCandy[i].StartPos, DropCandy[i].EndPos, _Acc);
+                }
+            });
 
- 
-    //       Pos.Y += static_cast<float>(CandyScale.Y * (NewX + 1)); // 뉴캔디 위치
-    //      // FVector TargetPos = Data[TargetIndex.X][TargetIndex.Y].Pos;
-    //       ACandy* NewCandy = NewCandyCreate();
-    //       {
-    //           StageCandyData StageCandy;
+        TimeEventComponent->AddEndEvent(1.0f, [this]()
+            {
+                DropCandy.clear();
+            });
+    }
 
-    //           StageCandy.IsActive = true;
-    //           StageCandy.Pos = Pos;
-    //          // StageCandy. = TargetPos;
-
-    //           Data[X].push_back(StageCandy);
-    //       }
-
-    //       NewCandy->SetCandy({ X,Y }, Pos, SpriteIndex);
-    //       NewCandy->CandyData.TargetIndex = TargetIndex;
-
-    //       Candys[X].push_back(NewCandy);
-    //   }
-    //   
-    //}
-
-    // Empty.clear();
 }
 
 void ACandyManager::NewCandyDrop(float _Delta)
 {
+    if (0 == DropCandy.size())
+    {
+        int a = 0;
+    }
+
+    //if (드랍이 끝날때까지 기다리다)
+    //{
+    //}
 
     int a = 0;
     //for (int row = 0; row < Candys.size(); row++)

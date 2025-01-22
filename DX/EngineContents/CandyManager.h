@@ -29,6 +29,13 @@ public:
 	}
 };
 
+class DropData
+{
+public:
+	class ACandy* Candy;
+	FVector StartPos;
+	FVector EndPos;
+};
 
 class StageCombo
 {
@@ -99,6 +106,8 @@ public:
 
 	 void ChangeCandyState(ECandyManagerState _CandyState);
 
+	 FVector IndexToWorldPos(FIntPoint _Index);
+
 protected:
 	void BeginPlay() override;
 
@@ -109,8 +118,11 @@ private:
 	std::vector<std::vector<StageCandyData>> Data;
 	std::list<ACandy*> DestroyCandy;
 	std::vector<FIntPoint> Empty;
+
+	std::vector<DropData> DropCandy;
 	
-	FVector SetPos = { -100,100 };
+	FVector LeftTop = { -50,100 };
+
 	float DropSpeed = 50.0f;
 	bool IsChange = false;
 
@@ -144,6 +156,5 @@ public:
 		// std::mt19937_64 메르헨 트위스터 알고리즘 써서 만들어줘.
 		return RandomCreate.operator()(MtGen);
 	}
-
 };
 
