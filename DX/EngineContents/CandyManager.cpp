@@ -397,7 +397,6 @@ void ACandyManager::NewCandyDropStart()
         }
     }
     
-
     // ºó°ø°£¾Ö Äµµð µå·Ó
     if (0 != DropCandy.size())
     {
@@ -411,40 +410,20 @@ void ACandyManager::NewCandyDropStart()
 
         TimeEventComponent->AddEndEvent(CCSConst::DropTime, [this]()
             {
-               
                 DropCandy.clear();
             });
     }
-      
 }
 
 void ACandyManager::NewCandyDrop(float _Delta)
 {
-    /*ChangeCandyState(ECandyManagerState::Select);
-    return;*/
+
     if (0 == DropCandy.size())
     {
         ChangeCandyState(ECandyManagerState::Update);
         return;
         
     }
-
-   
-    
-
-    //if (false == IsCandyDestroy())
-    //{
-    //    ChangeCandyState(ECandyManagerState::Select);
-    //    return;
-    //}
-    //else
-    //{
-    //    ChangeCandyState(ECandyManagerState::Destroy);
-    //    return;
-    //}
-
-    //ChangeCandyState(ECandyManagerState::Select);
-   //return;
 }
 void ACandyManager::UpdateStart()
 {
@@ -456,17 +435,15 @@ void ACandyManager::UpdateStart()
         ChangeCandyState(ECandyManagerState::Destroy);
         return;
     }
-    if (false == IsCandyDestroy())
+    else
     {
         ChangeCandyState(ECandyManagerState::Select);
         return;
     }
-
 }
 void ACandyManager::Update(float _DeltaTime)
 {
-    
-   
+    //
 }
 void ACandyManager::CandyDestroyStart()
 {
@@ -516,6 +493,5 @@ void ACandyManager::Tick(float _DeltaTime)
         break;
     }
 
-    Candys;
 }
 
