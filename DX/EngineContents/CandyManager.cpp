@@ -325,6 +325,7 @@ void ACandyManager::NewCandyDropStart()
     
             if (nullptr == Candys[row][col])
             {
+                //5 < 4+1
                 if (CandyRow < row + 1)
                 {
                     continue;
@@ -348,7 +349,12 @@ void ACandyManager::NewCandyDropStart()
                     NewData.EndPos = Data[row][col].Pos;
                     DropCandy.push_back(NewData);
 
-                    Candys[row][col] = Candys[Newrow][col];                  
+                    //綴奢除           // 襄營ж朝 警蛤 奢除
+                    Candys[row][col] = Candys[Newrow][col];   
+                    
+
+                    Candys[row][col]->CandyData.row = row;
+                    Candys[row][col]->CandyData.col = col;
                     Candys[Newrow][col] = nullptr;
                     break;
                     
@@ -414,6 +420,8 @@ void ACandyManager::NewCandyDropStart()
 
 void ACandyManager::NewCandyDrop(float _Delta)
 {
+    /*ChangeCandyState(ECandyManagerState::Select);
+    return;*/
     if (0 == DropCandy.size())
     {
         ChangeCandyState(ECandyManagerState::Update);
@@ -508,5 +516,6 @@ void ACandyManager::Tick(float _DeltaTime)
         break;
     }
 
+    Candys;
 }
 
