@@ -221,7 +221,7 @@ void ACandyManager::CandyFindConsec()
         }
     }
 }
-void ACandyManager::CascadeCandyExplosion()
+void ACandyManager::CandyCascadeExplosion()
 {
 
 }
@@ -424,6 +424,8 @@ void ACandyManager::NewCandyDrop(float _Delta)
         
     }
 }
+
+
 void ACandyManager::PushDestroyCandy(int _row, int _col, ESpriteType SpriteType)
 {
     int BottomRow = _row;
@@ -511,8 +513,7 @@ void ACandyManager::CandyDestroyStart()
     for (ACandy* Candy : DestroyCandy)
     {
         {
-            // 이미 파괴되어 있다면
-          
+            if (Candy == nullptr) continue;
 
             Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
 

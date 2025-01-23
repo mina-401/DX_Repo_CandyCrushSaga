@@ -78,7 +78,7 @@ public:
 	void CandyCreate();
 	bool IsCandyDestroy();
 	void CandyFindConsec();
-	void CascadeCandyExplosion();
+	void CandyCascadeExplosion();
 	void CandyDestroyCheck();
 	void CandyChange(class  ACandy* SelectCandy, class ACandy* CurCandy);
 	void CandyClear();
@@ -133,7 +133,7 @@ private:
 	std::vector<ACandy*> NewCandys;
 	std::vector<ACandy*> DestroySpecialCandy;
 	
-	FVector LeftBottom = { -50,-100 };
+	FVector LeftBottom = { -100,-200 };
 	//FVector LeftTop = { -50,-100 };
 
 	float DropSpeed = 50.0f;

@@ -97,7 +97,7 @@ void APlayGameMode::BeginPlay()
 
 		CandyManager = dynamic_cast<ACandyManager*>(GetWorld()->GetMainPawn());
 
-		CandyManager->CreateStage(5, 5);
+		CandyManager->CreateStage(8, 8);
 		CandyManager->DeleteIndex(0, 0);
 		CandyManager->CandyCreate();
 
