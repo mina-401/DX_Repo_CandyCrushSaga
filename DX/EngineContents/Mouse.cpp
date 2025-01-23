@@ -192,7 +192,7 @@ void AMouse::Tick(float _DeltaTime)
 	FVector Pos = Camera->ScreenMousePosToWorldPos();
 	Pos.Z = 0.0f;
 
-	SetActorLocation(Pos);
+	SetActorLocation(Pos); 
 }
 
 
