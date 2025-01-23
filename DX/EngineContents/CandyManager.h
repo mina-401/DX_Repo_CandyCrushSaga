@@ -3,12 +3,13 @@
 #include <random>
 //#include "Queue.h"
 #include <queue>
+#include "CCSEnums.h"
 
 class StageCandyData
 {
 public:
 	bool IsActive = true;
-	FVector Pos;
+	FVector Pos = { -1,-1 };
 	//FVector TargetPos = { -1,-1 };
 
 	bool operator==(std::nullptr_t) const
@@ -37,12 +38,17 @@ public:
 	FVector EndPos;
 };
 
-class StageCombo
+class StageMapData
 {
 public:
-	int Combo = 0;
+	int Combo;
+	int Bonus;
 
-
+	
+};
+class CandyBlock
+{
+	int Count = 0;
 };
 
 enum class ECandyManagerState
@@ -72,15 +78,19 @@ public:
 	void CandyCreate();
 	bool IsCandyDestroy();
 	void CandyFindConsec();
+	void CascadeCandyExplosion();
+	void CandyDestroyCheck();
 	void CandyChange(class  ACandy* SelectCandy, class ACandy* CurCandy);
 	void CandyClear();
-	void CandyPlaceAt(int EmptyRow,int Col);
+
 	//void CandyDropAt(ACandy* candy, FVector pos);
 	void CandyDestroy();
 	ACandy* NewCandyCreate();
 
 	void NewCandyDropStart();
 	void NewCandyDrop(float _Delta);
+
+	void PushDestroyCandy(int _row, int _col,ESpriteType SpriteType);
 
 	void UpdateStart();
 	void Update(float _DeltaTime);
@@ -96,7 +106,7 @@ public:
 	 int CandyCol = 0; //X
 	 int Combo = 0;
 
-	 StageCombo CandyCombo;
+	 StageMapData StageData;
 	 FVector CandyScale = { 50,50 };
 
 	 ECandyManagerState GetCandyState()
@@ -120,6 +130,8 @@ private:
 	std::vector<FIntPoint> Empty;
 
 	std::vector<DropData> DropCandy;
+	std::vector<ACandy*> NewCandys;
+	std::vector<ACandy*> DestroySpecialCandy;
 	
 	FVector LeftBottom = { -50,-100 };
 	//FVector LeftTop = { -50,-100 };
@@ -127,6 +139,11 @@ private:
 	float DropSpeed = 50.0f;
 	bool IsDropCandy = false;
 
+	const int Three = 3;
+	const int Four = 4;
+	const int Five = 5;
+
+	int Count = 0;
 
 
 //¹ØÀº ·£´ýÇÔ¼ö

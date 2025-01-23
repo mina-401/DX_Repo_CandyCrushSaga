@@ -10,6 +10,7 @@ public:
 	static inline float Wrapped= 3;
 
 	static inline float Combo = 2;
+	//static inline float CandyThreeBlock = 3;
 
 	
 };

@@ -8,6 +8,9 @@ public:
 
 	//FIntPoint TargetIndex = { -1,-1 };
 	//EComboVector ComboVectpr;
+
+
+
 	ESpriteType CandySpriteType;
 	EColor CandyColor;
 

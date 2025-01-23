@@ -187,18 +187,20 @@ void ACandyManager::RowCheck(int X, int Y)
     // 3개 이상의 콤보가 발생한 경우에만 DestroyCandy에 추가
     if (Combo >= CCSConst::Combo)
     {
+        
         for (ACandy* candy : CandyList)
         {
+           
             if (std::find(DestroyCandy.begin(), DestroyCandy.end(), candy) == DestroyCandy.end()) {
                 DestroyCandy.push_back(candy);
             }
         }
+       
     }
 }
 
 bool ACandyManager::IsCandyDestroy()
 {
-    // 리스트에 쓰레기값 들어옴
     return DestroyCandy.size() !=0 ? true : false ;
 }
 void ACandyManager::CandyFindConsec()
@@ -217,6 +219,22 @@ void ACandyManager::CandyFindConsec()
             RowCheck(row, col);
             ColCheck(row, col);
         }
+    }
+}
+void ACandyManager::CascadeCandyExplosion()
+{
+
+}
+void ACandyManager::CandyDestroyCheck()
+{
+    if (false == IsCandyDestroy())
+    {
+        //콤보 캔디가 없다.
+        ChangeCandyState(ECandyManagerState::Select);
+    }
+    else {
+        //콤보 캔디가 있다.
+        ChangeCandyState(ECandyManagerState::Destroy);
     }
 
 }
@@ -248,31 +266,14 @@ void ACandyManager::CandyChange(class ACandy* SelectCandy, class ACandy* CurCand
 void ACandyManager::CandyClear()
 {
     DestroyCandy.clear();
+    DestroySpecialCandy.clear();
+    
 }
 ACandy* ACandyManager::NewCandyCreate()
 {
     ACandy* NewCandy = (GetWorld()->SpawnActor<ACandy>()).get();
     
     return NewCandy;
-}
-
-void ACandyManager::CandyPlaceAt(int EmptyRow, int Col)
-{
-    int row = EmptyRow;
-    int col = Col;
-    while (row >= 0)
-    {
-
-        if (Data[row][col].IsActive == false) {}
-        else {
-            ACandy* NewCandy = NewCandyCreate();
-            int RandSpriteIndex = RandomInt(1, 55);
-            NewCandy->SetCandy({ row,col }, Data[row][col].Pos, RandSpriteIndex);
-
-            Candys[row][col] = NewCandy;
-        }
-        row--;
-    }
 }
 
 FVector ACandyManager::IndexToWorldPos(FIntPoint _Index)
@@ -305,14 +306,11 @@ void ACandyManager::ChangeCandyState(ECandyManagerState _CandyState)
 
 }
 
-FIntPoint TopIndexCheck()
-{
-    return FIntPoint();
-}
 
 void ACandyManager::NewCandyDropStart()
 {
 
+    // 비어있는 공간 위에 있는 캔디로 채우기
     for (int col = 0; col < CandyCol; col++)
     {
         //제일 아래칸부터 시작한다
@@ -385,6 +383,7 @@ void ACandyManager::NewCandyDropStart()
                 NewData.EndPos = Data[row][col].Pos;
                 DropCandy.push_back(NewData);
                 
+                // 빈 공간(맨윗칸)에 캔디 넣기
                 Candys[row][col] = NewCandy;
 
                 IsDropCandy = true;                      
@@ -425,47 +424,128 @@ void ACandyManager::NewCandyDrop(float _Delta)
         
     }
 }
+void ACandyManager::PushDestroyCandy(int _row, int _col, ESpriteType SpriteType)
+{
+    int BottomRow = _row;
+    int BottonCol = _col;
+
+    int TopRow = _row;
+    int TopCol = _col;
+    
+    switch (SpriteType)
+    {
+    case ESpriteType::Normal:
+        return;
+        break;
+    case ESpriteType::StripedHorizontal:
+       BottomRow = _row;
+       BottonCol = 0;
+
+       TopRow = _row+1;
+       TopCol = CandyCol;
+        break;
+    case ESpriteType::StripedVertical:
+       BottomRow = 0;
+       BottonCol = _col;
+
+       TopRow = CandyRow;
+       TopCol = _col+1;
+        break;
+    case ESpriteType::Wrapped:
+        BottomRow = _row - 1;
+        BottonCol = _col - 1;
+
+       TopRow = _row + 2;
+       TopCol = _col + 2;
+        break;
+    case ESpriteType::None:
+        break;
+    default:
+        return;
+        break;
+    }
+
+
+   
+    for (int row = BottomRow; row < TopRow; row++)
+    {
+        for (int col = BottonCol; col < TopCol; col++)
+        {
+            if (row < 0 || row >= CandyRow || col < 0 || col >= CandyCol)
+            {
+                continue;
+            }
+            if (Data[row][col].IsActive == false) continue;
+
+            if ((_row == row) && (_col == col)) continue;
+
+            DestroySpecialCandy.push_back(Candys[row][col]);
+
+        }
+    }
+}
+
+// 캔디 부수기
+void ACandyManager::CandyDestroyStart()
+{
+    for (ACandy* Candy : DestroyCandy)
+    {
+        ESpriteType SpriteType = Candy->CandyData.CandySpriteType;
+
+        int row = Candy->CandyData.row;
+        int col = Candy->CandyData.col;
+
+        PushDestroyCandy(row, col, SpriteType);
+
+    }
+   
+
+    /*TimeEventComponent->AddEndEvent(CCSConst::DropTime, [this]()
+        {
+            DropCandy.clear();
+        });*/
+    for (ACandy* Candy : DestroyCandy)
+    {
+        {
+            Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
+
+            Candy->Destroy();
+            Candy = nullptr;
+        }
+    }
+    for (ACandy* Candy : DestroySpecialCandy)
+    {
+        {
+            Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
+
+            Candy->Destroy();
+            Candy = nullptr;
+        }
+    }
+    CandyClear();
+}
+void ACandyManager::CandyDestroy()
+{
+    // 부술 캔디가 없다.
+    if (false == IsCandyDestroy())
+    {
+        ChangeCandyState(ECandyManagerState::NewCandyDrop);
+        return;
+    }
+}
+
 void ACandyManager::UpdateStart()
 {
+    //연속하는 캔디 찾음
     CandyFindConsec();
 
-    if (true == IsCandyDestroy())
-    {
-        //콤보 캔디가 있다.
-        ChangeCandyState(ECandyManagerState::Destroy);
-        return;
-    }
-    else
-    {
-        ChangeCandyState(ECandyManagerState::Select);
-        return;
-    }
+    // 부술 캔디를 확인
+    CandyDestroyCheck();
 }
 void ACandyManager::Update(float _DeltaTime)
 {
     //
 }
-void ACandyManager::CandyDestroyStart()
-{
-    //
-}
-void ACandyManager::CandyDestroy()
-{
-    for (ACandy* Candy : DestroyCandy)
-    {
-       // Empty.push_back({ Candy->CandyData.row,Candy->CandyData.col });
-
-        Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
-        Candy->Destroy();
-        Candy = nullptr;
-    }
-
-    CandyClear();
-    ChangeCandyState(ECandyManagerState::NewCandyDrop);
-    return;
-}
-
-
 
 void ACandyManager::Tick(float _DeltaTime)
 {

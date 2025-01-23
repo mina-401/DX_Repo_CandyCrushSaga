@@ -161,9 +161,7 @@ AMouse::AMouse()
 AMouse::~AMouse()
 {
 }
-void AMouse::TestFunction(FCandySpriteData& _a)
 
-{ }
 //void AMouse::CollisionEnter(UCollision* _This, UCollision* _Other)
 //{
 //	int a = 0;
