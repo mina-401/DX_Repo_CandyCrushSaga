@@ -437,6 +437,7 @@ void ACandyManager::PushDestroyCandy(int _row, int _col, ESpriteType SpriteType)
     case ESpriteType::Normal:
         return;
         break;
+        //return;
     case ESpriteType::StripedHorizontal:
        BottomRow = _row;
        BottonCol = 0;
@@ -459,9 +460,10 @@ void ACandyManager::PushDestroyCandy(int _row, int _col, ESpriteType SpriteType)
        TopCol = _col + 2;
         break;
     case ESpriteType::None:
+        return;
         break;
     default:
-        return;
+       // return;
         break;
     }
 
@@ -497,6 +499,8 @@ void ACandyManager::CandyDestroyStart()
 
         PushDestroyCandy(row, col, SpriteType);
 
+        
+
     }
    
 
@@ -507,6 +511,9 @@ void ACandyManager::CandyDestroyStart()
     for (ACandy* Candy : DestroyCandy)
     {
         {
+            // 이미 파괴되어 있다면
+          
+
             Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
 
             Candy->Destroy();
@@ -516,6 +523,8 @@ void ACandyManager::CandyDestroyStart()
     for (ACandy* Candy : DestroySpecialCandy)
     {
         {
+            if (Candy == nullptr) continue;
+
             Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
 
             Candy->Destroy();
