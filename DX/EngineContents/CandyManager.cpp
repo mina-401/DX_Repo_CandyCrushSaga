@@ -402,9 +402,9 @@ void ACandyManager::NewCandyDropStart()
     {
         TimeEventComponent->AddUpdateEvent(CCSConst::DropTime, [this](float _Delta, float _Acc)
             {
-                for (size_t i = 0; i < DropCandy.size(); i++)
+                for (int i = 0; i < DropCandy.size(); i++)
                 {
-                    DropCandy[i].Candy->CandyData.SetPos = FVector::Lerp(DropCandy[i].StartPos, DropCandy[i].EndPos, _Acc);
+                    DropCandy[i].Candy->CandyData.SetPos = FVector::Lerp(DropCandy[i].StartPos, DropCandy[i].EndPos, _Acc * (1/CCSConst::DropTime));
                 }
             });
 

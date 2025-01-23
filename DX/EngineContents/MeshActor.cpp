@@ -7,6 +7,7 @@
 #include <EngineCore/TimeEventComponent.h>
 #include "MyCustomRenderer.h"
 #include <EngineCore/Collision.h>
+#include <EngineCore/Level.h>
 
 AMeshActor::AMeshActor()
 {
@@ -24,6 +25,7 @@ AMeshActor::AMeshActor()
 	URenderUnit& Unit = Renderer->GetRenderUnit();
 	Unit.SetMesh("Sphere");
 	Unit.SetMaterial("LightMesh");
+	Unit.ConstantBufferLinkData("MeshColor", &ResultColor);
 
 	// 
 

@@ -451,6 +451,7 @@ public:
 		Result.X = -X;
 		Result.Y = -Y;
 		Result.Z = -Z;
+		Result.W = W;
 		return Result;
 	}
 

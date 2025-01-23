@@ -267,3 +267,34 @@ FVector UEngineWindow::GetMousePos()
 
     return FVector(MousePoint.x, MousePoint.y);
 }
+
+
+bool UEngineWindow::IsMouseScreenOut() const
+{
+    POINT MousePoint;
+
+    GetCursorPos(&MousePoint);
+    ScreenToClient(WindowHandle, &MousePoint); // 윈도우창 위치기준으로 마우스 포지션을 가져온다.
+
+    if (0.0f > MousePoint.x)
+    {
+        return true;
+    }
+
+    if (0.0f > MousePoint.y)
+    {
+        return true;
+    }
+
+    if (WindowSize.X < MousePoint.x)
+    {
+        return true;
+    }
+
+    if (WindowSize.Y < MousePoint.y)
+    {
+        return true;
+    }
+
+    return false;
+}

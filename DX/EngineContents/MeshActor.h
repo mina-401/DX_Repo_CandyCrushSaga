@@ -1,4 +1,5 @@
 #pragma once
+
 #include <EngineCore/SpriteRenderer.h>
 #include <EnginePlatform/EngineWinImage.h>
 #include <EngineCore/Actor.h>
@@ -23,5 +24,6 @@ protected:
 
 
 private:
+	float4 ResultColor = float4(1.0f, 0.0f, 0.0f, 1.0f);
 };
 
