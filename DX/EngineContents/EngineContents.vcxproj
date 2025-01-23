@@ -172,6 +172,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BackGroundTile.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Candy.cpp">
       <SubType>
       </SubType>
@@ -220,6 +224,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PreCompile.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="Shine.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="TileMapGameMode.cpp" />
     <ClCompile Include="TitleButton.cpp">
       <SubType>
@@ -232,6 +240,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BackGroundTile.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Candy.h">
       <SubType>
       </SubType>
@@ -273,6 +285,10 @@
     </ClInclude>
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="MyQueue.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Shine.h">
       <SubType>
       </SubType>
     </ClInclude>

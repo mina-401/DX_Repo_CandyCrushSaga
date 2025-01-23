@@ -67,12 +67,14 @@ public:
 	 ACandyManager();
 	 ~ACandyManager();
 
+
 	// delete Function
 	ACandyManager(const ACandyManager& _Other) = delete;
 	ACandyManager(ACandyManager&& _Other) noexcept = delete;
 	ACandyManager& operator=(const ACandyManager& _Other) = delete;
 	ACandyManager& operator=(ACandyManager&& _Other) noexcept = delete;
 
+	 void CreateStageBackTile();
 	void CreateStage(int X, int Y);
 	void DeleteIndex(int X, int Y);
 	void CandyCreate();
@@ -132,6 +134,7 @@ private:
 	std::vector<DropData> DropCandy;
 	std::vector<ACandy*> NewCandys;
 	std::vector<ACandy*> DestroySpecialCandy;
+
 	
 	FVector LeftBottom = { -100,-200 };
 	//FVector LeftTop = { -50,-100 };

@@ -40,6 +40,8 @@
     <ClCompile Include="MyCustomRenderer.cpp">
       <Filter>Render</Filter>
     </ClCompile>
+    <ClCompile Include="Shine.cpp" />
+    <ClCompile Include="BackGroundTile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -83,6 +85,8 @@
     <ClInclude Include="MyCustomRenderer.h">
       <Filter>Render</Filter>
     </ClInclude>
+    <ClInclude Include="Shine.h" />
+    <ClInclude Include="BackGroundTile.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameMode">

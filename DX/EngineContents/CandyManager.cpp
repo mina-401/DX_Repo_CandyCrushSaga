@@ -5,13 +5,14 @@
 #include <EngineCore/CameraActor.h>
 #include <EngineCore/SpriteRenderer.h>
 #include <EnginePlatform/EngineInput.h>
+#include <EngineCore/TimeEventComponent.h>
 
 #include "CCSConst.h"
 #include "Candy.h"
 #include <queue>
 #include "Mouse.h"
-#include <EngineCore/TimeEventComponent.h>
-
+#include "Shine.h"
+#include "BackGroundTile.h"
 
 ACandyManager::ACandyManager()
 {
@@ -22,9 +23,31 @@ ACandyManager::~ACandyManager()
 {
 }
 
+void ACandyManager::CreateStageBackTile()
+{
+    {
+        for (int row = 0; row < CandyRow; row++)
+        {
+
+            for (int col = 0; col < CandyCol; col++)
+            {
+  
+                if (false == Data[row][col].IsActive) {}
+                else {
+                    // 캔디 스폰
+                    class ABackGroundTile* BackTile = GetWorld()->SpawnActor<ABackGroundTile>().get();             
+                    BackTile->GetRenderer()->SetRelativeScale3D({CandyScale.X,CandyScale.Y,0.0f});
+                    BackTile->SetActorLocation(Data[row][col].Pos);
+                }
+            }
+
+
+        }
+    }
+}
+
 void ACandyManager::CreateStage(int X, int Y)
 {
-
     CandyRow = X;
     CandyCol = Y;
 
@@ -50,6 +73,8 @@ void ACandyManager::CreateStage(int X, int Y)
         SetPos.Y += CandyScale.Y;
     }
 
+
+
     // SetPos = { -100,100 };
     
 
@@ -63,6 +88,8 @@ void ACandyManager::DeleteIndex(int X, int Y)
 
 void ACandyManager::CandyCreate()
 {
+   // CreateStageBackTile();
+
     {
         for (int row = 0; row < CandyRow; row++)
         {
@@ -130,7 +157,7 @@ void ACandyManager::ColCheck(int X, int Y)
         }
         else
         {
-            break; // 색상이 다르면 루프 종료
+            break;
         }
 
         CurTarget = Candys[row][col];
@@ -365,11 +392,8 @@ void ACandyManager::NewCandyDropStart()
 
     // 새로운 캔디를 맨위에 생성한다
     for (int row = 0; row < CandyRow; row++)
-    
     {
-
         for (int col = 0; col < CandyCol; col++)
-        
         {
             if (nullptr == Candys[row][col] && Data[row][col].IsActive == true)
             {
@@ -489,9 +513,12 @@ void ACandyManager::PushDestroyCandy(int _row, int _col, ESpriteType SpriteType)
     }
 }
 
+bool DestroyEnd = false;
+
 // 캔디 부수기
 void ACandyManager::CandyDestroyStart()
 {
+    DestroyEnd = false;
     for (ACandy* Candy : DestroyCandy)
     {
         if (Candy == nullptr) continue;
@@ -507,35 +534,60 @@ void ACandyManager::CandyDestroyStart()
 
     for (ACandy* Candy : DestroyCandy)
     {
-        {
-            if (Candy == nullptr) continue;
-            Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
-            Candy->Destroy();
-            Candy = nullptr;
-        }
+        if (Candy == nullptr) continue;
+      
+         class AShine* ShineEffect = GetWorld()->SpawnActor<AShine>().get();
+         ShineEffect->SetActorLocation(Candy->GetActorLocation());
+
+         Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
+         Candy->Destroy();
+         Candy = nullptr;
+
+         TimeEventComponent->AddUpdateEvent(2.0f, [this, Candy,ShineEffect](float _Delta, float _Acc)
+             {
+
+             });
+         TimeEventComponent->AddEndEvent(2.0f, [this,ShineEffect]()
+             {
+                 ShineEffect->Destroy();
+             });
+        // ShineEffectList.push_back(ShineEffect);
+
     }
 
     
     CandyClear();
-
-    // 특수 캔디가 부술 캔디가 있다.
+    
+    // 특수 캔디 폭발 범위에 캔디가 있다.
     if (0 != DestroySpecialCandy.size())
     {
+
         for (ACandy* Candy : DestroySpecialCandy)
         {
             DestroyCandy.push_back(Candy);
         }
         DestroySpecialCandy.clear();
         CandyDestroyStart();
-    }
-    else {
+   
 
 
     }
+
+    TimeEventComponent->AddEndEvent(2.0f, [this]()
+    {
+        DestroyEnd = true;
+        });
+   
 }
+
+
+
 void ACandyManager::CandyDestroy()
 {
-
+    if (false == DestroyEnd)
+    {
+        return;
+    }
     // 부술 캔디가 없다.
     if (false == IsCandyDestroy() && 0 == DestroySpecialCandy.size())
     {
@@ -550,11 +602,11 @@ void ACandyManager::UpdateStart()
     CandyFindConsec();
 
     // 부술 캔디를 확인
-    CandyDestroyCheck();
 }
 void ACandyManager::Update(float _DeltaTime)
 {
-    //
+    CandyDestroyCheck();
+
 }
 
 void ACandyManager::Tick(float _DeltaTime)

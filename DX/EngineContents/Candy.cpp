@@ -15,7 +15,6 @@ ACandy::ACandy()
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
-
 	Renderer = CreateDefaultSubObject<USpriteRenderer>();
 	Renderer->SetupAttachment(RootComponent);
 	Renderer->SetRelativeScale3D({ 50,50,0.0f });
