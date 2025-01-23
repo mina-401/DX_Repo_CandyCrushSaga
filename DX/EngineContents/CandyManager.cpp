@@ -266,7 +266,7 @@ void ACandyManager::CandyChange(class ACandy* SelectCandy, class ACandy* CurCand
 void ACandyManager::CandyClear()
 {
     DestroyCandy.clear();
-    DestroySpecialCandy.clear();
+
     
 }
 ACandy* ACandyManager::NewCandyCreate()
@@ -494,50 +494,50 @@ void ACandyManager::CandyDestroyStart()
 {
     for (ACandy* Candy : DestroyCandy)
     {
+        if (Candy == nullptr) continue;
         ESpriteType SpriteType = Candy->CandyData.CandySpriteType;
 
         int row = Candy->CandyData.row;
         int col = Candy->CandyData.col;
 
         PushDestroyCandy(row, col, SpriteType);
-
-        
-
     }
    
+   
 
-    /*TimeEventComponent->AddEndEvent(CCSConst::DropTime, [this]()
-        {
-            DropCandy.clear();
-        });*/
     for (ACandy* Candy : DestroyCandy)
     {
         {
             if (Candy == nullptr) continue;
-
             Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
-
             Candy->Destroy();
             Candy = nullptr;
         }
     }
-    for (ACandy* Candy : DestroySpecialCandy)
-    {
-        {
-            if (Candy == nullptr) continue;
 
-            Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
-
-            Candy->Destroy();
-            Candy = nullptr;
-        }
-    }
+    
     CandyClear();
+
+    // 특수 캔디가 부술 캔디가 있다.
+    if (0 != DestroySpecialCandy.size())
+    {
+        for (ACandy* Candy : DestroySpecialCandy)
+        {
+            DestroyCandy.push_back(Candy);
+        }
+        DestroySpecialCandy.clear();
+        CandyDestroyStart();
+    }
+    else {
+
+
+    }
 }
 void ACandyManager::CandyDestroy()
 {
+
     // 부술 캔디가 없다.
-    if (false == IsCandyDestroy())
+    if (false == IsCandyDestroy() && 0 == DestroySpecialCandy.size())
     {
         ChangeCandyState(ECandyManagerState::NewCandyDrop);
         return;
