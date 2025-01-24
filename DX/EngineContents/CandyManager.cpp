@@ -101,7 +101,7 @@ void ACandyManager::CandyCreate()
                 if (false == Data[row][col].IsActive) {}
                 else {
                     // Äµµð ½ºÆù
-                    int RandomIndx = RandomInt(1, 55);
+                    int RandomIndx = Random.RandomInt(1, 55);
                     FIntPoint Index = { row,col };
                     NewCandy = GetWorld()->SpawnActor<ACandy>();
                     NewCandy->SetCandy(Index, Data[row][col].Pos, RandomIndx);
@@ -397,7 +397,7 @@ void ACandyManager::NewCandyDropStart()
         {
             if (nullptr == Candys[row][col] && Data[row][col].IsActive == true)
             {
-                int Index = RandomInt(1, 55);
+                int Index = Random.RandomInt(1, 79);
                 ACandy* NewCandy = NewCandyCreate();
                 NewCandy->SetCandy({ row,col }, IndexToWorldPos({ NewCandyRow, col }), Index);
 

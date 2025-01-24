@@ -35,32 +35,32 @@ public:
 		{
 			SetCandyColor(EColor::None);
 		}
-		else if (1 <= _index && _index < 10)
+		else if (1 <= _index && _index < 14)
 		{
 			SetCandyColor(EColor::Blue);
 		}
-		else if (10 <= _index && _index < 19)
+		else if (14 <= _index && _index < 27)
 		{
 			SetCandyColor(EColor::Green);
 		}
 
-		else if (19 <= _index && _index < 28)
+		else if (27 <= _index && _index < 40)
 		{
 			SetCandyColor(EColor::Orange);
 		}
-		else if (28 <= _index && _index < 37)
+		else if (40 <= _index && _index < 53)
 		{
 			SetCandyColor(EColor::Purple);
 		}
-		else if (37 <= _index && _index < 46)
+		else if (53 <= _index && _index < 66)
 		{
 			SetCandyColor(EColor::Red);
 		}
-		else if (46 <= _index && _index < 55)
+		else if (66 <= _index && _index < 79)
 		{
 			SetCandyColor(EColor::Yellow);
 		}
-		else if (55 == _index)
+		else if (79 == _index)
 		{
 			SetCandyColor(EColor::Choco);
 		}
@@ -112,72 +112,7 @@ public:
 	}
 	void SetCandy(FIntPoint RenderPos, FVector _Pos, int _Index);
 	void SetPos(int X, int Y);
-	/*void SetSpriteColor(int _index)
-	{
-		if (0 == _index)
-		{
-			CandyData.SetCandyColor(EColor::None);
-		}
-		else if (1 <= _index && _index < 10)
-		{
-			CandyData.SetCandyColor(EColor::Blue);
-		}
-		else if (10 <= _index && _index < 19)
-		{
-			CandyData.SetCandyColor(EColor::Green);
-		}
-
-		else if (19 <= _index && _index < 28)
-		{
-			CandyData.SetCandyColor(EColor::Orange);
-		}
-		else if (28 <= _index && _index < 36)
-		{
-			CandyData.SetCandyColor(EColor::Purple);
-		}
-		else if (36 <= _index && _index < 46)
-		{
-			CandyData.SetCandyColor(EColor::Red);
-		}
-		else if (46 <= _index && _index < 54)
-		{
-			CandyData.SetCandyColor(EColor::Yellow);
-		}
-		else if (55 == _index)
-		{
-			CandyData.SetCandyColor(EColor::Choco);
-		}
-
-	}*/
-
-	/*void SetSpriteType(int _index)
-	{
-		int idx = _index % 9;
-
-		if (0 == _index || 55 == _index)
-		{
-			CandyData.SetCandySprite(ESpriteType::None);
-		}
-		else if (7 == idx) {
-			CandyData.SetCandySprite(ESpriteType::StripedHorizontal);
-		}
-		else if (8 == idx)
-		{
-			CandyData.SetCandySprite(ESpriteType::StripedVertical);
-		}
-		else if (0 == idx)
-		{
-			CandyData.SetCandySprite(ESpriteType::Wrapped);
-
-		}
-		
-		else
-		{
-			CandyData.SetCandySprite(ESpriteType::Normal);
-
-		}
-
-	}*/
+	
 	FCandySpriteData& GetCandyData()
 	{
 		return CandyData;
