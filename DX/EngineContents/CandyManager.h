@@ -85,6 +85,10 @@ public:
 	void CandyChange(class  ACandy* SelectCandy, class ACandy* CurCandy);
 	void CandyClear();
 
+	void ClearCandys();
+
+	void ResetCandyBoard();
+
 	//void CandyDropAt(ACandy* candy, FVector pos);
 	void CandyDestroy();
 	ACandy* NewCandyCreate();
@@ -141,12 +145,13 @@ private:
 
 	float DropSpeed = 50.0f;
 	bool IsDropCandy = false;
+	bool DestroyEnd = false;
 
 	const int Three = 3;
 	const int Four = 4;
 	const int Five = 5;
 
-	int Count = 0;
+	
 	UEngineRandom Random;
 
 //¹ØÀº ·£´ýÇÔ¼ö

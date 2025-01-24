@@ -23,6 +23,7 @@ public:
 	{
 		return GameMainHud;
 	}
+	bool IsGameEnd = false;
 protected:
 
 	void LevelChangeStart() override;
@@ -39,7 +40,6 @@ private:
 	void SpritesInit();
 
 	std::shared_ptr<class ACCSHUD> GameMainHud;
-
 
 
 };

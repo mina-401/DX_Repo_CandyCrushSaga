@@ -44,10 +44,17 @@ AMouse::AMouse()
 
 	Collision->SetCollisionStay([this](UCollision* _This, UCollision* _Other)
 		{
+			if (IsTransEnd == true) {
+
+				return;
+			}
+
 			if (CandyManager->GetCandyState() != ECandyManagerState::Select)
 			{
 				return;
 			}
+
+
 
 			class ACandy* CurCandy = dynamic_cast<ACandy*>(_Other->GetActor());
 			class AMouse* me = dynamic_cast<AMouse*>(_This->GetActor());
@@ -134,6 +141,8 @@ AMouse::AMouse()
 											else {
 												//콤보 캔디가 있다.
 												CandyManager->ChangeCandyState(ECandyManagerState::Destroy);
+
+												CurTransCount--;
 											}
 										});
 									break;
@@ -191,6 +200,18 @@ void AMouse::Tick(float _DeltaTime)
 	Pos.Z = 0.0f;
 
 	SetActorLocation(Pos); 
+
+	// 마우스 이동횟수 제한 있다.
+	if (CurTransCount == 0)
+	{
+		IsTransEnd = true;  
+	}
+
+	//모든 게임이 끝나면, 점수화면으로 이동
+	//if (IsGameEnd == true)
+	//{
+		//레벨 체인지
+	//}
 }
 
 

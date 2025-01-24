@@ -88,7 +88,6 @@ void ACandyManager::DeleteIndex(int X, int Y)
 
 void ACandyManager::CandyCreate()
 {
-   // CreateStageBackTile();
 
     {
         for (int row = 0; row < CandyRow; row++)
@@ -101,7 +100,7 @@ void ACandyManager::CandyCreate()
                 if (false == Data[row][col].IsActive) {}
                 else {
                     // Äµµð ½ºÆù
-                    int RandomIndx = Random.RandomInt(1, 55);
+                    int RandomIndx = Random.RandomInt(1, 79);
                     FIntPoint Index = { row,col };
                     NewCandy = GetWorld()->SpawnActor<ACandy>();
                     NewCandy->SetCandy(Index, Data[row][col].Pos, RandomIndx);
@@ -295,6 +294,30 @@ void ACandyManager::CandyClear()
     DestroyCandy.clear();
 
     
+}
+void ACandyManager::ClearCandys()
+{
+    for (int x = 0; x < CandyRow; x++)
+    {
+        for (int y = 0; y < CandyCol; y++)
+        {
+            if (Data[x][y].IsActive == false) continue;
+
+            Candys[x][y]->Destroy();
+           // Candys[x][y] = nullptr;
+        }
+    }
+
+}
+void ACandyManager::ResetCandyBoard()
+{
+
+    ClearCandys(); // ÄµµðŠæ ÀúÀå »èÁ¦
+
+    CandyCreate(); // Äµµð ´Ù½Ã ¸¸µê
+    
+    CandyFindConsec();
+    CandyDestroyCheck();
 }
 ACandy* ACandyManager::NewCandyCreate()
 {
@@ -513,7 +536,7 @@ void ACandyManager::PushDestroyCandy(int _row, int _col, ESpriteType SpriteType)
     }
 }
 
-bool DestroyEnd = false;
+
 
 // Äµµð ºÎ¼ö±â
 void ACandyManager::CandyDestroyStart()
@@ -613,6 +636,10 @@ void ACandyManager::Tick(float _DeltaTime)
 {
     AActor::Tick(_DeltaTime);
 
+    if (UEngineInput::IsDown('R') == true)
+    {
+        ResetCandyBoard();
+    }
     switch (CandyState)
     {
     case ECandyManagerState::Select:

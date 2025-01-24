@@ -85,7 +85,6 @@ void APlayGameMode::BeginPlay()
 	{
 		GetWorld()->CreateCollisionProfile("Candy");
 		GetWorld()->CreateCollisionProfile("Mouse");
-		//GetWorld()->LinkCollisionProfile("Candy", "Mouse");
 		GetWorld()->LinkCollisionProfile("Mouse", "Candy");
 	}
 	{
@@ -93,7 +92,6 @@ void APlayGameMode::BeginPlay()
 		
 	}
 	{
-		// CandyManager = GetWorld()->SpawnActor<ACandyManager>();
 
 		CandyManager = dynamic_cast<ACandyManager*>(GetWorld()->GetMainPawn());
 
@@ -114,6 +112,11 @@ void APlayGameMode::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
+	if (true == IsGameEnd)
+	{
+		// 점수판에 점수 
+
+	}
 	
 }
 

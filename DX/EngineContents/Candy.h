@@ -68,9 +68,9 @@ public:
 	}
 	void SetSpriteType(int _index)
 	{
-		int idx = _index % 9;
+		int idx = _index % 13;
 
-		if (0 == _index || 55 == _index)
+		if (0 == _index || 79 == _index)
 		{
 			SetCandySprite(ESpriteType::None);
 		}
