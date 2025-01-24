@@ -39,7 +39,7 @@ void UCandyCrushSaga::EngineStart(UEngineInitData& _Data)
 
 	
 
-	MyGSetting();
+	//MyGSetting();
 
 
 	UEngineCore::CreateLevel<ATitleGameMode, APawn, AHUD>("TitleLevel");

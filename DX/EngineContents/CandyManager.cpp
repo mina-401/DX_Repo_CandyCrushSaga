@@ -37,7 +37,11 @@ void ACandyManager::CreateStageBackTile()
                     // Äµµð ½ºÆù
                     class ABackGroundTile* BackTile = GetWorld()->SpawnActor<ABackGroundTile>().get();             
                     BackTile->GetRenderer()->SetRelativeScale3D({CandyScale.X,CandyScale.Y,0.0f});
-                    BackTile->SetActorLocation(Data[row][col].Pos);
+
+                    FVector BackTilePos = Data[row][col].Pos;
+                    BackTilePos.Z = 0.0f;
+                    BackTile->SetActorLocation(BackTilePos);
+                    
                 }
             }
 
@@ -66,7 +70,7 @@ void ACandyManager::CreateStage(int X, int Y)
         Data[i].resize(Y);
         for (int y = 0; y < Y; y++)
         {
-            Data[i][y].Pos = { SetPos.X,SetPos.Y };
+            Data[i][y].Pos = { SetPos.X,SetPos.Y};
             SetPos.X += CandyScale.X;
         }
         SetPos.X = LeftBottom.X;
@@ -85,7 +89,24 @@ void ACandyManager::DeleteIndex(int X, int Y)
 {
     Data[X][Y].IsActive = false;
 }
+ACandy* ACandyManager::NewCandyCreate(int row,int col)
+{
+    int RandomIndx = Random.RandomInt(1, 79);
+    ACandy* NewCandy = GetWorld()->SpawnActor<ACandy>().get();
+    FVector CandyPos = Data[row][col].Pos;
+    NewCandy->SetCandy({row,col}, CandyPos, RandomIndx);
 
+    return NewCandy;
+}
+ACandy* ACandyManager::NewCandyCreate(int row, int col,FVector Pos)
+{
+    int RandomIndx = Random.RandomInt(1, 79);
+    ACandy* NewCandy = GetWorld()->SpawnActor<ACandy>().get();
+    FVector CandyPos = Pos + FVector(0,0,-100);
+    NewCandy->SetCandy({ row,col }, CandyPos, RandomIndx);
+
+    return NewCandy;
+}
 void ACandyManager::CandyCreate()
 {
 
@@ -93,19 +114,18 @@ void ACandyManager::CandyCreate()
         for (int row = 0; row < CandyRow; row++)
         {
 
-            std::shared_ptr< ACandy> NewCandy = nullptr;
+            ACandy* NewCandy = nullptr;
             for (int col = 0; col < CandyCol; col++)
             {
                 //SetPos.X += CandyScale.X;
                 if (false == Data[row][col].IsActive) {}
                 else {
                     // Äµµð ½ºÆù
-                    int RandomIndx = Random.RandomInt(1, 79);
+                   
                     FIntPoint Index = { row,col };
-                    NewCandy = GetWorld()->SpawnActor<ACandy>();
-                    NewCandy->SetCandy(Index, Data[row][col].Pos, RandomIndx);
+                    NewCandy = NewCandyCreate(row, col);
 
-                    Candys[row][col] = NewCandy.get();
+                    Candys[row][col] = NewCandy;
                 }
             }
 
@@ -311,12 +331,7 @@ void ACandyManager::ResetCandyBoard()
     CandyFindConsec();
     CandyDestroyCheck();
 }
-ACandy* ACandyManager::NewCandyCreate()
-{
-    ACandy* NewCandy = (GetWorld()->SpawnActor<ACandy>()).get();
-    
-    return NewCandy;
-}
+
 
 FVector ACandyManager::IndexToWorldPos(FIntPoint _Index)
 {
@@ -351,7 +366,7 @@ void ACandyManager::ChangeCandyState(ECandyManagerState _CandyState)
 
 void ACandyManager::NewCandyDropStart()
 {
-
+    IsCandyDrop = false;
     // ºñ¾îÀÖ´Â °ø°£ À§¿¡ ÀÖ´Â Äµµð·Î Ã¤¿ì±â
     for (int col = 0; col < CandyCol; col++)
     {
@@ -386,7 +401,11 @@ void ACandyManager::NewCandyDropStart()
                     DropData NewData;
                     NewData.Candy = Candys[Newrow][col];
                     NewData.StartPos = Data[Newrow][col].Pos;
+                    NewData.StartPos.Z = -100.0f;
+
                     NewData.EndPos = Data[row][col].Pos;
+                    NewData.EndPos.Z = -100.0f;
+
                     DropCandy.push_back(NewData);
 
                     //ºó°ø°£           // Á¸ÀçÇÏ´Â Äµµð °ø°£
@@ -413,13 +432,15 @@ void ACandyManager::NewCandyDropStart()
             if (nullptr == Candys[row][col] && Data[row][col].IsActive == true)
             {
                 int Index = Random.RandomInt(1, 79);
-                ACandy* NewCandy = NewCandyCreate();
-                NewCandy->SetCandy({ row,col }, IndexToWorldPos({ NewCandyRow, col }), Index);
+                FVector Pos = IndexToWorldPos({ NewCandyRow, col });
+                ACandy* NewCandy = NewCandyCreate(row,col,Pos);
+
 
                 DropData NewData;
                 NewData.Candy = NewCandy;
                 NewData.StartPos = NewCandy->CandyData.SetPos;
                 NewData.EndPos = Data[row][col].Pos;
+                NewData.EndPos.Z = -100.0f;
                 DropCandy.push_back(NewData);
                 
                 // ºó °ø°£(¸ÇÀ­Ä­)¿¡ Äµµð ³Ö±â
@@ -449,6 +470,11 @@ void ACandyManager::NewCandyDropStart()
         TimeEventComponent->AddEndEvent(CCSConst::DropTime, [this]()
             {
                 DropCandy.clear();
+
+                TimeEventComponent->AddEndEvent(CCSConst::DropTime, [this]()
+                    {
+                        IsCandyDrop = true;
+                    });
             });
     }
 }
@@ -456,6 +482,7 @@ void ACandyManager::NewCandyDropStart()
 void ACandyManager::NewCandyDrop(float _Delta)
 {
 
+    if (IsCandyDrop == false) return;
     if (0 == DropCandy.size())
     {
         ChangeCandyState(ECandyManagerState::Update);

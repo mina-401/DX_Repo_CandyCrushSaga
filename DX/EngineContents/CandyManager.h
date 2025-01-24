@@ -9,7 +9,7 @@ class StageCandyData
 {
 public:
 	bool IsActive = true;
-	FVector Pos = { -1,-1 };
+	FVector Pos = { -1,-1,-100 };
 	//FVector TargetPos = { -1,-1 };
 
 	bool operator==(std::nullptr_t) const
@@ -91,7 +91,10 @@ public:
 
 	//void CandyDropAt(ACandy* candy, FVector pos);
 	void CandyDestroy();
-	ACandy* NewCandyCreate();
+	
+	ACandy* NewCandyCreate(int row, int col);
+
+	ACandy* NewCandyCreate(int row, int col, FVector Pos);
 
 	void NewCandyDropStart();
 	void NewCandyDrop(float _Delta);
@@ -146,6 +149,7 @@ private:
 	float DropSpeed = 50.0f;
 	bool IsDropCandy = false;
 	bool DestroyEnd = false;
+	bool IsCandyDrop = false;
 
 	const int Three = 3;
 	const int Four = 4;
