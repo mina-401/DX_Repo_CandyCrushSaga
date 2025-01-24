@@ -58,6 +58,7 @@ enum class ECandyManagerState
 	Destroy,
 	NewCandyDrop,
 	Update,
+	Disable,
 };
 
 class ACandyManager : public APawn

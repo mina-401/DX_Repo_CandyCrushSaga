@@ -21,6 +21,7 @@ public:
 
 	//void CollisionEnter(UCollision* _This, UCollision* _Other);
 	class ACandy* SelectCandy = nullptr;
+	bool IsTransEnd = false;
 
 protected:
 	void BeginPlay() override;
@@ -38,7 +39,6 @@ private:
 	int MaxTransCount = 10;
 	int CurTransCount = MaxTransCount;
 
-	bool IsTransEnd = false;
 	//bool IsGameEnd = false;
 
 	void CandyMove(float _Delta, float _Acc, class ACandy* _SelectCandyPtr, class ACandy* _CurCandyPtr, FVector _StartPos, FVector _EndPos, float _MoveTime);

@@ -578,21 +578,21 @@ void ACandyManager::CandyDestroyStart()
     {
         if (Candy == nullptr) continue;
       
-         class AShine* ShineEffect = GetWorld()->SpawnActor<AShine>().get();
-         ShineEffect->SetActorLocation(Candy->GetActorLocation());
+         //class AShine* ShineEffect = GetWorld()->SpawnActor<AShine>().get();
+        // ShineEffect->SetActorLocation(Candy->GetActorLocation());
 
          Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
          Candy->Destroy();
          Candy = nullptr;
 
-         TimeEventComponent->AddUpdateEvent(2.0f, [this, Candy,ShineEffect](float _Delta, float _Acc)
+        /* TimeEventComponent->AddUpdateEvent(2.0f, [this, Candy,ShineEffect](float _Delta, float _Acc)
              {
-
+                
              });
          TimeEventComponent->AddEndEvent(2.0f, [this,ShineEffect]()
              {
                  ShineEffect->Destroy();
-             });
+             });*/
         // ShineEffectList.push_back(ShineEffect);
 
     }
@@ -663,6 +663,9 @@ void ACandyManager::Tick(float _DeltaTime)
     {
         ResetCandyBoard();
     }
+
+    
+ 
     switch (CandyState)
     {
     case ECandyManagerState::Select:
@@ -680,6 +683,8 @@ void ACandyManager::Tick(float _DeltaTime)
     case ECandyManagerState::Update:
         Update(_DeltaTime);
 
+        break;
+    case ECandyManagerState::Disable:
         break;
     default:
         break;

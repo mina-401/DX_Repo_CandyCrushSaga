@@ -44,10 +44,6 @@ AMouse::AMouse()
 
 	Collision->SetCollisionStay([this](UCollision* _This, UCollision* _Other)
 		{
-			if (IsTransEnd == true) {
-
-				return;
-			}
 
 			if (CandyManager->GetCandyState() != ECandyManagerState::Select)
 			{

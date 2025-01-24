@@ -461,14 +461,16 @@
     <CopyFileToFolders Include="ThirdParty\FW1FontWrapper\Debug\FW1FontWrapper.dll">
       <Filter>ThirdParty\FW1FontWrapper\Debug</Filter>
     </CopyFileToFolders>
-    <CopyFileToFolders Include="ThirdParty\DirectxTex\Release\DirectXTex_Release.lib">
-      <Filter>ThirdParty\DirectxTex\Release</Filter>
-    </CopyFileToFolders>
     <CopyFileToFolders Include="ThirdParty\FW1FontWrapper\Release\FW1FontWrapper.dll">
       <Filter>ThirdParty\FW1FontWrapper\Release</Filter>
     </CopyFileToFolders>
     <CopyFileToFolders Include="ThirdParty\FW1FontWrapper\Release\FW1FontWrapper.lib">
       <Filter>ThirdParty\FW1FontWrapper\Release</Filter>
     </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="ThirdParty\DirectxTex\Release\DirectXTex_Release.lib">
+      <Filter>ThirdParty\DirectxTex\Release</Filter>
+    </Library>
   </ItemGroup>
 </Project>
