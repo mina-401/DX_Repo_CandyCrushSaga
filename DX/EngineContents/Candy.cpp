@@ -34,8 +34,8 @@ ACandy::~ACandy()
 
 void ACandy::SetCandy(FIntPoint RenderPos, FVector _Pos, int _Index)
 {
-
-	GetRenderer()->SetSprite("Candy",_Index);
+	GetRenderer()->SetOrder(-1);
+	GetRenderer()->SetSprite("Candy", _Index);
 
 	CandyData.row = RenderPos.X;
 	CandyData.col = RenderPos.Y;

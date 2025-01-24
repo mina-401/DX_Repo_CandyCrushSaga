@@ -187,6 +187,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ContentsEditorGUI.cpp" />
+    <ClCompile Include="CustomCandyRenderer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="CustomTestRenderer.cpp">
       <SubType>
       </SubType>
@@ -259,6 +263,10 @@
     </ClInclude>
     <ClInclude Include="CCSEnums.h" />
     <ClInclude Include="ContentsEditorGUI.h" />
+    <ClInclude Include="CustomCandyRenderer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="CustomTestRenderer.h">
       <SubType>
       </SubType>

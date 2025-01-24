@@ -88,7 +88,9 @@ VertexShaderOutPut SpriteRender_VS(EngineVertex _Vertex)
 	OutPut.UV.x += PlusUVValue.x;
 	OutPut.UV.y += PlusUVValue.y;
 	
+    //_Vertex.COLOR.z = 1.0f;
 	OutPut.COLOR = _Vertex.COLOR;
+	
 	return OutPut;
 }
 
@@ -112,13 +114,16 @@ float4 SpriteRender_PS(VertexShaderOutPut _Vertex) : SV_Target0
 	
 	float4 Color = ImageTexture.Sample(ImageSampler, _Vertex.UV.xy);
 	
-	if (0.0f >= Color.a)
-	{
-		// 픽셀쉐이더에서 아웃풋 머저로 넘기지 않는다.
-		clip(-1);
-	}
+	
 	
 	Color += PlusColor;
 	Color *= MulColor;
+	
+    if (0.0f >= Color.a)
+    {
+        //Color.a = 0.1f;
+		// 픽셀쉐이더에서 아웃풋 머저로 넘기지 않는다.
+		clip(-1);
+    }
 	return Color;
 };

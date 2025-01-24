@@ -4,5 +4,6 @@
     <FxCompile Include="TestShader.fx" />
     <FxCompile Include="CandyBackgroundShader.fx" />
     <FxCompile Include="LMHCustomPostEffect.fx" />
+    <FxCompile Include="..\EngineContents\CandyShader.fx" />
   </ItemGroup>
 </Project>

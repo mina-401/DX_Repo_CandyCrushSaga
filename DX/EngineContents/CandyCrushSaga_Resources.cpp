@@ -33,6 +33,11 @@ void UCandyCrushSaga::MyGSetting()
 	//	//Mat->SetCustom
 	//}
 	{
+		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("CandyMaterial");
+		Mat->SetVertexShader("CandyShader.fx");
+		Mat->SetPixelShader("CandyShader.fx");
+	}
+	{
 		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("MyCollisionDebugMaterial");
 		Mat->SetVertexShader("EngineDebugCollisionShader.fx");
 		Mat->SetPixelShader("EngineDebugCollisionShader.fx");
@@ -40,5 +45,7 @@ void UCandyCrushSaga::MyGSetting()
 		Mat->SetDepthStencilState("CollisionDebugDepth");
 		Mat->SetRasterizerState("CollisionDebugRas");
 	}
+
+
 
 }

@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <FxCompile Include="..\EngineContents\CandyShader.fx" />
     <FxCompile Include="CandyBackgroundShader.fx" />
     <FxCompile Include="LMHCustomPostEffect.fx" />
     <FxCompile Include="TestShader.fx" />

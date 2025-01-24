@@ -43,6 +43,7 @@
     <ClCompile Include="Shine.cpp" />
     <ClCompile Include="BackGroundTile.cpp" />
     <ClCompile Include="LMHPostEffect.cpp" />
+    <ClCompile Include="CustomCandyRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -89,6 +90,7 @@
     <ClInclude Include="Shine.h" />
     <ClInclude Include="BackGroundTile.h" />
     <ClInclude Include="LMHPostEffect.h" />
+    <ClInclude Include="CustomCandyRenderer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameMode">
