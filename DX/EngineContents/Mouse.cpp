@@ -203,6 +203,13 @@ void AMouse::Tick(float _DeltaTime)
 		IsTransEnd = true;  
 	}
 
+
+	if (true == IsTransEnd)
+	{
+		CandyManager->ChangeCandyState(ECandyManagerState::Disable);
+		IsTransEnd = false;
+	}
+
 	//모든 게임이 끝나면, 점수화면으로 이동
 	//if (IsGameEnd == true)
 	//{

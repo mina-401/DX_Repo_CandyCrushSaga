@@ -557,6 +557,13 @@ void ACandyManager::PushDestroyCandy(int _row, int _col, ESpriteType SpriteType)
 
 
 
+void ACandyManager::Disable(float _DeltaTime)
+{
+    // 마우스를 움직일 수 없는 경우.
+    // 움직임 횟수가 끝나서 게임이 끝났다.
+    // 
+}
+
 // 캔디 부수기
 void ACandyManager::CandyDestroyStart()
 {
@@ -599,26 +606,26 @@ void ACandyManager::CandyDestroyStart()
 
     
     CandyClear();
-    
-    // 특수 캔디 폭발 범위에 캔디가 있다.
-    if (0 != DestroySpecialCandy.size())
-    {
-
-        for (ACandy* Candy : DestroySpecialCandy)
-        {
-            DestroyCandy.push_back(Candy);
-        }
-        DestroySpecialCandy.clear();
-        CandyDestroyStart();
-   
-
-
-    }
-
     TimeEventComponent->AddEndEvent(2.0f, [this]()
-    {
-        DestroyEnd = true;
-        });
+        {
+            if (0 != DestroySpecialCandy.size())
+            {
+
+                for (ACandy* Candy : DestroySpecialCandy)
+                {
+                    DestroyCandy.push_back(Candy);
+                }
+                DestroySpecialCandy.clear();
+                CandyDestroyStart();
+
+            }
+            DestroyEnd = true;
+          
+        }); 
+    // 특수 캔디 폭발 범위에 캔디가 있다.
+    
+
+ 
    
 }
 
@@ -649,6 +656,9 @@ void ACandyManager::Update(float _DeltaTime)
 {
     CandyDestroyCheck();
 
+}
+void ACandyManager::DisableStart()
+{
 }
 void ACandyManager::BeginPlay()
 {
@@ -685,6 +695,8 @@ void ACandyManager::Tick(float _DeltaTime)
 
         break;
     case ECandyManagerState::Disable:
+        Disable(_DeltaTime);
+
         break;
     default:
         break;

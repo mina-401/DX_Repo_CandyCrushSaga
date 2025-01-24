@@ -104,6 +104,8 @@ public:
 
 	void UpdateStart();
 	void Update(float _DeltaTime);
+	void DisableStart();
+	void Disable(float _DeltaTime);
 	void CandyDestroyStart();
 	
 
