@@ -107,5 +107,8 @@
     <Filter Include="GUI">
       <UniqueIdentifier>{03c33d4f-686f-424f-8e7f-44febbe00eb9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Global">
+      <UniqueIdentifier>{b68d4045-6d62-4959-a339-edb4b5a99a96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

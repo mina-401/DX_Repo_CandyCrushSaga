@@ -28,6 +28,11 @@ public:
 	// 내가 교체 당했을때
 	void LevelChangeEnd();
 
+	UEngineRenderTarget* GetLastRenderTarget()
+	{
+		return LastRenderTarget.get();
+	}
+
 	template<typename Type>
 	Type* GetGameMode()
 	{

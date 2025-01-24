@@ -240,7 +240,6 @@
     <ClInclude Include="EngineCore.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="EngineEnums.h" />
     <ClInclude Include="EngineShaderResources.h" />
     <ClInclude Include="EngineVertexBuffer.h">
       <Filter>Resources\Buffer</Filter>
@@ -313,7 +312,6 @@
     <ClInclude Include="HUD.h">
       <Filter>Object\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="EngineDataStruct.h" />
     <ClInclude Include="ThirdParty\FW1FontWrapper\Inc\FW1FontWrapper.h">
       <Filter>ThirdParty\FW1FontWrapper\Inc</Filter>
     </ClInclude>
@@ -331,6 +329,12 @@
     <ClInclude Include="EngineStructuredBuffer.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="LightActor.h" />
+    <ClInclude Include="EngineDataStruct.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineEnums.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">
@@ -431,6 +435,9 @@
     </Filter>
     <Filter Include="HUD">
       <UniqueIdentifier>{86ba4431-2b23-4cf2-812f-b22c2362f022}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global">
+      <UniqueIdentifier>{2b8e1f88-9925-4a0f-9337-4d948518e827}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

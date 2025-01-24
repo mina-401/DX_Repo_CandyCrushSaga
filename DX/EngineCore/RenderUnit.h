@@ -16,9 +16,8 @@
 class URenderUnit
 {
 public:
-	// constrcuter destructer
-	URenderUnit();
-	~URenderUnit();
+	ENGINEAPI URenderUnit();
+	ENGINEAPI ~URenderUnit();
 
 	class UTransformObject* TransformObject = nullptr;
 

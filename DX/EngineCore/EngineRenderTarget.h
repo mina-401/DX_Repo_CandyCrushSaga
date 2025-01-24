@@ -3,6 +3,30 @@
 #include "EngineTexture.h"
 #include "RenderUnit.h"
 #include "EngineGraphicDevice.h"
+
+class UPostEffect
+{
+	friend class UEngineRenderTarget;
+
+public:
+	URenderUnit Unit;
+	// 내가 준 효과가 출력될 결과물이 될 타겟
+	UEngineRenderTarget* ResultTarget;
+
+	float AccTime = 0.0f;
+
+protected:
+	ENGINEAPI virtual void Init() = 0
+	{
+
+	}
+	ENGINEAPI virtual void Effect(float _DeltaTime, float _AccTime) = 0
+	{
+
+	}
+private:
+};
+
 // 설명 :
 class UEngineRenderTarget : public UEngineResources
 {
@@ -17,7 +41,7 @@ public:
 	UEngineRenderTarget& operator=(const UEngineRenderTarget& _Other) = delete;
 	UEngineRenderTarget& operator=(UEngineRenderTarget&& _Other) noexcept = delete;
 
-	
+
 
 	// DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT 색깔 범위의 최대 
 	// 그래픽스 효과중에 색깔 범위를 기본으로 하는 효과들도 있다.
@@ -61,5 +85,21 @@ private:
 	// 타겟마다 가지게 하겠습니다.
 	// 이게 낭비인거 같은데 그냥하겠습니다.
 	URenderUnit TargetUnit;
+
+	//// 포스트 이펙트 부분
+public:
+	template<typename EffectType>
+	void AddEffect()
+	{
+		std::shared_ptr<EffectType> NewEffect = std::make_shared<EffectType>();
+
+		std::shared_ptr<UPostEffect> PostEffect = std::dynamic_pointer_cast<UPostEffect>(NewEffect);
+
+		PostEffect->Init();
+		PosEffects.push_back(NewEffect);
+	}
+
+private:
+	std::vector<std::shared_ptr<UPostEffect>> PosEffects;
 };
 

@@ -59,6 +59,12 @@ public:
 
 	ENGINEAPI void Release(float _DeltaTime);
 
+	UEngineRenderTarget* GetCameraTarget()
+	{
+		return CameraTarget.get();
+	}
+
+
 protected:
 
 
@@ -81,8 +87,8 @@ private:
 	std::map<int, bool> RendererZSort;
 
 	std::shared_ptr<class UEngineRenderTarget> CameraTarget;
-	// std::shared_ptr<class UEngineRenderTarget> LightTarget;
-	// std::shared_ptr<class UEngineRenderTarget> ShadowTarget;
+
+
 
 	void ChangeRenderGroup(int _PrevGroupOrder, std::shared_ptr<URenderer> _Renderer);
 };

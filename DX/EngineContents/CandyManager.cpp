@@ -312,7 +312,7 @@ void ACandyManager::ChangeCandyState(ECandyManagerState _CandyState)
 {
 
     CandyState = _CandyState;
-    switch (_CandyState)
+    switch (CandyState)
     {
     case ECandyManagerState::Select:
         break;

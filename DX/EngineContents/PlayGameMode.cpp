@@ -100,8 +100,8 @@ void APlayGameMode::BeginPlay()
 		CandyManager->CreateStage(4, 4);
 		CandyManager->DeleteIndex(0, 0);
 
-		CandyManager->CandyCreate();
-		CandyManager->CreateStageBackTile();
+		CandyManager->CreateStageBackTile(); // 캔디 뒤에 배경 만들기
+		CandyManager->CandyCreate(); // 진짜 캔디 만들기
 
 		CandyManager->CandyFindConsec();
 		CandyManager->CandyDestroyCheck();
