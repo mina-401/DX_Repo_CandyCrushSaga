@@ -17,7 +17,7 @@ ACandy::ACandy()
 
 	Renderer = CreateDefaultSubObject<USpriteRenderer>();
 	Renderer->SetupAttachment(RootComponent);
-	Renderer->SetRelativeScale3D({ 50,50,0,0.0f });
+	Renderer->SetRelativeScale3D({ 50,50,0,-100.0f });
 	Renderer->SetAutoScale(false);
 
 	Collision = CreateDefaultSubObject<UCollision>();

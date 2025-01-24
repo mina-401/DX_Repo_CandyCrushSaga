@@ -114,12 +114,7 @@ void ACandyManager::CandyCreate()
     }
 }
 
-void ACandyManager::BeginPlay()
-{
-    AActor::BeginPlay();
 
-
-}
 
 void ACandyManager::ColCheck(int X, int Y)
 {
@@ -292,8 +287,7 @@ void ACandyManager::CandyChange(class ACandy* SelectCandy, class ACandy* CurCand
 void ACandyManager::CandyClear()
 {
     DestroyCandy.clear();
-
-    
+ 
 }
 void ACandyManager::ClearCandys()
 {
@@ -313,9 +307,7 @@ void ACandyManager::ResetCandyBoard()
 {
 
     ClearCandys(); // ÄµµðŠæ ÀúÀå »èÁ¦
-
     CandyCreate(); // Äµµð ´Ù½Ã ¸¸µê
-    
     CandyFindConsec();
     CandyDestroyCheck();
 }
@@ -631,7 +623,11 @@ void ACandyManager::Update(float _DeltaTime)
     CandyDestroyCheck();
 
 }
+void ACandyManager::BeginPlay()
+{
+    AActor::BeginPlay();
 
+}
 void ACandyManager::Tick(float _DeltaTime)
 {
     AActor::Tick(_DeltaTime);

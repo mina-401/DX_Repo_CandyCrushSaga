@@ -76,10 +76,13 @@ public:
 		}
 		else if (1 == idx) {
 			SetCandySprite(ESpriteType::StripedHorizontal);
+
 		}
 		else if (2 == idx)
 		{
 			SetCandySprite(ESpriteType::StripedVertical);
+
+
 		}
 		else if (3 == idx)
 		{

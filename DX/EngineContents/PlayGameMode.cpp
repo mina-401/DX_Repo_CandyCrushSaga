@@ -95,8 +95,8 @@ void APlayGameMode::BeginPlay()
 
 		CandyManager = dynamic_cast<ACandyManager*>(GetWorld()->GetMainPawn());
 
-		CandyManager->CreateStage(4, 4);
-		CandyManager->DeleteIndex(0, 0);
+		CandyManager->CreateStage(5, 5);
+		//CandyManager->DeleteIndex(0, 0);
 
 		CandyManager->CandyCreate(); // 진짜 캔디 만들기
 		CandyManager->CreateStageBackTile(); // 캔디 뒤에 배경 만들기
