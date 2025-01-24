@@ -52,7 +52,6 @@ cbuffer FTransform : register(b0)
     float4x4 WVP;
 };
 
-// 상수버퍼는 아무것도 세팅해주지 않으면 기본값이 0으로 채워집니다.
 cbuffer FSpriteData : register(b1)
 {
     float4 CuttingPos;
@@ -92,8 +91,6 @@ float4 CandySpriteRender_PS(VertexShaderOutPut _Vertex) : SV_Target0
 {
 	
     float4 Color = ImageTexture.Sample(ImageSampler, _Vertex.UV.xy);
-	
-	
 	
     if (0.95f >= Color.a)
     {

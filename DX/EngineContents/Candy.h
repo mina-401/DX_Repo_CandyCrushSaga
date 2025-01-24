@@ -109,7 +109,11 @@ public:
 	ACandy& operator=(const ACandy& _Other) = delete;
 	ACandy& operator=(ACandy&& _Other) noexcept = delete;
 
-	std::shared_ptr<class USpriteRenderer> GetRenderer()
+	/*std::shared_ptr<class USpriteRenderer> GetRenderer()
+	{
+		return Renderer;
+	}*/
+	std::shared_ptr<class UCustomCandyRenderer> GetRenderer()
 	{
 		return Renderer;
 	}
@@ -127,7 +131,8 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 private:
-	std::shared_ptr<class USpriteRenderer> Renderer;
+	//std::shared_ptr<class USpriteRenderer> Renderer;
+	std::shared_ptr<class UCustomCandyRenderer> Renderer;
 	std::shared_ptr<class UCollision> Collision;
 
 	FVector MaxSize = { 0,0 };

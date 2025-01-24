@@ -6,7 +6,7 @@
 #include <EngineCore/Level.h>
 #include "PlayGameMode.h"
 #include <EnginePlatform/EngineInput.h>
-
+#include "CustomCandyRenderer.h"
 
 ACandy::ACandy()
 {
@@ -15,7 +15,7 @@ ACandy::ACandy()
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
-	Renderer = CreateDefaultSubObject<USpriteRenderer>();
+	Renderer = CreateDefaultSubObject<UCustomCandyRenderer>();
 	Renderer->SetupAttachment(RootComponent);
 	Renderer->SetRelativeScale3D({ 50,50,0,-100.0f });
 	Renderer->SetAutoScale(false);

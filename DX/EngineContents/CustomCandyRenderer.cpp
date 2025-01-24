@@ -83,3 +83,12 @@ void UCustomCandyRenderer::CameraTransUpdate(UEngineCamera* _Camera)
 	RendererTrans.Projection = CameraTrans.Projection;
 	RendererTrans.WVP = CurWorld * RendererTrans.View * RendererTrans.Projection;
 }
+void UCustomCandyRenderer::SetSprite(UEngineSprite* _Sprite)
+{
+	Sprite = _Sprite;
+
+	if (nullptr == Sprite)
+	{
+		MSGASSERT("존재하지 않는 스프라이트를 사용하려고 했습니다.");
+	}
+}
