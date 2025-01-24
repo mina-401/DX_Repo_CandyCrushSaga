@@ -3,5 +3,6 @@
   <ItemGroup>
     <FxCompile Include="TestShader.fx" />
     <FxCompile Include="CandyBackgroundShader.fx" />
+    <FxCompile Include="LMHCustomPostEffect.fx" />
   </ItemGroup>
 </Project>

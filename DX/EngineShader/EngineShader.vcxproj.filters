@@ -11,5 +11,6 @@
   <ItemGroup>
     <None Include="Light.hlsli" />
     <None Include="Transform.hlsli" />
+    <None Include="RenderBaseData.hlsli" />
   </ItemGroup>
 </Project>

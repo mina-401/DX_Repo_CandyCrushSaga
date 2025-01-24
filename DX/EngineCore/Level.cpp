@@ -11,8 +11,6 @@
 #include "EngineFont.h"
 #include "EngineRenderTarget.h"
 
-
-
 std::shared_ptr<class ACameraActor> ULevel::SpawnCamera(int _Order)
 {
 	std::shared_ptr<ACameraActor> Camera = std::make_shared<ACameraActor>();
@@ -176,12 +174,21 @@ void ULevel::Render(float _DeltaTime)
 		MSGASSERT("UI카메라가 존재하지 않습니다. 엔진 오류입니다. UI카메라를 제작해주세요.");
 	}
 
+	for (std::pair<const int, std::shared_ptr<class ACameraActor>>& Pair : Cameras)
+	{
+		Pair.second->GetCameraComponent()->CameraTarget->Effect(nullptr, _DeltaTime);
+		// Pair.second->GetCameraComponent()->CameraTarget->MergeTo(LastRenderTarget);
+	}
+
 	// 모든 카메라의 최종 결과물은 어디에 머지됩니까?
 	// Last타겟에 머지됩니다.
 	for (std::pair<const int, std::shared_ptr<class ACameraActor>>& Pair : Cameras)
 	{
 		Pair.second->GetCameraComponent()->CameraTarget->MergeTo(LastRenderTarget);
 	}
+
+	// 이때가 후처리이펙트(PostEffect)를 하기 가장 좋은 시점이다.
+	LastRenderTarget->Effect(nullptr, _DeltaTime);
 
 	//Cameras[static_cast<int>(EEngineCameraType::UICamera)]->GetCameraComponent()->CameraTarget->MergeTo(LastRenderTarget);
 

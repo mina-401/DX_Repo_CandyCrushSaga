@@ -3,6 +3,7 @@
 #include "Mesh.h"
 #include "EngineMaterial.h"
 #include "EngineEnums.h"
+#include "EngineStruct.h"
 
 // 설명 : 랜더링의 최소단위
 //        Draw를 하는 애는 이녀석을 기반으로 할것이다.
@@ -16,6 +17,7 @@
 class URenderUnit
 {
 public:
+	// constrcuter destructer
 	ENGINEAPI URenderUnit();
 	ENGINEAPI ~URenderUnit();
 
@@ -29,6 +31,8 @@ public:
 	std::shared_ptr<UEngineMaterial> Material;
 
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> InputLayOut;
+
+	FRenderBaseData Data;
 
 	ENGINEAPI void SetMesh(std::string_view _Name);
 	ENGINEAPI void SetMaterial(std::string_view _Name);

@@ -159,6 +159,9 @@
     <ClCompile Include="EngineStructuredBuffer.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LightActor.cpp" />
+    <ClCompile Include="EngineStruct.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -334,6 +337,9 @@
     </ClInclude>
     <ClInclude Include="EngineEnums.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineStruct.h">
+      <Filter>Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

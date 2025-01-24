@@ -42,6 +42,7 @@
     </ClCompile>
     <ClCompile Include="Shine.cpp" />
     <ClCompile Include="BackGroundTile.cpp" />
+    <ClCompile Include="LMHPostEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -87,6 +88,7 @@
     </ClInclude>
     <ClInclude Include="Shine.h" />
     <ClInclude Include="BackGroundTile.h" />
+    <ClInclude Include="LMHPostEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameMode">

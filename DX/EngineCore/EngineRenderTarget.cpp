@@ -101,7 +101,18 @@ void UEngineRenderTarget::Clear()
     {
         UEngineCore::GetDevice().GetContext()->ClearRenderTargetView(ArrRTVs[i], ClearColor.Arr1D);
     }
-    UEngineCore::GetDevice().GetContext()->ClearDepthStencilView(DepthTexture->GetDSV(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+    ID3D11DepthStencilView* DSV = nullptr;
+
+    if (nullptr != DepthTexture)
+    {
+        DSV = DepthTexture->GetDSV();
+    }
+
+    if (nullptr != DSV)
+    {
+        UEngineCore::GetDevice().GetContext()->ClearDepthStencilView(DSV, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+    }
 }
 
 void UEngineRenderTarget::Setting()
@@ -109,7 +120,14 @@ void UEngineRenderTarget::Setting()
     //ID3D11RenderTargetView* RTV = UEngineCore::GetDevice().GetRTV();
     //ID3D11RenderTargetView* ArrRtv[16] = { 0 };
     // ArrRtv[0] = RTV; // SV_Target0
-    UEngineCore::GetDevice().GetContext()->OMSetRenderTargets(1, &ArrRTVs[0], DepthTexture->GetDSV());
+    ID3D11DepthStencilView* DSV = nullptr;
+
+    if (nullptr != DepthTexture)
+    {
+        DSV = DepthTexture->GetDSV();
+    }
+
+    UEngineCore::GetDevice().GetContext()->OMSetRenderTargets(1, &ArrRTVs[0], DSV);
 }
 
 // 어던 랜더타겟의 요소를 다른 랜더타겟에 복사한다.
@@ -120,10 +138,44 @@ void UEngineRenderTarget::CopyTo(std::shared_ptr<UEngineRenderTarget> _Target)
     MergeTo(_Target);
 }
 
-void UEngineRenderTarget::MergeTo(std::shared_ptr<UEngineRenderTarget> _Target)
+void UEngineRenderTarget::CopyTo(UEngineRenderTarget* _Target)
 {
+    _Target->Clear();
+    MergeTo(_Target);
+}
+
+void UEngineRenderTarget::MergeTo(UEngineRenderTarget* _Target)
+{
+    // 쉐이더 리소스에서 사용하는 리소스를 아웃머저에서도 사용할수 없다.
+    // Texture2D에서 => SRV(쉐이더리소스) RTV(아웃풋 머저에 세팅)
+    // 다른 타겟의 텍스처이다.
     _Target->Setting();
     TargetUnit.SetTexture("MergeTex", ArrTexture[0]);
     TargetUnit.Render(nullptr, 0.0f);
     TargetUnit.Reset();
 }
+
+void UEngineRenderTarget::MergeTo(std::shared_ptr<UEngineRenderTarget> _Target)
+{
+    // 쉐이더 리소스에서 사용하는 리소스를 아웃머저에서도 사용할수 없다.
+    // Texture2D에서 => SRV(쉐이더리소스) RTV(아웃풋 머저에 세팅)
+    // 다른 타겟의 텍스처이다.
+    _Target->Setting();
+    TargetUnit.SetTexture("MergeTex", ArrTexture[0]);
+    TargetUnit.Render(nullptr, 0.0f);
+    TargetUnit.Reset();
+}
+
+void UEngineRenderTarget::Effect(UEngineCamera* _Camera, float _DeltaTime)
+{
+    for (std::shared_ptr<UPostEffect>& Effect : PosEffects)
+    {
+        if (false == Effect->IsActive)
+        {
+            continue;
+        }
+
+        Effect->Effect(_Camera, _DeltaTime);
+    }
+}
+

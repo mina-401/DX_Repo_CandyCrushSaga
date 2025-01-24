@@ -26,12 +26,12 @@ void UCandyCrushSaga::MyGSetting()
 		}
 	}
 
-	{
-		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("CandyBackgroundMaterial");
-		Mat->SetVertexShader("CandyBackgroundShader.fx");
-		Mat->SetPixelShader("CandyBackgroundShader.fx");
-		//Mat->SetCustom
-	}
+	//{
+	//	std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("CandyBackgroundMaterial");
+	//	Mat->SetVertexShader("CandyBackgroundShader.fx");
+	//	Mat->SetPixelShader("CandyBackgroundShader.fx");
+	//	//Mat->SetCustom
+	//}
 	{
 		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("MyCollisionDebugMaterial");
 		Mat->SetVertexShader("EngineDebugCollisionShader.fx");
