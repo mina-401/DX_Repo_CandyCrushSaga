@@ -77,11 +77,6 @@ void ACandyManager::CreateStage(int X, int Y)
         SetPos.Y += CandyScale.Y;
     }
 
-
-
-    // SetPos = { -100,100 };
-    
-
 }
 
 
@@ -117,12 +112,10 @@ void ACandyManager::CandyCreate()
             ACandy* NewCandy = nullptr;
             for (int col = 0; col < CandyCol; col++)
             {
-                //SetPos.X += CandyScale.X;
                 if (false == Data[row][col].IsActive) {}
                 else {
                     // 캔디 스폰
                    
-                    FIntPoint Index = { row,col };
                     NewCandy = NewCandyCreate(row, col);
 
                     Candys[row][col] = NewCandy;
@@ -557,12 +550,6 @@ void ACandyManager::PushDestroyCandy(int _row, int _col, ESpriteType SpriteType)
 
 
 
-void ACandyManager::Disable(float _DeltaTime)
-{
-    // 마우스를 움직일 수 없는 경우.
-    // 움직임 횟수가 끝나서 게임이 끝났다.
-    // 
-}
 
 // 캔디 부수기
 void ACandyManager::CandyDestroyStart()
@@ -659,7 +646,15 @@ void ACandyManager::Update(float _DeltaTime)
 }
 void ACandyManager::DisableStart()
 {
+    //이동횟수 끝남으로 게임끝
 }
+void ACandyManager::Disable(float _DeltaTime)
+{
+    // 마우스를 움직일 수 없는 경우.
+    // 움직임 횟수가 끝나서 게임이 끝났다.
+    // 
+}
+
 void ACandyManager::BeginPlay()
 {
     AActor::BeginPlay();

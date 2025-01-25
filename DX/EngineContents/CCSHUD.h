@@ -1,6 +1,7 @@
 #pragma once
 #include <EngineCore/Actor.h>
 #include <EngineCore/HUD.h>
+#include <EngineCore/Widget.h>
 // Ό³Έν :
 class ACCSHUD : public AHUD
 {
@@ -25,6 +26,10 @@ private:
 	std::shared_ptr<class USpriteRenderer> Child_Score;
 
 	float MaxScore = 100.0f;
-	//float ScoreScale={200,}
+	class UImageWidget* ScoreTextBox;
+	class UImageWidget* FrameWidget;
+	class UImageWidget* ScoreBar;
+	class UImageWidget* Score;
+
 };
 

@@ -19,10 +19,7 @@ public:
 	{
 		return CandyManager;
 	}	
-	std::shared_ptr<class ACCSHUD> GetGameHud(class AHUD* _Hud)
-	{
-		return GameMainHud;
-	}
+	
 	bool IsGameEnd = false;
 protected:
 
@@ -39,7 +36,10 @@ private:
 	void PlayDirLoad();
 	void SpritesInit();
 
-	std::shared_ptr<class ACCSHUD> GameMainHud;
+	std::shared_ptr<class AHUD> GameMainHud;
+	class UWidget* ScoreWidget;
+	class UWidget* ScoreBarWidget;
+	class UWidget* ScoreTextBoxWidget;
 
 
 };

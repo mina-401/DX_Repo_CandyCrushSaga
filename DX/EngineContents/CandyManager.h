@@ -4,6 +4,7 @@
 //#include "Queue.h"
 #include <queue>
 #include "CCSEnums.h"
+#include <EngineCore/ImageWidget.h>
 
 class StageCandyData
 {
@@ -160,6 +161,8 @@ private:
 
 	
 	UEngineRandom Random;
+
+	UWidget* PlayerStatsWidget;
 
 //¹ØÀº ·£´ýÇÔ¼ö
 

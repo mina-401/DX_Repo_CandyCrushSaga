@@ -182,6 +182,7 @@
     </ClCompile>
     <ClCompile Include="CandyCrushSaga.cpp" />
     <ClCompile Include="CandyCrushSaga_Resources.cpp" />
+    <ClCompile Include="CandyGameInstance.cpp" />
     <ClCompile Include="CandyManager.cpp">
       <SubType>
       </SubType>

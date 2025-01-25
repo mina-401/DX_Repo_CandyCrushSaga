@@ -3,7 +3,14 @@
 #include "Candy.h"
 // Ό³Έν :
 
+class MouseController
+{
+public:
+	int MaxTransCount = 10;
+	int CurTransCount = MaxTransCount;
 
+	bool IsTransEnd = false;
+};
 class AMouse : public AActor
 {
 
@@ -21,7 +28,7 @@ public:
 
 	//void CollisionEnter(UCollision* _This, UCollision* _Other);
 	class ACandy* SelectCandy = nullptr;
-	bool IsTransEnd = false;
+
 
 protected:
 	void BeginPlay() override;
@@ -36,8 +43,8 @@ private:
 
 	int MaxRow = 0;
 	int MaxCol = 0;
-	int MaxTransCount = 10;
-	int CurTransCount = MaxTransCount;
+
+	MouseController CandyMouseCon;
 
 	//bool IsGameEnd = false;
 

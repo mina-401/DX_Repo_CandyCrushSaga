@@ -44,6 +44,7 @@
     <ClCompile Include="BackGroundTile.cpp" />
     <ClCompile Include="LMHPostEffect.cpp" />
     <ClCompile Include="CustomCandyRenderer.cpp" />
+    <ClCompile Include="CandyGameInstance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />

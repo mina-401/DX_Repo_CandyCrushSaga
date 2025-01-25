@@ -2,6 +2,7 @@
 #include "PlayGameMode.h"
 #include <EngineCore/CameraActor.h>
 #include <EngineCore/Level.h>	
+#include <EngineCore/HUD.h>	
 #include <EngineCore/EngineCore.h>	
 #include <EngineCore/EngineCamera.h>
 #include <EngineCore/EngineGUIWindow.h>
@@ -15,6 +16,7 @@
 #include "CandyManager.h"
 #include "Mouse.h"
 #include <EnginePlatform/EngineInput.h>
+#include "CandyGameInstance.h"
 
 class DebugWindow : public UEngineGUIWindow
 {
@@ -56,6 +58,13 @@ void APlayGameMode::LevelChangeStart()
 {
 	UEngineGUI::AllWindowOff();
 
+	AHUD* HUD = GetWorld()->GetHUD();
+	
+
+
+	GetGameInstance<CandyGameInstance>()->Score = ScoreWidget;
+	//GetGameInstance<CandyGameInstance>()->ScroeBar = ScoreBarWidget;
+	//GetGameInstance<CandyGameInstance>()->ScoreTextBox = ScoreTextBoxWidget;
 	{
 		std::shared_ptr<UContentsEditorGUI> Window = UEngineGUI::FindGUIWindow<UContentsEditorGUI>("CCSEditorGUI");
 
