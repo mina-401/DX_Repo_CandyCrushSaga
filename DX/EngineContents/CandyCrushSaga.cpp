@@ -16,6 +16,7 @@
 #include "TitleGameMode.h"
 #include "CCSHUD.h"
 #include "CandyManager.h"
+#include "CandyGameInstance.h"
 
 // #define은 그냥 무조건 복붙
 CreateContentsCoreDefine(UCandyCrushSaga);
@@ -38,7 +39,7 @@ void UCandyCrushSaga::EngineStart(UEngineInitData& _Data)
 	_Data.WindowSize = { 720, 480 };
 
 	
-
+	GEngine->CreateGameInstance<CandyGameInstance>();
 	//MyGSetting();
 
 

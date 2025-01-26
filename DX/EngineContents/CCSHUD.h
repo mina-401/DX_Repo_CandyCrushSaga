@@ -16,6 +16,10 @@ public:
 	ACCSHUD& operator=(const ACCSHUD& _Other) = delete;
 	ACCSHUD& operator=(ACCSHUD&& _Other) noexcept = delete;
 	
+	class UImageWidget* ScoreTextBox;
+	class UImageWidget* FrameWidget;
+	class UImageWidget* ScoreBar;
+	class UImageWidget* Score;
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -26,10 +30,7 @@ private:
 	std::shared_ptr<class USpriteRenderer> Child_Score;
 
 	float MaxScore = 100.0f;
-	class UImageWidget* ScoreTextBox;
-	class UImageWidget* FrameWidget;
-	class UImageWidget* ScoreBar;
-	class UImageWidget* Score;
+	
 
 };
 

@@ -541,11 +541,19 @@ void ACandyManager::PushDestroyCandy(int _row, int _col, ESpriteType SpriteType)
             if (Data[row][col].IsActive == false) continue;
 
             if ((_row == row) && (_col == col)) continue;
-
+            ACandy* Cur = Candys[row][col];
+            if (Cur == nullptr)
+            {
+                continue;
+            }
+            if (Cur->CandyData.row <0 || Cur->CandyData.col <0)
+            {
+                int a = 0;
+            }
             DestroySpecialCandy.push_back(Candys[row][col]);
 
         }
-    }
+    }  
 }
 
 
@@ -574,6 +582,10 @@ void ACandyManager::CandyDestroyStart()
       
          //class AShine* ShineEffect = GetWorld()->SpawnActor<AShine>().get();
         // ShineEffect->SetActorLocation(Candy->GetActorLocation());
+        if (Candy->CandyData.row < 0 || Candy->CandyData.col < 0)
+        {
+            int a = 0;
+        }
 
          Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
          Candy->Destroy();
@@ -593,27 +605,31 @@ void ACandyManager::CandyDestroyStart()
 
     
     CandyClear();
-    TimeEventComponent->AddEndEvent(2.0f, [this]()
+
+    if (0 != DestroySpecialCandy.size())
+    {
+
+      for (ACandy* Candy : DestroySpecialCandy)
+      {
+          DestroyCandy.push_back(Candys[Candy->CandyData.row][Candy->CandyData.col]);
+      }
+      DestroySpecialCandy.clear();
+
+       TimeEventComponent->AddEndEvent(1.0f, [this]()
+       {
+          CandyDestroyStart();
+       });
+
+        
+    }
+    else {
+
+        TimeEventComponent->AddEndEvent(2.0f, [this]()
         {
-            if (0 != DestroySpecialCandy.size())
-            {
-
-                for (ACandy* Candy : DestroySpecialCandy)
-                {
-                    DestroyCandy.push_back(Candy);
-                }
-                DestroySpecialCandy.clear();
-                CandyDestroyStart();
-
-            }
             DestroyEnd = true;
-          
-        }); 
-    // Æ¯¼ö Äµµð Æø¹ß ¹üÀ§¿¡ Äµµð°¡ ÀÖ´Ù.
-    
 
- 
-   
+        });
+    }
 }
 
 
