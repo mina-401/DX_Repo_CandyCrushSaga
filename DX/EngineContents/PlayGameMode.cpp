@@ -18,6 +18,7 @@
 #include <EnginePlatform/EngineInput.h>
 #include "CandyGameInstance.h"
 #include "CCSHUD.h"
+#include <EngineCore/FontWidget.h>
 
 class DebugWindow : public UEngineGUIWindow
 {
@@ -61,15 +62,9 @@ void APlayGameMode::LevelChangeStart()
 
 	AHUD* HUD = GetWorld()->GetHUD();
 	
-	ACCSHUD* MyHUD = dynamic_cast<ACCSHUD*>(HUD); 
+	//ACCSHUD* MyHUD = dynamic_cast<ACCSHUD*>(HUD); 
 
-	ScoreWidget = MyHUD->Score;
-	ScoreBarWidget = MyHUD->ScoreBar;
-	ScoreTextBoxWidget = MyHUD->ScoreTextBox;
-
-	GetGameInstance<CandyGameInstance>()->Score = ScoreWidget;
-	GetGameInstance<CandyGameInstance>()->ScroeBar = ScoreBarWidget;
-	GetGameInstance<CandyGameInstance>()->ScoreTextBox = ScoreTextBoxWidget;
+	
 
 	{
 		std::shared_ptr<UContentsEditorGUI> Window = UEngineGUI::FindGUIWindow<UContentsEditorGUI>("CCSEditorGUI");

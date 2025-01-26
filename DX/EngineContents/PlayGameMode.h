@@ -40,6 +40,7 @@ private:
 	class UWidget* ScoreWidget;
 	class UWidget* ScoreBarWidget;
 	class UWidget* ScoreTextBoxWidget;
+	//class UWidget* ScoreTextWidget;
 
 
 };

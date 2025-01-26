@@ -13,10 +13,14 @@
 #include "Mouse.h"
 #include "Shine.h"
 #include "BackGroundTile.h"
+#include <EngineCore/DefaultSceneComponent.h>
+#include <EngineCore/FontRenderer.h>
 
 ACandyManager::ACandyManager()
 {
     TimeEventComponent = CreateDefaultSubObject<UTimeEventComponent>();
+
+    
 }
 
 ACandyManager::~ACandyManager()
@@ -257,6 +261,19 @@ void ACandyManager::CandyFindConsec()
 }
 void ACandyManager::CandyCascadeExplosion()
 {
+
+}
+void ACandyManager::CandyFinalDestroyCheck()
+{
+    CandyFindConsec();
+    if (false == IsCandyDestroy())
+    {
+       
+    }
+    else {
+        //콤보 캔디가 있다.
+        ChangeCandyState(ECandyManagerState::Destroy);
+    }
 
 }
 void ACandyManager::CandyDestroyCheck()
@@ -546,10 +563,6 @@ void ACandyManager::PushDestroyCandy(int _row, int _col, ESpriteType SpriteType)
             {
                 continue;
             }
-            if (Cur->CandyData.row <0 || Cur->CandyData.col <0)
-            {
-                int a = 0;
-            }
             DestroySpecialCandy.push_back(Candys[row][col]);
 
         }
@@ -582,15 +595,10 @@ void ACandyManager::CandyDestroyStart()
       
          //class AShine* ShineEffect = GetWorld()->SpawnActor<AShine>().get();
         // ShineEffect->SetActorLocation(Candy->GetActorLocation());
-        if (Candy->CandyData.row < 0 || Candy->CandyData.col < 0)
-        {
-            int a = 0;
-        }
-
          Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
          Candy->Destroy();
          Candy = nullptr;
-
+           
         /* TimeEventComponent->AddUpdateEvent(2.0f, [this, Candy,ShineEffect](float _Delta, float _Acc)
              {
                 
@@ -624,7 +632,7 @@ void ACandyManager::CandyDestroyStart()
     }
     else {
 
-        TimeEventComponent->AddEndEvent(2.0f, [this]()
+        TimeEventComponent->AddEndEvent(1.0f, [this]()
         {
             DestroyEnd = true;
 
@@ -659,9 +667,18 @@ void ACandyManager::Update(float _DeltaTime)
 {
     CandyDestroyCheck();
 
+
+
+    if (GetGameInstance<CandyGameInstance>()->CandyMouseCon.IsTransEnd == true)
+    {
+        // 이동이 끝.
+        ChangeCandyState(ECandyManagerState::Disable);
+    }
+
 }
 void ACandyManager::DisableStart()
 {
+    
     //이동횟수 끝남으로 게임끝
 }
 void ACandyManager::Disable(float _DeltaTime)

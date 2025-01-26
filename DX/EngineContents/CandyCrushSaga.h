@@ -23,6 +23,6 @@ protected:
 	void EngineEnd();
 
 private:
-	void MyGSetting();
+	void CandyGSetting();
 };
 

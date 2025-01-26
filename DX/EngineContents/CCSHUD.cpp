@@ -3,6 +3,9 @@
 #include <EngineCore/DefaultSceneComponent.h>
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/ImageWidget.h>
+#include "CandyGameInstance.h"
+#include <EngineCore/FontRenderer.h>
+#include <EngineCore/FontWidget.h>
 
 ACCSHUD::ACCSHUD()
 {
@@ -23,15 +26,14 @@ void ACCSHUD::BeginPlay()
 		FrameWidget = CreateWidget<UImageWidget>(-1).get();
 
 		FrameWidget->SetScale3D({ 100, 100, 1 });
-		FrameWidget->SetWorldLocation({ -250,100});
+		FrameWidget->SetWorldLocation({ -250,100 });
 		FrameWidget->SetRelativeScale3D({ 259,150,0.0f });
 		FrameWidget->SetTexture("HUD_1.png");
 		FrameWidget->SetDownEvent([]()
 		{
 			//UEngineDebug::OutPutString("Click~~~~~~~~~");
 		});
-	}
-	{
+
 		ScoreTextBox = CreateWidget<UImageWidget>(-1).get();
 
 		ScoreTextBox->SetScale3D({ 100, 100, 1 });
@@ -43,9 +45,8 @@ void ACCSHUD::BeginPlay()
 		{
 			//UEngineDebug::OutPutString("Click~~~~~~~~~");
 		});
-	}
-	{
-		 ScoreBar = CreateWidget<UImageWidget>(-1).get();
+
+		ScoreBar = CreateWidget<UImageWidget>(-1).get();
 
 		ScoreBar->SetScale3D({ 100, 100, 1 });
 		ScoreBar->SetWorldLocation({ -190,5 });
@@ -55,8 +56,6 @@ void ACCSHUD::BeginPlay()
 		{
 			//UEngineDebug::OutPutString("Click~~~~~~~~~");
 		});
-	}
-	{
 		Score = CreateWidget<UImageWidget>(-1).get();
 
 		Score->SetScale3D({ 100, 100, 1 });
@@ -70,10 +69,30 @@ void ACCSHUD::BeginPlay()
 	}
 
 
+	{
+
+		TransText = CreateWidget<UFontWidget>(-1).get();
+		TransText->SetFont("BrandonGrotesque-Bold", 20.0f, TColor<unsigned char>::BLACK, FW1_LEFT);
+		TransText->SetWorldLocation({ -310,120 });
+
+		TransText->SetText("남은 턴수: " + (std::to_string(GetGameInstance<CandyGameInstance>()->PlayerStat.Turn)));
+
+		ScoreText = CreateWidget<UFontWidget>(-1).get();
+		ScoreText->SetFont("BrandonGrotesque-Bold", 20.0f, TColor<unsigned char>::BLACK, FW1_LEFT);
+		ScoreText->SetWorldLocation({ -310,45 });
+
+		ScoreText->SetText("점수: " + (std::to_string(GetGameInstance<CandyGameInstance>()->PlayerStat.Score)));
+
+	}
 
 }
 
 void ACCSHUD::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
+	Turn = GetGameInstance<CandyGameInstance>()->PlayerStat.Turn;
+	TransText->SetText("남은 턴수: " + (std::to_string(Turn)));
+	ScoreText->SetText("점수: " + (std::to_string(GetGameInstance<CandyGameInstance>()->PlayerStat.Score)));
+
+
 }

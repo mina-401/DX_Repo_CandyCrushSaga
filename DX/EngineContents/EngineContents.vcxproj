@@ -263,6 +263,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="CCSEnums.h" />
+    <ClInclude Include="CCSStruct.h" />
     <ClInclude Include="ContentsEditorGUI.h" />
     <ClInclude Include="CustomCandyRenderer.h">
       <SubType>

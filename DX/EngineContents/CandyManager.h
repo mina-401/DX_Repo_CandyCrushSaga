@@ -83,6 +83,7 @@ public:
 	bool IsCandyDestroy();
 	void CandyFindConsec();
 	void CandyCascadeExplosion();
+	void CandyFinalDestroyCheck();
 	void CandyDestroyCheck();
 	void CandyChange(class  ACandy* SelectCandy, class ACandy* CurCandy);
 	void CandyClear();
@@ -163,7 +164,7 @@ private:
 	UEngineRandom Random;
 
 	UWidget* PlayerStatsWidget;
-
+	std::shared_ptr<class UFontRenderer> ScoreTextWidget;
 //¹ØÀº ·£´ýÇÔ¼ö
 
 };

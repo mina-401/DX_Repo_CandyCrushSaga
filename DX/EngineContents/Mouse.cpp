@@ -138,7 +138,7 @@ AMouse::AMouse()
 												//콤보 캔디가 있다.
 												CandyManager->ChangeCandyState(ECandyManagerState::Destroy);
 
-												CandyMouseCon.CurTransCount--;
+												GetGameInstance<CandyGameInstance>()-> PlayerStat.Turn--;
 											}
 										});
 									break;
@@ -198,17 +198,11 @@ void AMouse::Tick(float _DeltaTime)
 	SetActorLocation(Pos); 
 
 	// 마우스 이동횟수 제한 있다.
-	if (CandyMouseCon.CurTransCount == 0)
+	if (GetGameInstance<CandyGameInstance>()->PlayerStat.Turn == 0)
 	{
-		CandyMouseCon.IsTransEnd = true;
+		GetGameInstance<CandyGameInstance>()->CandyMouseCon.IsTransEnd = true;
 	}
 
-
-	if (true == CandyMouseCon.IsTransEnd)
-	{
-		CandyManager->ChangeCandyState(ECandyManagerState::Disable);
-		//IsTransEnd = false;
-	}
 
 	//모든 게임이 끝나면, 점수화면으로 이동
 	//if (IsGameEnd == true)

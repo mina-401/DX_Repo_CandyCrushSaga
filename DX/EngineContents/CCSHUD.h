@@ -2,6 +2,7 @@
 #include <EngineCore/Actor.h>
 #include <EngineCore/HUD.h>
 #include <EngineCore/Widget.h>
+#include "CCSStruct.h"
 // Ό³Έν :
 class ACCSHUD : public AHUD
 {
@@ -16,6 +17,9 @@ public:
 	ACCSHUD& operator=(const ACCSHUD& _Other) = delete;
 	ACCSHUD& operator=(ACCSHUD&& _Other) noexcept = delete;
 	
+	class UFontWidget* ScoreText;
+	class UFontWidget* TransText;
+
 	class UImageWidget* ScoreTextBox;
 	class UImageWidget* FrameWidget;
 	class UImageWidget* ScoreBar;
@@ -24,13 +28,10 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 private:
-	std::shared_ptr<class USpriteRenderer> Renderer;
-	std::shared_ptr<class USpriteRenderer> Child_ScoreTextBox;
-	std::shared_ptr<class USpriteRenderer> Child_ScoreBar;
-	std::shared_ptr<class USpriteRenderer> Child_Score;
 
-	float MaxScore = 100.0f;
 	
 
+	PlayerStatus PlayerStat;
+	int Turn;
 };
 

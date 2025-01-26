@@ -1,11 +1,17 @@
 #pragma once
 #include <EngineCore/GameInstance.h>
 #include <EngineCore/Widget.h>
-
-struct PlayerStatus
+#include "CCSStruct.h"
+class MouseController
 {
-	int Score;
-	int Star;
+public:
+	//int MaxTransCount = 10;
+	//int CurTransCount = MaxTransCount;
+
+	bool IsTransEnd = false;
+
+	
+
 };
 // Ό³Έν :
 class CandyGameInstance : public UGameInstance
@@ -20,12 +26,11 @@ public:
 	CandyGameInstance(CandyGameInstance&& _Other) noexcept = delete;
 	CandyGameInstance& operator=(const CandyGameInstance& _Other) = delete;
 	CandyGameInstance& operator=(CandyGameInstance&& _Other) noexcept = delete;
-
-	UWidget* ScoreTextBox;
-	UWidget* ScroeBar;
-	UWidget* Score;
+		
+	UWidget* ScoreText;
 
 	PlayerStatus PlayerStat;
+	MouseController CandyMouseCon;
 protected:	
 
 private:

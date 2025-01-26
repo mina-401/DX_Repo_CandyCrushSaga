@@ -8,10 +8,11 @@
 #include <EngineCore/EngineShader.h>
 #include <EngineCore/EngineMaterial.h>
 #include <EngineCore/EngineTexture.h>
+#include <EngineCore/EngineFont.h>
 
 
 
-void UCandyCrushSaga::MyGSetting()
+void UCandyCrushSaga::CandyGSetting()
 {
 
 	{
@@ -26,26 +27,8 @@ void UCandyCrushSaga::MyGSetting()
 		}
 	}
 
-	//{
-	//	std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("CandyBackgroundMaterial");
-	//	Mat->SetVertexShader("CandyBackgroundShader.fx");
-	//	Mat->SetPixelShader("CandyBackgroundShader.fx");
-	//	//Mat->SetCustom
-	//}
-	{
-		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("CandyMaterial");
-		Mat->SetVertexShader("CandyShader.fx");
-		Mat->SetPixelShader("CandyShader.fx");
-	}
-	{
-		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("MyCollisionDebugMaterial");
-		Mat->SetVertexShader("EngineDebugCollisionShader.fx");
-		Mat->SetPixelShader("EngineDebugCollisionShader.fx");
-		// 언제나 화면에 나오는 누구도 이녀석의 앞을 가릴수 없어.
-		Mat->SetDepthStencilState("CollisionDebugDepth");
-		Mat->SetRasterizerState("CollisionDebugRas");
-	}
+	
 
-
+	UEngineFont::Load("BrandonGrotesque-Bold", "BrandonGrotesque-Bold");
 
 }

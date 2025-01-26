@@ -1,16 +1,10 @@
 #pragma once
 #include <EngineCore/Actor.h>
 #include "Candy.h"
+#include "CandyGameInstance.h"
 // Ό³Έν :
 
-class MouseController
-{
-public:
-	int MaxTransCount = 10;
-	int CurTransCount = MaxTransCount;
 
-	bool IsTransEnd = false;
-};
 class AMouse : public AActor
 {
 
@@ -45,6 +39,7 @@ private:
 	int MaxCol = 0;
 
 	MouseController CandyMouseCon;
+	PlayerStatus PlayerStat;
 
 	//bool IsGameEnd = false;
 

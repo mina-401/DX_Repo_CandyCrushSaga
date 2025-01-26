@@ -40,7 +40,7 @@ void UCandyCrushSaga::EngineStart(UEngineInitData& _Data)
 
 	
 	GEngine->CreateGameInstance<CandyGameInstance>();
-	//MyGSetting();
+	CandyGSetting();
 
 
 	UEngineCore::CreateLevel<ATitleGameMode, APawn, AHUD>("TitleLevel");
