@@ -90,7 +90,7 @@ void ACandyManager::DeleteIndex(int X, int Y)
 }
 ACandy* ACandyManager::NewCandyCreate(int row,int col)
 {
-    int RandomIndx = Random.RandomInt(1, 79);
+    int RandomIndx = Random.RandomInt(1, 78);
     ACandy* NewCandy = GetWorld()->SpawnActor<ACandy>().get();
     FVector CandyPos = Data[row][col].Pos;
     NewCandy->SetCandy({row,col}, CandyPos, RandomIndx);
@@ -99,7 +99,7 @@ ACandy* ACandyManager::NewCandyCreate(int row,int col)
 }
 ACandy* ACandyManager::NewCandyCreate(int row, int col,FVector Pos)
 {
-    int RandomIndx = Random.RandomInt(1, 79);
+    int RandomIndx = Random.RandomInt(1, 78);
     ACandy* NewCandy = GetWorld()->SpawnActor<ACandy>().get();
     FVector CandyPos = Pos + FVector(0,0,-100);
     NewCandy->SetCandy({ row,col }, CandyPos, RandomIndx);
@@ -338,8 +338,9 @@ void ACandyManager::ResetCandyBoard()
 
     ClearCandys(); // 캔디딀 저장 삭제
     CandyCreate(); // 캔디 다시 만듦
-    CandyFindConsec();
-    CandyDestroyCheck();
+    CandyFindConsec(); // 콤보캔디 찾기
+    CandyDestroyCheck(); // 상태 어디로 갈지.
+    
 }
 
 
@@ -441,7 +442,7 @@ void ACandyManager::NewCandyDropStart()
         {
             if (nullptr == Candys[row][col] && Data[row][col].IsActive == true)
             {
-                int Index = Random.RandomInt(1, 79);
+                int Index = Random.RandomInt(1, 78);
                 FVector Pos = IndexToWorldPos({ NewCandyRow, col });
                 ACandy* NewCandy = NewCandyCreate(row,col,Pos);
 
@@ -576,6 +577,9 @@ void ACandyManager::PushDestroyCandy(int _row, int _col, ESpriteType SpriteType)
 void ACandyManager::CandyDestroyStart()
 {
     DestroyEnd = false;
+
+    ComboCount++;
+
     for (ACandy* Candy : DestroyCandy)
     {
         if (Candy == nullptr) continue;
@@ -588,11 +592,48 @@ void ACandyManager::CandyDestroyStart()
     }
    
    
+    EColor PrevColor = EColor::None;
+    EColor CurColor = EColor::None;
 
+    int Combo = 1;
+    IsCombo = false;
     for (ACandy* Candy : DestroyCandy)
     {
         if (Candy == nullptr) continue;
       
+        CurColor = Candy->CandyData.CandyColor;
+
+        // 콤보 카운트
+        
+        if (PrevColor != EColor::None && PrevColor == CurColor)
+        {
+            Combo++;
+            //IsCombo = true;
+        }
+        else {
+            Combo = 1;
+
+        }
+
+        // 캔디 스프라이트 모양에 따른 기본 점수 계산한다.
+        BasicPlayerStateScore(Candy);
+
+      
+            // 3콤보 이펙트
+
+        // 연쇄해서 부서지는 캔디 존재한다.
+        if (ComboCount >= 2)
+        {
+            GetGameInstance<CandyGameInstance>()->PlayerStat.Score += BonusScore*ComboCount;
+            ComboCount = 0;
+        }
+
+            //기본점수       
+
+       
+
+        PrevColor = CurColor;
+        // 
          //class AShine* ShineEffect = GetWorld()->SpawnActor<AShine>().get();
         // ShineEffect->SetActorLocation(Candy->GetActorLocation());
          Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
@@ -631,12 +672,41 @@ void ACandyManager::CandyDestroyStart()
         
     }
     else {
-
+        // combo count 초기화
         TimeEventComponent->AddEndEvent(1.0f, [this]()
         {
             DestroyEnd = true;
+            ComboCount = 0;
 
         });
+    }
+}
+
+void ACandyManager::BasicPlayerStateScore(ACandy* Candy)
+{
+    switch (Candy->CandyData.CandySpriteType)
+    {
+    case ESpriteType::Normal:
+        GetGameInstance<CandyGameInstance>()->PlayerStat.Score += 10;
+
+        break;
+    case ESpriteType::StripedHorizontal:
+        GetGameInstance<CandyGameInstance>()->PlayerStat.Score += 30;
+
+        break;
+    case ESpriteType::StripedVertical:
+        GetGameInstance<CandyGameInstance>()->PlayerStat.Score += 30;
+
+        break;
+    case ESpriteType::Wrapped:
+        GetGameInstance<CandyGameInstance>()->PlayerStat.Score += 50;
+
+        break;
+    case ESpriteType::None:
+        break;
+
+    default:
+        break;
     }
 }
 
@@ -663,17 +733,19 @@ void ACandyManager::UpdateStart()
 
     // 부술 캔디를 확인
 }
-void ACandyManager::Update(float _DeltaTime)
+void ACandyManager::CandyDisableCheck()
 {
-    CandyDestroyCheck();
-
-
-
-    if (GetGameInstance<CandyGameInstance>()->CandyMouseCon.IsTransEnd == true)
+    if (false == IsCandyDestroy() && (GetGameInstance<CandyGameInstance>()->CandyMouseCon.IsTransEnd == true))
     {
         // 이동이 끝.
         ChangeCandyState(ECandyManagerState::Disable);
     }
+}
+void ACandyManager::Update(float _DeltaTime)
+{
+    CandyDestroyCheck();
+
+    CandyDisableCheck();
 
 }
 void ACandyManager::DisableStart()

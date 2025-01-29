@@ -105,10 +105,13 @@ public:
 	void PushDestroyCandy(int _row, int _col,ESpriteType SpriteType);
 
 	void UpdateStart();
+	void CandyDisableCheck();
 	void Update(float _DeltaTime);
 	void DisableStart();
 	void Disable(float _DeltaTime);
 	void CandyDestroyStart();
+
+	void BasicPlayerStateScore(ACandy* Candy);
 	
 
 
@@ -160,6 +163,10 @@ private:
 	const int Four = 4;
 	const int Five = 5;
 
+	// ÇÑÅÏ¿¡ ÄÞº¸ÇÑ È½¼ö
+	int ComboCount = 0;
+	int BonusScore = 100;
+	bool IsCombo = false;
 	
 	UEngineRandom Random;
 
