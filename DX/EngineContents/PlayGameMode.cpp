@@ -113,6 +113,11 @@ void APlayGameMode::LevelChangeStart()
 	}
 }
 
+void APlayGameMode::LevelChangeEnd()
+{
+	SoundPlayer.Stop();
+}
+
 void APlayGameMode::BeginPlay()
 {
 	AActor::BeginPlay();

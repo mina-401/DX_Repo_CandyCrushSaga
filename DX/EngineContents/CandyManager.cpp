@@ -242,6 +242,226 @@ bool ACandyManager::IsCandyDestroy()
 {
     return DestroyCandy.size() !=0 ? true : false ;
 }
+
+bool ACandyManager::RowCheckInProgress(int X, int Y)
+{
+    bool Combo = false;
+  
+
+    int dx[8] = {-1,1,1,-1,1,-1,0,0};
+
+    int row = X;
+    int col = Y;
+    int Nextcol = Y+1;
+    int NextNextcol = Y+2;
+
+
+     
+    if (col >= CandyCol || NextNextcol >= CandyCol || Nextcol > CandyCol) return Combo;
+
+    for (int i = 0; i < 8; i++)
+    {
+        int NextRow = row+dx[i];
+
+        if (NextRow >= CandyRow || NextRow < 0) return Combo;
+
+        ACandy* CurTarget = Candys[row][col];
+        ACandy* NextTarget = nullptr;
+        ACandy* NextNextTarget = nullptr;
+
+        if (i == 0 || i == 1)
+        {
+            NextTarget = Candys[row][Nextcol];
+            NextNextTarget = Candys[NextRow][NextNextcol];
+        }
+       
+        if (i == 2 || i == 3)
+        {
+            NextTarget = Candys[NextRow][Nextcol];
+            NextNextTarget = Candys[row][NextNextcol];
+        }
+
+        if (i == 4 || i == 5)
+        {
+            NextTarget = Candys[NextRow][Nextcol];
+            NextNextTarget = Candys[NextRow][NextNextcol];
+        }
+        if (i == 6 )
+        {
+            if (col + 3 >= CandyCol) return Combo;
+            NextTarget = Candys[row][col+1];
+            NextNextTarget = Candys[row][col+3];
+        }
+        if (i == 7)
+        {
+            if (col + 2 >= CandyCol)  break;
+            if (col + 3 >= CandyCol) break;
+
+            NextTarget = Candys[row][col + 2];
+            NextNextTarget = Candys[row][col + 3];
+        }
+        if (nullptr == CurTarget || nullptr == NextTarget || nullptr == NextNextTarget)
+        {
+            break;
+        }
+
+        EColor CurColor = CurTarget->CandyData.CandyColor;
+        EColor NextColor = NextTarget->CandyData.CandyColor;
+        EColor NextNextColor = NextNextTarget->CandyData.CandyColor;
+
+        // 세개가 연속이다.
+        if (CurColor == NextColor && NextColor == NextNextColor)
+        {
+            Combo = true;
+
+
+        }
+        else {
+            Combo = false;
+        }
+    } 
+
+    return Combo;
+
+}
+bool ACandyManager::ColCheckInProgress(int X, int Y)
+{
+    bool Combo = true;
+
+
+    int dy[8] = { 1,-1,1,-1,-1,1,0,0 };
+
+    int row = X;
+    int col = Y;
+    int NextRow = X + 1;
+    int NextNextRow = X + 2;
+
+
+
+    if (row >= CandyRow || NextNextRow >= CandyRow || NextRow > CandyRow) return true;
+
+    for (int i = 0; i < 8; i++)
+    {
+        int NextCol = col + dy[i];
+
+        if (NextCol >= CandyCol || NextCol < 0) break;
+
+        ACandy* CurTarget = Candys[row][col];
+        ACandy* NextTarget = nullptr;
+        ACandy* NextNextTarget = nullptr;
+
+        if (i == 0 || i == 1)
+        {
+            NextTarget = Candys[NextRow][col];
+            NextNextTarget = Candys[NextNextRow][NextCol];
+        }
+
+        if (i == 2 || i == 3)
+        {
+            NextTarget = Candys[NextRow][NextCol];
+            NextNextTarget = Candys[NextNextRow][col];
+        }
+
+        if (i == 4 || i == 5)
+        {
+            NextTarget = Candys[NextRow][NextCol];
+            NextNextTarget = Candys[NextNextRow][NextCol];
+        }
+        if (i == 6)
+        {
+            if (row + 3 >= CandyRow) break;
+            if (row + 2 >= CandyRow) break;
+            NextTarget = Candys[row+1][NextCol];
+            NextNextTarget = Candys[row+3][NextCol];
+        }
+        if (i == 7)
+        {
+            if (row + 3 >= CandyRow) break;
+
+
+            NextTarget = Candys[row+2][NextCol];
+            NextNextTarget = Candys[row+3][NextCol];
+        }
+        if (nullptr == CurTarget || nullptr == NextTarget || nullptr == NextNextTarget)
+        {
+            break;
+        }
+
+        EColor CurColor = CurTarget->CandyData.CandyColor;
+        EColor NextColor = NextTarget->CandyData.CandyColor;
+        EColor NextNextColor = NextNextTarget->CandyData.CandyColor;
+
+       
+
+        // 세개가 연속이다.
+        if (CurColor == NextColor && NextColor == NextNextColor)
+        {
+            Combo = true;
+        }
+        else {
+            Combo = false;
+        }
+    }
+
+    return Combo;
+}
+bool  FindInProgressCombo = true;
+void ACandyManager::CandyFindConsecInProgress()
+{
+    //CandyClear();
+    //InProgressCandyClear();
+
+     FindInProgressCombo = true;
+    for (int row = 0; row < CandyRow; row++)
+    {
+        for (int col = 0; col < CandyCol; col++)
+        {
+            if (false == Data[row][col].IsActive) //빈자리는 체크 안함
+            {
+                continue;
+            }
+
+            if (false == RowCheckInProgress(row, col))
+            {
+                FindInProgressCombo = false;
+                
+            }
+            if (false == ColCheckInProgress(row, col))
+            {
+                FindInProgressCombo = false;
+
+                // 콤보가 하나라도 있다.
+              
+            }
+           
+        }
+    }
+   
+   
+}
+
+void ACandyManager::InProgress(float _DeltaTime)
+{
+    //AActor::Tick(_DeltaTime);
+
+    if (GetCandyState() != ECandyManagerState::Select) return;
+    else
+    {
+        if (true == FindInProgressCombo)
+        {
+            ChangeBoardState(ECandyBoardState::InProgress);
+
+            return;
+        }
+        else
+        {
+            ChangeBoardState(ECandyBoardState::Resetting);
+
+            return;
+        }
+    }
+    
+}
 void ACandyManager::CandyFindConsec()
 { 
     CandyClear();
@@ -288,6 +508,11 @@ void ACandyManager::CandyChange(class ACandy* SelectCandy, class ACandy* CurCand
     CurCandyDataRef.SetPos = CurCandyData.SetPos;
 
 }
+void ACandyManager::InProgressCandyClear()
+{
+    InProgressCandy.clear();
+
+}
 void ACandyManager::CandyClear()
 {
     DestroyCandy.clear();
@@ -301,11 +526,19 @@ void ACandyManager::ClearCandys()
         {
             if (Data[x][y].IsActive == false) continue;
 
+            ACandy* Candy = Candys[x][y];
+            if (Candy == nullptr) continue;
             Candys[x][y]->Destroy();
            // Candys[x][y] = nullptr;
         }
     }
 
+}
+void ACandyManager::ResettingStart()
+{
+    ResetCandyBoard();
+    ChangeBoardState(ECandyBoardState::InProgress);
+    
 }
 void ACandyManager::ResetCandyBoard()
 {
@@ -321,6 +554,29 @@ void ACandyManager::ResetCandyBoard()
 FVector ACandyManager::IndexToWorldPos(FIntPoint _Index)
 {
     return LeftBottom + float4(_Index.Y * CandyScale.Y, _Index.X * CandyScale.X);
+}
+void ACandyManager::ChangeBoardState(ECandyBoardState _BoardState)
+{
+    BoardState = _BoardState;
+    switch (BoardState)
+    {
+    case ECandyBoardState::Ready:
+        break;
+    case ECandyBoardState::InProgress:
+       // CandyFindConsecInProgress(); 
+        break;
+    case ECandyBoardState::Paused:
+        break;
+    case ECandyBoardState::Completed:
+        break;
+    case ECandyBoardState::Resetting:
+       // ResettingStart();
+        break;
+    case ECandyBoardState::GameOver:
+        break;
+    default:
+        break;
+    }
 }
 
 void ACandyManager::ChangeCandyState(ECandyManagerState _CandyState)
@@ -347,6 +603,7 @@ void ACandyManager::ChangeCandyState(ECandyManagerState _CandyState)
     }
 
 }
+
 
 
 void ACandyManager::NewCandyDropStart()
@@ -419,7 +676,7 @@ void ACandyManager::NewCandyDropStart()
                 int Index = Random.RandomInt(1, 78);
                 FVector Pos = IndexToWorldPos({ NewCandyRow, col });
                 ACandy* NewCandy = NewCandyCreate(row,col,Pos);
-
+               // NewCandy->SetActive(false);
 
                 DropData NewData;
                 NewData.Candy = NewCandy;
@@ -444,17 +701,21 @@ void ACandyManager::NewCandyDropStart()
     // 빈공간애 캔디 드롭
     if (0 != DropCandy.size())
     {
+      
         TimeEventComponent->AddUpdateEvent(CCSConst::DropTime, [this](float _Delta, float _Acc)
             {
                 for (int i = 0; i < DropCandy.size(); i++)
                 {
                     DropCandy[i].Candy->CandyData.SetPos = FVector::Lerp(DropCandy[i].StartPos, DropCandy[i].EndPos, _Acc * (1/CCSConst::DropTime));
                 }
+               
             });
 
         TimeEventComponent->AddEndEvent(CCSConst::DropTime, [this]()
             {
                 DropCandy.clear();
+                PlaySoundPlayer("candy_land1.wav");
+                
 
                 TimeEventComponent->AddEndEvent(CCSConst::DropTime, [this]()
                     {
@@ -463,13 +724,20 @@ void ACandyManager::NewCandyDropStart()
             });
     }
 }
-
+void ACandyManager::PlaySoundPlayer(std::string _sound)
+{
+    {
+        USoundPlayer SoundPlayer;
+        SoundPlayer.SetVolume(0.5f);
+        SoundPlayer = UEngineSound::Play(_sound);
+    }
+}
 void ACandyManager::NewCandyDrop(float _Delta)
 {
 
     if (IsCandyDrop == false) return;
   
-    if (0 == DropCandy.size())
+    else if (0 == DropCandy.size())
     {
         ChangeCandyState(ECandyManagerState::Update);
         return;
@@ -602,20 +870,36 @@ void ACandyManager::CandyDestroyStart()
         if (ComboCount >= 2)
         {
             AScoreActor* ScoreActor = GetWorld()->SpawnActor< AScoreActor>().get();
-            ScoreActor->SetActorLocation({ -100,100,-200 });
-            //ScoreActor->SetActorRelativeScale3D({ 500,500,1 });
+
+            USoundPlayer SoundPlayer;
+            SoundPlayer.SetVolume(0.5f);
+
             switch (ComboCount)
             {
             case 2:
                 ScoreActor->SetSprite(3);
+                ScoreActor->SetActorLocation({ -100,100,-200 });
+
+                SoundPlayer = UEngineSound::Play("sweet.wav");  
                 break;
             case 3:
-                ScoreActor->SetSprite(2);
+                ScoreActor->SetSprite(1);
+                ScoreActor->SetActorLocation({ -100,100,-201 });
 
+                SoundPlayer = UEngineSound::Play("tasty.wav");           
                 break;
             case 4:
-                ScoreActor->SetSprite(1);
+                ScoreActor->SetSprite(0);
+                ScoreActor->SetActorLocation({ -100,100,-202 });
 
+                SoundPlayer = UEngineSound::Play("delicious.wav");
+                break;
+            case 5:
+                ScoreActor->SetSprite(2);
+                ScoreActor->SetActorLocation({ -100,100,-203 });
+
+                SoundPlayer = UEngineSound::Play("divine.wav");
+            
                 break;
             
             default:
@@ -792,18 +1076,37 @@ void ACandyManager::BeginPlay()
 {
     AActor::BeginPlay();
 
-
+    ChangeBoardState(ECandyBoardState::InProgress);
 
 }
+
 void ACandyManager::Tick(float _DeltaTime)
 {
     AActor::Tick(_DeltaTime);
 
     if (UEngineInput::IsDown('R') == true)
     {
-        ResetCandyBoard();
+        ResettingStart();
     }
 
+    switch (BoardState)
+    {
+    case ECandyBoardState::Ready:
+        break;
+    case ECandyBoardState::InProgress:
+       // InProgress(_DeltaTime);
+        break;
+    case ECandyBoardState::Paused:
+        break;
+    case ECandyBoardState::Completed:
+        break;
+    case ECandyBoardState::Resetting:
+        break;
+    case ECandyBoardState::GameOver:
+        break;
+    default:
+        break;
+    }
     
  
     switch (CandyState)

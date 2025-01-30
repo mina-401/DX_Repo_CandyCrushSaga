@@ -44,6 +44,7 @@ private:
 	//bool IsGameEnd = false;
 
 	void CandyMove(float _Delta, float _Acc, class ACandy* _SelectCandyPtr, class ACandy* _CurCandyPtr, FVector _StartPos, FVector _EndPos, float _MoveTime);
+	void PlaySoundPlayer(std::string _sound);
 
 };
 

@@ -26,7 +26,7 @@ public:
 protected:
 
 	void LevelChangeStart() override;
-	void LevelChangeEnd() override {};
+	void LevelChangeEnd() override;
 	virtual void BeginPlay();
 	virtual void Tick(float _DeltaTime);
 

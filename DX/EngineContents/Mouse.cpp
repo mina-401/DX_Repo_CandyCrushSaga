@@ -101,6 +101,7 @@ AMouse::AMouse()
 									ACandy* SelectCandy = this->SelectCandy;
 									FVector StartPos = SelectCandy->GetCandyData().SetPos;
 									FVector EndPos = CurCandy->GetCandyData().SetPos;
+									PlaySoundPlayer("switch_sound1.wav");
 
 									TimeEventComponent->AddUpdateEvent(CCSConst::MoveTime, [this, SelectCandy, CurCandy,StartPos,EndPos](float _Delta, float _Acc)
 										{
@@ -112,6 +113,7 @@ AMouse::AMouse()
 									TimeEventComponent->AddEndEvent(CCSConst::MoveTime, [this, SelectCandy, CurCandy, StartPos, EndPos]()
 										{
 											// 자리바꾸기
+
 											CandyManager->CandyChange(SelectCandy, CurCandy); 
 											
 											// 연속하는 캔디 찾기
@@ -162,7 +164,7 @@ AMouse::AMouse()
 
 		});
 }
-
+ 
 AMouse::~AMouse()
 {
 }
@@ -216,4 +218,15 @@ void AMouse::CandyMove(float _Delta, float _Acc, class ACandy* _SelectCandyPtr, 
 {
 	_SelectCandyPtr->GetCandyData().SetPos = FVector::Lerp(_StartPos, _EndPos, _Acc * 1 / _MoveTime);
 	_CurCandyPtr->GetCandyData().SetPos = FVector::Lerp(_EndPos, _StartPos, _Acc * 1 / _MoveTime);
+
+	
+}
+
+void AMouse::PlaySoundPlayer(std::string _sound)
+{
+	{
+		USoundPlayer SoundPlayer;
+		SoundPlayer.SetVolume(0.5f);
+		SoundPlayer = UEngineSound::Play(_sound);
+	}
 }

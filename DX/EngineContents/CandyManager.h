@@ -5,6 +5,7 @@
 #include <queue>
 #include "CCSEnums.h"
 #include <EngineCore/ImageWidget.h>
+#include <EnginePlatform/EngineSound.h>
 
 class StageCandyData
 {
@@ -61,6 +62,15 @@ enum class ECandyManagerState
 	Update,
 	Disable,
 };
+enum class ECandyBoardState
+{
+	Ready,
+	InProgress,  
+	Paused,    
+	Completed,   
+	Resetting,   
+	GameOver     
+};
 
 class ACandyManager : public APawn
 {
@@ -80,24 +90,35 @@ public:
 	void CreateStage(int X, int Y);
 	void DeleteIndex(int X, int Y);
 	void CandyCreate();
+
 	bool IsCandyDestroy();
+	void CandyDestroy();
+	
+	bool RowCheckInProgress(int X, int Y);
+	bool ColCheckInProgress(int X, int Y);
+
+	void CandyFindConsecInProgress();
+	void InProgress(float _DeltaTime);
+
+
 	void CandyFindConsec();
 	void CandyDestroyCheck();
 	void CandyChange(class  ACandy* SelectCandy, class ACandy* CurCandy);
+	void InProgressCandyClear();
 	void CandyClear();
 
 	void ClearCandys();
 
+	void ResettingStart();
 	void ResetCandyBoard();
 
 	//void CandyDropAt(ACandy* candy, FVector pos);
-	void CandyDestroy();
 	
 	ACandy* NewCandyCreate(int row, int col);
-
 	ACandy* NewCandyCreate(int row, int col, FVector Pos);
 
 	void NewCandyDropStart();
+	void PlaySoundPlayer(std::string _sound);
 	void NewCandyDrop(float _Delta);
 
 	void PushDestroyCandy(int _row, int _col,ESpriteType SpriteType);
@@ -129,19 +150,28 @@ public:
 		 return CandyState;
 	 }
 
+	 ECandyBoardState GetBoardState()
+	 {
+		 return BoardState;
+	 }
+
 	 void ChangeCandyState(ECandyManagerState _CandyState);
+	 void ChangeBoardState(ECandyBoardState _BoardState);
 
 	 FVector IndexToWorldPos(FIntPoint _Index);
 
 protected:
 	void BeginPlay() override;
 
+
 	void Tick(float _DeltaTime) override;
 private:
 	std::shared_ptr<class UTimeEventComponent> TimeEventComponent;
 	ECandyManagerState CandyState = ECandyManagerState::Select;
+	ECandyBoardState BoardState = ECandyBoardState::Ready;
 	std::vector<std::vector<StageCandyData>> Data;
 	std::list<ACandy*> DestroyCandy;
+	std::list<ACandy*> InProgressCandy; 
 	std::vector<FIntPoint> Empty;
 
 	std::vector<DropData> DropCandy;
@@ -168,9 +198,6 @@ private:
 	
 	UEngineRandom Random;
 
-	UWidget* PlayerStatsWidget;
-	std::shared_ptr<class UFontRenderer> ScoreTextWidget;
-//¹ØÀº ·£´ýÇÔ¼ö
 
 };
 

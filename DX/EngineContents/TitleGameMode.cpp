@@ -80,12 +80,6 @@ void ATitleGameMode::Tick(float _DeltaTime)
 	// 부모 호출
 	AActor::Tick(_DeltaTime);
 
-	if (UEngineInput::IsPress('P'))
-	{
-		UEngineCore::OpenLevel("PlayLevel");
-		//AddRelativeLocation(FVector{ -100.0f * _DeltaTime, 0.0f, 0.0f });
-	}
-
 }
 
 void ATitleGameMode::SpritesInit()
