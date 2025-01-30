@@ -1,6 +1,6 @@
 #pragma once
 #include<EngineCore/GameMode.h>
-
+#include <EnginePlatform/EngineSound.h>
 
 class APlayGameMode : public AGameMode
 {
@@ -21,13 +21,20 @@ public:
 	}	
 	
 	bool IsGameEnd = false;
+	void StartGame(int x, int y);
+
 protected:
 
 	void LevelChangeStart() override;
+	void LevelChangeEnd() override {};
 	virtual void BeginPlay();
 	virtual void Tick(float _DeltaTime);
 
 private:
+	void SoundInit();
+
+
+
 	std::shared_ptr<class APlayMap> Map;
 	//std::vector<std::vector<std::shared_ptr<class ACandy>>> Candys;
 
@@ -40,8 +47,10 @@ private:
 	class UWidget* ScoreWidget;
 	class UWidget* ScoreBarWidget;
 	class UWidget* ScoreTextBoxWidget;
+
+	std::shared_ptr<class UTimeEventComponent> TimeEventComponent;
 	//class UWidget* ScoreTextWidget;
 
-
+	USoundPlayer SoundPlayer;
 };
 

@@ -45,6 +45,7 @@
     <ClCompile Include="LMHPostEffect.cpp" />
     <ClCompile Include="CustomCandyRenderer.cpp" />
     <ClCompile Include="CandyGameInstance.cpp" />
+    <ClCompile Include="ScoreActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -93,6 +94,7 @@
     <ClInclude Include="LMHPostEffect.h" />
     <ClInclude Include="CustomCandyRenderer.h" />
     <ClInclude Include="CCSStruct.h" />
+    <ClInclude Include="ScoreActor.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameMode">

@@ -9,6 +9,7 @@
 #include <EngineCore/EngineMaterial.h>
 #include <EngineCore/EngineTexture.h>
 #include <EngineCore/EngineFont.h>
+#include <EnginePlatform/EngineSound.h>
 
 
 

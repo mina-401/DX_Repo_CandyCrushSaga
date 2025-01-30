@@ -1,6 +1,7 @@
 #pragma once
 
 #include<EngineCore/GameMode.h>
+#include <EnginePlatform/EngineSound.h>
 
 class ATitleGameMode : public AGameMode
 {
@@ -19,11 +20,16 @@ public:
 
 protected:
 	void LevelChangeStart() override;
+	void LevelChangeEnd() override;
 private:
 	std::shared_ptr<class ATitleMap> Map;
+	std::shared_ptr<class ATitleButton> Button;
 	
 
 	void TitleDirLoad();
 	void SpritesInit();
+	void SoundInit();
+
+	USoundPlayer SoundPlayer;
 };
 

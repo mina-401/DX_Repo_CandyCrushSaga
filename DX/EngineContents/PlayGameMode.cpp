@@ -19,6 +19,7 @@
 #include "CandyGameInstance.h"
 #include "CCSHUD.h"
 #include <EngineCore/FontWidget.h>
+#include <EngineCore/TimeEventComponent.h>
 
 class DebugWindow : public UEngineGUIWindow
 {
@@ -45,27 +46,50 @@ APlayGameMode::APlayGameMode()
 	}
 	PlayDirLoad();
 	SpritesInit();
+	//SoundInit();
 	{
+		TimeEventComponent = CreateDefaultSubObject<UTimeEventComponent>();
 		Map=GetWorld()->SpawnActor<APlayMap>();
 	
 	}
 
 }
-
 APlayGameMode::~APlayGameMode()
 {
+}
+
+void APlayGameMode::SoundInit()
+{
+
+	UEngineDirectory Dir;
+	if (false == Dir.MoveParentToDirectory("ContentsResources"))
+	{
+		MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+		return;
+	}
+	Dir.Append("Sounds");
+
+	std::vector<UEngineFile> ImageFiles = Dir.GetAllFile(true, { ".wav", ".mp3" });
+
+	for (size_t i = 0; i < ImageFiles.size(); i++)
+	{
+		std::string FilePath = ImageFiles[i].GetPathToString();
+		UEngineSound::Load(FilePath);
+	}
+
 }
 
 void APlayGameMode::LevelChangeStart()
 {
 	UEngineGUI::AllWindowOff();
 
+	{
+		SoundPlayer = UEngineSound::Play("PlayOST.mp3");
+		SoundPlayer.SetVolume(0.5f);
+	}
+
 	AHUD* HUD = GetWorld()->GetHUD();
 	
-	//ACCSHUD* MyHUD = dynamic_cast<ACCSHUD*>(HUD); 
-
-	
-
 	{
 		std::shared_ptr<UContentsEditorGUI> Window = UEngineGUI::FindGUIWindow<UContentsEditorGUI>("CCSEditorGUI");
 
@@ -105,17 +129,26 @@ void APlayGameMode::BeginPlay()
 
 		CandyManager = dynamic_cast<ACandyManager*>(GetWorld()->GetMainPawn());
 
-		CandyManager->CreateStage(5, 5);
-		//CandyManager->DeleteIndex(0, 0);
+		//TimeEventComponent->AddEndEvent(1.0f, [this]()
+		//{
+			StartGame(5, 5);
 
-		CandyManager->CreateStageBackTile(); // 캔디 뒤에 배경 만들기
-		CandyManager->CandyCreate(); // 진짜 캔디 만들기
-
-		CandyManager->CandyFindConsec();
-		CandyManager->CandyDestroyCheck();
+		//});
 	}
 
 
+}
+
+void APlayGameMode::StartGame(int x, int y)
+{
+	CandyManager->CreateStage(x, y);
+	CandyManager->DeleteIndex(0, 0);
+
+	CandyManager->CreateStageBackTile(); // 캔디 뒤에 배경 만들기
+	CandyManager->CandyCreate(); // 진짜 캔디 만들기
+
+	CandyManager->CandyFindConsec();
+	CandyManager->CandyDestroyCheck();
 }
 
 void APlayGameMode::Tick(float _DeltaTime)
@@ -183,12 +216,30 @@ void APlayGameMode::PlayDirLoad()
 		}
 		UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
 	}
+	{
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("ContentsResources"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
+		Dir.Append("Image//Play//Message");
+
+		std::vector<UEngineFile> ImageFiles = Dir.GetAllFile(true, { ".PNG", ".BMP", ".JPG" });
+		for (size_t i = 0; i < ImageFiles.size(); i++)
+		{
+			std::string FilePath = ImageFiles[i].GetPathToString();
+			UEngineTexture::Load(FilePath);
+		}
+		UEngineSprite::CreateSpriteToMeta("Message.png", ".sdata");
+		//UEngineSprite::CreateSpriteToFolder(Dir.GetPathToString());
+	}
 
 }
 
 void APlayGameMode::SpritesInit()
 {
-	//UEngineSprite::CreateSpriteToMeta("Candys.png", ".sdata");
+	//
 
 }
 

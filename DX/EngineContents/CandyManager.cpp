@@ -15,6 +15,7 @@
 #include "BackGroundTile.h"
 #include <EngineCore/DefaultSceneComponent.h>
 #include <EngineCore/FontRenderer.h>
+#include "ScoreActor.h"
 
 ACandyManager::ACandyManager()
 {
@@ -259,36 +260,9 @@ void ACandyManager::CandyFindConsec()
         }
     }
 }
-void ACandyManager::CandyCascadeExplosion()
-{
 
-}
-void ACandyManager::CandyFinalDestroyCheck()
-{
-    CandyFindConsec();
-    if (false == IsCandyDestroy())
-    {
-       
-    }
-    else {
-        //ÄÞº¸ Äµµð°¡ ÀÖ´Ù.
-        ChangeCandyState(ECandyManagerState::Destroy);
-    }
 
-}
-void ACandyManager::CandyDestroyCheck()
-{
-    if (false == IsCandyDestroy())
-    {
-        //ÄÞº¸ Äµµð°¡ ¾ø´Ù.
-        ChangeCandyState(ECandyManagerState::Select);
-    }
-    else {
-        //ÄÞº¸ Äµµð°¡ ÀÖ´Ù.
-        ChangeCandyState(ECandyManagerState::Destroy);
-    }
 
-}
 void ACandyManager::CandyChange(class ACandy* SelectCandy, class ACandy* CurCandy)
 {
     FCandySpriteData& SelectCandyDataRef = SelectCandy->GetCandyData();
@@ -494,12 +468,14 @@ void ACandyManager::NewCandyDrop(float _Delta)
 {
 
     if (IsCandyDrop == false) return;
+  
     if (0 == DropCandy.size())
     {
         ChangeCandyState(ECandyManagerState::Update);
         return;
         
     }
+
 }
 
 
@@ -620,12 +596,35 @@ void ACandyManager::CandyDestroyStart()
 
       
             // 3ÄÞº¸ ÀÌÆåÆ®
+       
 
         // ¿¬¼âÇØ¼­ ºÎ¼­Áö´Â Äµµð Á¸ÀçÇÑ´Ù.
         if (ComboCount >= 2)
         {
+            AScoreActor* ScoreActor = GetWorld()->SpawnActor< AScoreActor>().get();
+            ScoreActor->SetActorLocation({ -100,100,-200 });
+            //ScoreActor->SetActorRelativeScale3D({ 500,500,1 });
+            switch (ComboCount)
+            {
+            case 2:
+                ScoreActor->SetSprite(3);
+                break;
+            case 3:
+                ScoreActor->SetSprite(2);
+
+                break;
+            case 4:
+                ScoreActor->SetSprite(1);
+
+                break;
+            
+            default:
+                break;
+            }
+            //AScoreActor* ScoreActor = GetWorld()->SpawnActor< AScoreActor>().get();
+
+
             GetGameInstance<CandyGameInstance>()->PlayerStat.Score += BonusScore*ComboCount;
-            ComboCount = 0;
         }
 
             //±âº»Á¡¼ö       
@@ -682,6 +681,7 @@ void ACandyManager::CandyDestroyStart()
     }
 }
 
+
 void ACandyManager::BasicPlayerStateScore(ACandy* Candy)
 {
     switch (Candy->CandyData.CandySpriteType)
@@ -733,12 +733,29 @@ void ACandyManager::UpdateStart()
 
     // ºÎ¼ú Äµµð¸¦ È®ÀÎ
 }
+
+void ACandyManager::CandyDestroyCheck()
+{
+    if (false == IsCandyDestroy())
+    {
+        //ÄÞº¸ Äµµð°¡ ¾ø´Ù.
+        ChangeCandyState(ECandyManagerState::Select);
+        return;
+    }
+    else {
+        //ÄÞº¸ Äµµð°¡ ÀÖ´Ù.
+        ChangeCandyState(ECandyManagerState::Destroy);
+        return;
+    }
+
+}
 void ACandyManager::CandyDisableCheck()
 {
-    if (false == IsCandyDestroy() && (GetGameInstance<CandyGameInstance>()->CandyMouseCon.IsTransEnd == true))
+    if (false == IsCandyDestroy()  && (GetGameInstance<CandyGameInstance>()->CandyMouseCon.IsTransEnd == true))
     {
         // ÀÌµ¿ÀÌ ³¡.
         ChangeCandyState(ECandyManagerState::Disable);
+        return;
     }
 }
 void ACandyManager::Update(float _DeltaTime)
@@ -746,11 +763,22 @@ void ACandyManager::Update(float _DeltaTime)
     CandyDestroyCheck();
 
     CandyDisableCheck();
-
 }
 void ACandyManager::DisableStart()
 {
-    
+    //¸¶Áö¸· Äµµð ºÎ¼ö±â
+    CandyFindConsec();
+    if (false == IsCandyDestroy())
+    {
+        //ÄÞº¸ Äµµð°¡ ¾ø´Ù.
+        
+    }
+    else {
+        //ÄÞº¸ Äµµð°¡ ÀÖ´Ù.
+        ChangeCandyState(ECandyManagerState::Destroy);
+        return;
+    }
+
     //ÀÌµ¿È½¼ö ³¡³²À¸·Î °ÔÀÓ³¡
 }
 void ACandyManager::Disable(float _DeltaTime)
@@ -763,6 +791,8 @@ void ACandyManager::Disable(float _DeltaTime)
 void ACandyManager::BeginPlay()
 {
     AActor::BeginPlay();
+
+
 
 }
 void ACandyManager::Tick(float _DeltaTime)

@@ -15,15 +15,13 @@ public:
 	ATitleButton& operator=(const ATitleButton& _Other) = delete;
 	ATitleButton& operator=(ATitleButton&& _Other) noexcept = delete;
 
-	std::shared_ptr<class USpriteRenderer> GetRenderer()
-	{
-		return Renderer;
-	}
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 private:
-	std::shared_ptr<class USpriteRenderer> Renderer;
-	std::shared_ptr<class USpriteRenderer> Child;
+
+	std::shared_ptr<class UImageWidget> Button;
+	class UFontWidget* TitleText;
 };
 

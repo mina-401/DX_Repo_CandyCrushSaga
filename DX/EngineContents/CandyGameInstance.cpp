@@ -1,13 +1,14 @@
 #include "PreCompile.h"
 #include "CandyGameInstance.h"
+#include "CCSConst.h"
 
 CandyGameInstance::CandyGameInstance()
 {
 
-	int MaxTurn = 3;
-	int MaxScore = 20000;
+	
 	int Score = 0;
-	int Turn = MaxTurn;
+	int Turn = CCSConst::MaxTurn;
+	int MaxTurn = CCSConst::MaxScore;
 
 	PlayerStat.Score = Score;
 	PlayerStat.Turn = Turn;
