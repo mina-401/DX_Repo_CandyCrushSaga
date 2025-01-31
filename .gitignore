@@ -401,3 +401,4 @@ FodyWeavers.xsd
 /DX/EngineCore/ThirdParty/FW1FontWrapper/Inc/FW1FontWrapper.h
 /DX/EngineCore/ThirdParty/FW1FontWrapper/Inc/FW1FontWrapper.h
 /DX/EnginePlatform/ThirdParty/FMOD/Debug/fmodL.dll
+/DX/EngineCore/ThirdParty/DirectxTex/Release/DirectXTex_Release.lib
