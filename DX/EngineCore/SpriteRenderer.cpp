@@ -26,6 +26,10 @@ USpriteRenderer::~USpriteRenderer()
 {
 }
 
+void USpriteRenderer::SetPivotValue(FVector _Value)
+{
+	SpriteData.Pivot = _Value;
+}
 void USpriteRenderer::SetSprite(std::string_view _Name, UINT _Index)
 {
 	Sprite = UEngineSprite::Find<UEngineSprite>(_Name).get();

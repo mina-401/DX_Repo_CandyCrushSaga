@@ -21,18 +21,32 @@ void ACCSHUD::BeginPlay()
 {
 	AActor::BeginPlay();
 
+	/*std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
+	RootComponent = Default;
+
+	Score = CreateDefaultSubObject<USpriteRenderer>().get();
+	Score->SetupAttachment(RootComponent);
+	Score->SetPivotValue({ 0.0f,0.5f });
+	Score->SetScale3D({ 500,500,1 });
+	Score->SetWorldLocation({ 0,0,-500 });
+	Score->SetAutoScale(false);*/
+	//Score->SetupAttachment(RootCompoenent);
 
 	{
+		Score = CreateWidget<UImageWidget>(-1).get();
+		Score->SetAutoScale(false);
+		Score->SetWorldLocation({ -191,-57 });
+		Score->SetScale3D({ 33,2000.0f,0.0f });
+		Score->SetTexture("HUD_4.png");
+
+
 		FrameWidget = CreateWidget<UImageWidget>(-1).get();
 
 		FrameWidget->SetScale3D({ 100, 100, 1 });
 		FrameWidget->SetWorldLocation({ -250,100 });
 		FrameWidget->SetRelativeScale3D({ 259,150,0.0f });
 		FrameWidget->SetTexture("HUD_1.png");
-		FrameWidget->SetDownEvent([]()
-		{
-			//UEngineDebug::OutPutString("Click~~~~~~~~~");
-		});
+
 
 		ScoreTextBox = CreateWidget<UImageWidget>(-1).get();
 
@@ -41,10 +55,7 @@ void ACCSHUD::BeginPlay()
 		ScoreTextBox->SetWorldLocation({ -270,30 });
 		ScoreTextBox->SetRelativeScale3D({ 230,200,0.0f });
 		ScoreTextBox->SetTexture("HUD_2.png");
-		ScoreTextBox->SetDownEvent([]()
-		{
-			//UEngineDebug::OutPutString("Click~~~~~~~~~");
-		});
+
 
 		ScoreBar = CreateWidget<UImageWidget>(-1).get();
 
@@ -52,22 +63,8 @@ void ACCSHUD::BeginPlay()
 		ScoreBar->SetWorldLocation({ -190,5 });
 		ScoreBar->SetRelativeScale3D({ 78,150,0.0f });
 		ScoreBar->SetTexture("HUD_3.png");
-		ScoreBar->SetDownEvent([]()
-		{
-			//UEngineDebug::OutPutString("Click~~~~~~~~~");
-		});
-		Score = CreateWidget<UImageWidget>(-1).get();
 
-		//Score->SetScale3D({ 100, 100, 1 });
-		Score->SetAutoScale(false);
-		Score->SetWorldLocation({ -191,-54 });
-		//Score->SetRelativeScale3D({ 33,500,0.0f });
-		Score->SetScale3D({ 33,500,0 });
-		Score->SetTexture("HUD_4.png");
-		Score->SetDownEvent([]()
-		{
-			//UEngineDebug::OutPutString("Click~~~~~~~~~");
-		});
+		
 	}
 
 
@@ -105,6 +102,8 @@ void ACCSHUD::Tick(float _DeltaTime)
 	}
 
 	ScoreText->SetText("Á¡¼ö: " + (std::to_string(GetGameInstance<CandyGameInstance>()->PlayerStat.Score)));
+
+	
 
 
 }

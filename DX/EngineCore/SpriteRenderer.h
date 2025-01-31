@@ -108,12 +108,15 @@ public:
 		IsBillboard = false;
 	}
 
+	ENGINEAPI void SetPivotValue(FVector _Value);
 
-	void SetSprite(UEngineSprite* _Sprite);
+	ENGINEAPI void SetSprite(UEngineSprite* _Sprite);
 
 	FResultColor ColorData;
 	FUVValue UVValue;
-	FSpriteData SpriteData;
+	 FSpriteData SpriteData;
+
+
 
 protected:
 	ENGINEAPI void Render(class UEngineCamera* _Camera, float _DeltaTime) override;
@@ -134,5 +137,7 @@ private:
 	UEngineSprite* Sprite = nullptr;
 	bool IsAutoScale = true;
 	float AutoScaleRatio = 1.0f;
+
+	
 };
 

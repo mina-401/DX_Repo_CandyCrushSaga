@@ -194,6 +194,7 @@ private:
 	// ÇÑÅÏ¿¡ ÄÞº¸ÇÑ È½¼ö
 	int ComboCount = 0;
 	int BonusScore = 100;
+	float ACC = 0;
 	bool IsCombo = false;
 	
 	UEngineRandom Random;

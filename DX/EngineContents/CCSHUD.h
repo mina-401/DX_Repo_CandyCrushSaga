@@ -24,13 +24,14 @@ public:
 	class UImageWidget* FrameWidget;
 	class UImageWidget* ScoreBar;
 	class UImageWidget* Score;
+	//class USpriteRenderer* Score;
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 private:
 
 	
-
+	float ACC = 0;
 	//PlayerStatus PlayerStat;
 	int Turn;
 	int MaxScore;
