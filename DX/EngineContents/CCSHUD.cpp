@@ -92,7 +92,7 @@ void ACCSHUD::BeginPlay()
 
 void ACCSHUD::Tick(float _DeltaTime)
 {
-	AActor::Tick(_DeltaTime)
+	AActor::Tick(_DeltaTime);
 
 
 	Turn = GetGameInstance<CandyGameInstance>()->PlayerStat.Turn;
@@ -100,8 +100,8 @@ void ACCSHUD::Tick(float _DeltaTime)
 	TransText->SetText("남은 턴수: " + (std::to_string(Turn)));
 
 	MaxScore = GetGameInstance<CandyGameInstance>()->GameStat.MaxScore;
-	if (PlayerStat.Score >= MaxScore) {
-		PlayerStat.Score = MaxScore;
+	if (GetGameInstance<CandyGameInstance>()->PlayerStat.Score >= MaxScore) {
+		GetGameInstance<CandyGameInstance>()->PlayerStat.Score = MaxScore;
 	}
 
 	ScoreText->SetText("점수: " + (std::to_string(GetGameInstance<CandyGameInstance>()->PlayerStat.Score)));

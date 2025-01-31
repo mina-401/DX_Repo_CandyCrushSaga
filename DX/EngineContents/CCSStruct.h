@@ -10,7 +10,7 @@ struct PlayerStatus
 struct GameStatus
 {
 public:
-	int MaxScore = CCSConst::MaxScore;;
+	int MaxScore = CCSConst::MaxScore;
 
 
 };
