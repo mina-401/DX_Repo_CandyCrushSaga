@@ -33,5 +33,6 @@ private:
 
 	PlayerStatus PlayerStat;
 	int Turn;
+	int MaxScore;
 };
 

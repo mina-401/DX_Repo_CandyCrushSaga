@@ -13,6 +13,8 @@ public:
 	
 
 };
+
+
 // Ό³Έν :
 class CandyGameInstance : public UGameInstance
 {
@@ -30,9 +32,16 @@ public:
 	UWidget* ScoreText;
 
 	PlayerStatus PlayerStat;
+	GameStatus GameStat;
+
 	MouseController CandyMouseCon;
+
+	int Score = 0;
+	int Turn = CCSConst::MaxTurn;
 protected:	
 
 private:
+
+	
 };
 

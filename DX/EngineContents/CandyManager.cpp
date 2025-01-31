@@ -862,10 +862,6 @@ void ACandyManager::CandyDestroyStart()
         // 캔디 스프라이트 모양에 따른 기본 점수 계산한다.
         BasicPlayerStateScore(Candy);
 
-      
-            // 3콤보 이펙트
-       
-
         // 연쇄해서 부서지는 캔디 존재한다.
         if (ComboCount >= 2)
         {
@@ -1035,18 +1031,29 @@ void ACandyManager::CandyDestroyCheck()
 }
 void ACandyManager::CandyDisableCheck()
 {
-    if (false == IsCandyDestroy()  && (GetGameInstance<CandyGameInstance>()->CandyMouseCon.IsTransEnd == true))
+    
+}
+void ACandyManager::Update(float _DeltaTime)
+{
+    if (false == IsCandyDestroy() && (GetGameInstance<CandyGameInstance>()->CandyMouseCon.IsTransEnd == true))
     {
         // 이동이 끝.
         ChangeCandyState(ECandyManagerState::Disable);
         return;
     }
-}
-void ACandyManager::Update(float _DeltaTime)
-{
-    CandyDestroyCheck();
+    if (false == IsCandyDestroy())
+    {
+        //콤보 캔디가 없다.
+        ChangeCandyState(ECandyManagerState::Select);
+        return;
+    }
+    else {
+        //콤보 캔디가 있다.
+        ChangeCandyState(ECandyManagerState::Destroy);
+        return;
+    }
 
-    CandyDisableCheck();
+   // CandyDisableCheck();
 }
 void ACandyManager::DisableStart()
 {
@@ -1076,7 +1083,7 @@ void ACandyManager::BeginPlay()
 {
     AActor::BeginPlay();
 
-    ChangeBoardState(ECandyBoardState::InProgress);
+  //  ChangeBoardState(ECandyBoardState::Ready);
 
 }
 

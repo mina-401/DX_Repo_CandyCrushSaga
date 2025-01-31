@@ -58,9 +58,11 @@ void ACCSHUD::BeginPlay()
 		});
 		Score = CreateWidget<UImageWidget>(-1).get();
 
-		Score->SetScale3D({ 100, 100, 1 });
+		//Score->SetScale3D({ 100, 100, 1 });
+		Score->SetAutoScale(false);
 		Score->SetWorldLocation({ -191,-54 });
-		Score->SetRelativeScale3D({ 33,100,0.0f });
+		//Score->SetRelativeScale3D({ 33,500,0.0f });
+		Score->SetScale3D({ 33,500,0 });
 		Score->SetTexture("HUD_4.png");
 		Score->SetDownEvent([]()
 		{
@@ -90,9 +92,18 @@ void ACCSHUD::BeginPlay()
 
 void ACCSHUD::Tick(float _DeltaTime)
 {
-	AActor::Tick(_DeltaTime);
+	AActor::Tick(_DeltaTime)
+
+
 	Turn = GetGameInstance<CandyGameInstance>()->PlayerStat.Turn;
+
 	TransText->SetText("남은 턴수: " + (std::to_string(Turn)));
+
+	MaxScore = GetGameInstance<CandyGameInstance>()->GameStat.MaxScore;
+	if (PlayerStat.Score >= MaxScore) {
+		PlayerStat.Score = MaxScore;
+	}
+
 	ScoreText->SetText("점수: " + (std::to_string(GetGameInstance<CandyGameInstance>()->PlayerStat.Score)));
 
 
