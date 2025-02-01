@@ -7,6 +7,9 @@
 #include <EngineCore/HUD.h>
 #include <EngineCore/FontWidget.h>
 #include <EnginePlatform/EngineSound.h>
+#include "PlayGameMode.h"
+#include "CCSHUD.h"
+#include "CandyManager.h"
 
 ATitleButton::ATitleButton()
 {
@@ -27,15 +30,16 @@ void ATitleButton::BeginPlay()
 	Button->SetHoverEvent([this] {
 		Button->SetScale3D({ 160,160,1.0f });
 	});
-	Button->SetDownEvent([this]{
+	Button->SetDownEvent([this] {
 
 		USoundPlayer SoundPlayer;
 		SoundPlayer.SetVolume(0.5f);
 		SoundPlayer = UEngineSound::Play("button_press.wav");
 
+		UEngineCore::ResetLevel<APlayGameMode, ACandyManager, ACCSHUD>("PlayLevel");
 		UEngineCore::OpenLevel("PlayLevel");
 	});
-	
+
 	TitleText = GetWorld()->GetHUD()->CreateWidget<UFontWidget>(-1).get();
 	TitleText->SetupAttachment(Button.get());
 
@@ -43,13 +47,16 @@ void ATitleButton::BeginPlay()
 	TitleText->SetFont("BrandonGrotesqueBold", 20.0f, TColor<unsigned char>::BLACK, FW1_CENTER);
 	//TitleText->SetRelativeLocation({ 0,0.15,0 });
 	//TitleText->SetRelativeScale3D({ 100,100 });
-	TitleText->SetHoverEvent([this]{
+	TitleText->SetHoverEvent([this] {
 		TitleText->SetRelativeLocation({ 0.0f,0.12f,0.0f });
 		TitleText->SetFont("BrandonGrotesqueBold", 25.0f, TColor<unsigned char>::BLACK, FW1_CENTER);
 		TitleText->SetText("시작하기");
 
-		});
+	});
+	TitleText->SetUpEvent([this] {
 
+		
+	});
 	TitleText->SetText("시작하기");
 
 

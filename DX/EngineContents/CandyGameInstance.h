@@ -23,13 +23,14 @@ public:
 	CandyGameInstance();
 	~CandyGameInstance();
 
+	void Init();
+
 	// delete Function
 	CandyGameInstance(const CandyGameInstance& _Other) = delete;
 	CandyGameInstance(CandyGameInstance&& _Other) noexcept = delete;
 	CandyGameInstance& operator=(const CandyGameInstance& _Other) = delete;
 	CandyGameInstance& operator=(CandyGameInstance&& _Other) noexcept = delete;
 		
-	UWidget* ScoreText;
 
 	PlayerStatus PlayerStat;
 	GameStatus GameStat;
@@ -40,6 +41,7 @@ public:
 	int Turn = CCSConst::MaxTurn;
 
 	bool IsRestart = false;
+	bool IsGameEnd = false;
 protected:	
 
 private:

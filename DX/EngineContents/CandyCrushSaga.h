@@ -19,6 +19,8 @@ public:
 
 protected:
 	void EngineStart(UEngineInitData& _Data);
+	void SoundInit();
+	void DirLoad();
 	void EngineTick(float _DeltaTime);
 	void EngineEnd();
 

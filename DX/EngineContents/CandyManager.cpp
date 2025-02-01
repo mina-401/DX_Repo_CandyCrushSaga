@@ -1093,6 +1093,8 @@ void ACandyManager::Disable(float _DeltaTime)
     // 마우스를 움직일 수 없는 경우.
     // 움직임 횟수가 끝나서 게임이 끝났다.
     // 
+
+    GetGameInstance<CandyGameInstance>()->IsGameEnd = true;
 }
 
 void ACandyManager::BeginPlay()

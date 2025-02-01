@@ -18,7 +18,7 @@ public:
 	static inline float BasicComboScore = 50;
 	static inline float ComboScore = 100;
 
-	static inline int MaxTurn = 10;
+	static inline int MaxTurn = 1;
 	static inline int MaxScore = 5000;
 
 };
