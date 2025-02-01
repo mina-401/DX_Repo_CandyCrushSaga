@@ -38,6 +38,8 @@ public:
 
 	int Score = 0;
 	int Turn = CCSConst::MaxTurn;
+
+	bool IsRestart = false;
 protected:	
 
 private:

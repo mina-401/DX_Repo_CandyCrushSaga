@@ -544,10 +544,12 @@ void ACandyManager::ResettingStart()
 void ACandyManager::ResetCandyBoard()
 {
 
+
     ClearCandys(); // 캔디딀 저장 삭제
     CandyCreate(); // 캔디 다시 만듦
     CandyFindConsec(); // 콤보캔디 찾기
     CandyDestroyCheck(); // 상태 어디로 갈지.
+
     
 }
 
@@ -872,8 +874,8 @@ void ACandyManager::CandyDestroyStart()
         //2000 
         if (Hud != nullptr)
         {
-            Hud->Score->SetRelativeScale3D({ 33.0f,ACC/2,0.0f });
-            Hud->Score->SetWorldLocation({ -191,-57+ACC*0.01f,0});
+            //Hud->Score->SetRelativeScale3D({ 33.0f,ACC/2,0.0f });
+           // Hud->Score->SetWorldLocation({ -191,-57+ACC*0.01f,0});
         }
        
         // 연쇄해서 부서지는 캔디 존재한다.

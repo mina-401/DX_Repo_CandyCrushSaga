@@ -24,8 +24,13 @@ public:
 	class UImageWidget* ScoreTextBox;
 	class UImageWidget* FrameWidget;
 	class UImageWidget* ScoreBar;
+
+	class UImageWidget* ButtonWidget;
+
 	//class UImageWidget* Score;
 	std::shared_ptr<UImageWidget> Score;
+
+	bool IsRestart = false;
 	//class USpriteRenderer* Score;
 protected:
 	void BeginPlay() override;

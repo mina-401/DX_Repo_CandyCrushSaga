@@ -33,6 +33,35 @@ void ACCSHUD::BeginPlay()
 	//Score->SetupAttachment(RootCompoenent);
 
 	{
+		ButtonWidget = CreateWidget<UImageWidget>(-1).get();
+
+		FVector Size = UEngineCore::GetMainWindow().GetWindowSize();
+
+		float X = Size.X / 2 - 100.0f;
+		float Y = Size.Y / 2 - 100.0f;
+
+		ButtonWidget->SetWorldLocation({ -290,-50,0 });
+		ButtonWidget->SetScale3D({ 100,150.0f,0.0f });
+		ButtonWidget->SetTexture("StartButton_2.png");
+		ButtonWidget->SetAutoScale(false);
+
+		
+
+		UFontWidget* RestartText = CreateWidget<UFontWidget>(-1).get();
+		RestartText->SetFont("BrandonGrotesqueBold", 20.0f, TColor<unsigned char>::BLACK, FW1_CENTER);
+		RestartText->SetWorldLocation({ -290,-35,0 });
+
+		RestartText->SetText("돌리기");
+
+		ButtonWidget->SetDownEvent([this] {
+			ButtonWidget->SetScale3D({ 120,170.0f,0.0f });
+		});
+		ButtonWidget->SetUpEvent([this] {
+			ButtonWidget->SetScale3D({ 100,150,0.0f });
+			IsRestart = true;
+		});
+	}
+	{
 
 		Score = CreateWidget<UImageWidget>(-1);
 		Score->SetAutoScale(false);
@@ -109,7 +138,11 @@ void ACCSHUD::Tick(float _DeltaTime)
 	MaxScoreText->SetText("목표 점수: " + (std::to_string(GetGameInstance<CandyGameInstance>()->GameStat.MaxScore)));
 	ScoreText->SetText("점수: " + (std::to_string(GetGameInstance<CandyGameInstance>()->PlayerStat.Score)));
 
-	
+	if (IsRestart == true)
+	{
+		GetGameInstance<CandyGameInstance>()->IsRestart = true;
+		IsRestart = false;
+	}
 
 
 }

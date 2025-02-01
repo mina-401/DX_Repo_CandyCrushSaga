@@ -164,6 +164,17 @@ void APlayGameMode::Tick(float _DeltaTime)
 	{
 		// 점수판에 점수 
 
+		return;
+
+	}
+
+
+	bool IsRestart = GetGameInstance<CandyGameInstance>()->IsRestart;
+	if (true == IsRestart)
+	{
+		GetGameInstance<CandyGameInstance>()->IsRestart=false;
+		CandyManager->ResetCandyBoard();
+
 	}
 	
 }
