@@ -33,10 +33,11 @@ void ACCSHUD::BeginPlay()
 	//Score->SetupAttachment(RootCompoenent);
 
 	{
-		Score = CreateWidget<UImageWidget>(-1).get();
+
+		Score = CreateWidget<UImageWidget>(-1);
 		Score->SetAutoScale(false);
 		Score->SetWorldLocation({ -191,-57 });
-		Score->SetScale3D({ 33,2000.0f,0.0f });
+		Score->SetScale3D({ 33,0.0f,0.0f });
 		Score->SetTexture("HUD_4.png");
 
 
@@ -83,6 +84,10 @@ void ACCSHUD::BeginPlay()
 
 		ScoreText->SetText("점수: " + (std::to_string(GetGameInstance<CandyGameInstance>()->PlayerStat.Score)));
 
+		MaxScoreText = CreateWidget<UFontWidget>(-1).get();
+		MaxScoreText->SetFont("BrandonGrotesqueBold", 20.0f, TColor<unsigned char>::BLACK, FW1_LEFT);
+		MaxScoreText->SetWorldLocation({ -310,200 });
+
 	}
 
 }
@@ -97,10 +102,11 @@ void ACCSHUD::Tick(float _DeltaTime)
 	TransText->SetText("남은 턴수: " + (std::to_string(Turn)));
 
 	MaxScore = GetGameInstance<CandyGameInstance>()->GameStat.MaxScore;
-	if (GetGameInstance<CandyGameInstance>()->PlayerStat.Score >= MaxScore) {
-		GetGameInstance<CandyGameInstance>()->PlayerStat.Score = MaxScore;
+	if (GetGameInstance<CandyGameInstance>()->PlayerStat.Score >= 9999) {
+		GetGameInstance<CandyGameInstance>()->PlayerStat.Score = 9999;
 	}
 
+	MaxScoreText->SetText("목표 점수: " + (std::to_string(GetGameInstance<CandyGameInstance>()->GameStat.MaxScore)));
 	ScoreText->SetText("점수: " + (std::to_string(GetGameInstance<CandyGameInstance>()->PlayerStat.Score)));
 
 	

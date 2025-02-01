@@ -18,12 +18,14 @@ public:
 	ACCSHUD& operator=(ACCSHUD&& _Other) noexcept = delete;
 	
 	class UFontWidget* ScoreText;
+	class UFontWidget* MaxScoreText;
 	class UFontWidget* TransText;
 
 	class UImageWidget* ScoreTextBox;
 	class UImageWidget* FrameWidget;
 	class UImageWidget* ScoreBar;
-	class UImageWidget* Score;
+	//class UImageWidget* Score;
+	std::shared_ptr<UImageWidget> Score;
 	//class USpriteRenderer* Score;
 protected:
 	void BeginPlay() override;

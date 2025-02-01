@@ -863,12 +863,19 @@ void ACandyManager::CandyDestroyStart()
         // 캔디 스프라이트 모양에 따른 기본 점수 계산한다.
         BasicPlayerStateScore(Candy);
 
-        ACC += 25.0f;
+        ACC = GetGameInstance<CandyGameInstance>()->PlayerStat.Score;
+       // ACC += 75.0f; //75 -> 1.5 , 1->0.02
 
+      
         ACCSHUD* Hud = dynamic_cast<ACCSHUD*>( GetWorld()->GetHUD());
 
-        Hud->Score->SetRelativeScale3D({ 33.0f,ACC,0.0f });
-        Hud->Score->AddRelativeLocation({ 0,0.5f,0 });
+        //2000 
+        if (Hud != nullptr)
+        {
+            Hud->Score->SetRelativeScale3D({ 33.0f,ACC/2,0.0f });
+            Hud->Score->SetWorldLocation({ -191,-57+ACC*0.01f,0});
+        }
+       
         // 연쇄해서 부서지는 캔디 존재한다.
         if (ComboCount >= 2)
         {
