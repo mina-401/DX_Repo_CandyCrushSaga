@@ -161,18 +161,31 @@ void APlayGameMode::GameEndStart()
 	//결과 확인하는 UI 
 	Result = GetWorld()->SpawnActor<AResultHUD>();
 
+	GetGameInstance<CandyGameInstance>()->PlayerStat.ScoreStar = 2;
 
 }
 void APlayGameMode::GameEnd(float _DeltaTime)
 {
-	Result;
+	CurTime += 1.0f;
+
 	if (true == Result->IsDestroy()) {
 		// 점수판 제거됨
 		UEngineCore::ResetLevel<ATitleGameMode, ACandyManager, AHUD>("TitleLevel");
 		UEngineCore::OpenLevel("TitleLevel");
 	}
 	else {
-		int a = 0;
+
+		if (CurTime > StarTime)
+		{
+			CurTime = 0;
+
+			if (star > GetGameInstance<CandyGameInstance>()->PlayerStat.ScoreStar) return;
+			Result->StarSetActive(star++);
+		}
+
+		
+
+
 	}
 
 }

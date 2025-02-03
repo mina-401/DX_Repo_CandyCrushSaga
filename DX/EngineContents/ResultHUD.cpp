@@ -10,7 +10,7 @@
 AResultHUD::AResultHUD()
 {
 
-	TimeEventComponent = CreateDefaultSubObject<UTimeEventComponent>();
+
 	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
 	RootComponent = Default;
 
@@ -49,7 +49,6 @@ AResultHUD::AResultHUD()
 		Stars[2]->SetRelativeScale3D({ 100,100,0.0 });
 		Stars[2]->SetWorldLocation({ 25,40,-310.0f });
 	}
-	
 
 	
 }
@@ -65,10 +64,10 @@ void AResultHUD::SetSprite(int index)
 void AResultHUD::BeginPlay()
 {
 	AActor::BeginPlay();
-	Destroy(0.5f);
+
 	for (int i = 0; i <= 2; i++)
 	{
-		Stars[i]->SetActive(true);
+		Stars[i]->SetActive(false);
 	}
 
 	{
@@ -94,7 +93,7 @@ void AResultHUD::Tick(float _DeltaTime)
 	{
 		CurTime = 0;
 
-		//Destroy();
+		Destroy();
 
 	}
 
@@ -105,13 +104,13 @@ void AResultHUD::Tick(float _DeltaTime)
 
 void AResultHUD::StarSetActive(int _value) {
 
-	TimeEventComponent->AddEndEvent(2.0f,[this,_value]
-	{
-		for (int i = 0; i <= _value; i++)
-		{
-			Stars[i]->SetActive(true);
-		}
-	});
+	Stars[_value]->SetActive(true);
 
 	
+}
+void AResultHUD::SetScoreStar(int _value) {
+
+	ScoreStar = _value;
+
+
 }

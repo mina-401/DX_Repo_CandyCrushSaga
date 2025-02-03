@@ -5,6 +5,8 @@ struct PlayerStatus
 	int Turn;
 	int Score;
 
+	int ScoreStar;
+
 };
 
 struct GameStatus

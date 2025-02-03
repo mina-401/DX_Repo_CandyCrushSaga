@@ -22,10 +22,15 @@ public:
 	{
 		return Renderer;
 	}
+	void StarSetActive(int _value);
+
+	void SetScoreStar(int _value);
+
+	int ScoreStar = 0;
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-	void StarSetActive(int _value);
 private:
 	class UFontWidget* ScoreText;
 	class USpriteRenderer* Renderer = nullptr;

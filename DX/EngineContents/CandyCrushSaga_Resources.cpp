@@ -27,15 +27,17 @@ void UCandyCrushSaga::CandyGSetting()
 			UEngineShader::ReflectionCompile(ShaderFiles[i]);
 		}
 	}
-	/*UEngineDirectory Dir;
-	if (false == Dir.MoveParentToDirectory("ContentsResources"))
 	{
-		MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-		return;
-	}
-	Dir.Append("Fonts");*/
+		/*UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("ContentsResources"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
+		Dir.Append("Fonts");*/
 
-	UEngineFont::Load("BrandonGrotesqueBold", "BrandonGrotesque-Bold");
+		UEngineFont::Load("BrandonGrotesqueBold", "BrandonGrotesque-Bold");
+	}
 	//UEngineFont::Load("DX하늘구름 중간", "DX하늘구름 중간");
 	{
 		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("LMHCustomPostEffect");

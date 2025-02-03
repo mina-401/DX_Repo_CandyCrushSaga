@@ -92,5 +92,11 @@ private:
 	USoundPlayer SoundPlayer;
 
 	std::shared_ptr<class AResultHUD> Result = nullptr;
+
+	float CurTime = 0.0f;
+	float StarTime = 50.0f;
+
+	int star = 0;
+	int ScoreStar = 0;
 };
 

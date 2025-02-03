@@ -29,6 +29,7 @@ void CandyGameInstance::Init()
 	GameStat.MaxScore = CCSConst::MaxScore;
 	PlayerStat.Score = 0;
 	PlayerStat.Turn = CCSConst::MaxTurn;
+	PlayerStat.ScoreStar = 0;
 
 
 
