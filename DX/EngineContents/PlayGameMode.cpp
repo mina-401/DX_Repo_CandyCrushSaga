@@ -21,6 +21,7 @@
 #include <EngineCore/FontWidget.h>
 #include <EngineCore/TimeEventComponent.h>
 #include "TitleGameMode.h"
+#include "ResultHUD.h"
 
 class DebugWindow : public UEngineGUIWindow
 {
@@ -142,8 +143,11 @@ void APlayGameMode::BeginPlay()
 
 		//TimeEventComponent->AddEndEvent(1.0f, [this]()
 		//{
-			StartGame(5, 5);
+		ChangeState(EGameModeState::GameStart);
 
+		StartGame(5, 5);
+
+		ChangeState(EGameModeState::InGame);
 		//});
 	}
 
@@ -161,32 +165,68 @@ void APlayGameMode::StartGame(int x, int y)
 	CandyManager->CandyFindConsec();
 	CandyManager->CandyDestroyCheck();
 }
-
-void APlayGameMode::Tick(float _DeltaTime)
+void APlayGameMode::GameEndStart()
 {
-	AActor::Tick(_DeltaTime);
+	//결과 확인하는 UI 
 
-	//if (UEngineInput::IsPress(VK_F1)) IsGameEnd = true;
 
-	IsGameEnd = GetGameInstance<CandyGameInstance>()->IsGameEnd;
+}
+void APlayGameMode::GameEnd(float _DeltaTime)
+{
+	// 점수판에 점수
+	AHUD* Result = GetWorld()->SpawnActor<AResultHUD>().get();
+//UEngineCore::ResetLevel<ATitleGameMode, ACandyManager, AHUD>("TitleLevel");
+//UEngineCore::OpenLevel("TitleLevel");
+}
+void APlayGameMode::InGame(float _DeltaTime)
+{
+	bool IsGameEnd = GetGameInstance<CandyGameInstance>()->IsGameEnd;
+
+
 	if (true == IsGameEnd)
 	{
-		// 점수판에 점수 
 
-		UEngineCore::ResetLevel<ATitleGameMode, ACandyManager, AHUD>("TitleLevel");
-		UEngineCore::OpenLevel("TitleLevel");
-		IsGameEnd = false;
+		ChangeState(EGameModeState::GameEnd);
 		return;
 	}
-
 
 	bool IsRestart = GetGameInstance<CandyGameInstance>()->IsRestart;
 	if (true == IsRestart)
 	{
-		GetGameInstance<CandyGameInstance>()->IsRestart=false;
+		GetGameInstance<CandyGameInstance>()->IsRestart = false;
 		CandyManager->ResetCandyBoard();
 
 	}
+}
+void APlayGameMode::InGameStart()
+{
+	//결과 확인하는 UI 
+}
+void APlayGameMode::Tick(float _DeltaTime)
+{
+	AActor::Tick(_DeltaTime);
+
+	switch (GameModeState)
+	{
+	case EGameModeState::GameStart:
+		break;
+	case EGameModeState::InGame:
+		InGame(_DeltaTime);
+		break;
+	case EGameModeState::Paused:
+		break;
+	case EGameModeState::GameEnd:
+		GameEnd(_DeltaTime);
+		break;
+	default:
+		break;
+	}
+	//if (UEngineInput::IsPress(VK_F1)) IsGameEnd = true;
+
+	
+
+
+	
 	
 }
 

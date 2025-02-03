@@ -1,7 +1,13 @@
 #pragma once
 #include<EngineCore/GameMode.h>
 #include <EnginePlatform/EngineSound.h>
-
+enum class EGameModeState
+{
+	GameStart,
+	InGame,
+	Paused,
+	GameEnd 
+};
 class APlayGameMode : public AGameMode
 {
 public:
@@ -20,8 +26,16 @@ public:
 		return CandyManager;
 	}	
 	
-	bool IsGameEnd = false;
+	//bool IsGameEnd = false;
 	void StartGame(int x, int y);
+
+	void GameEndStart();
+
+	void GameEnd(float _DeltaTime);
+
+	void InGame(float _DeltaTime);
+
+	void InGameStart();
 
 protected:
 
@@ -30,10 +44,34 @@ protected:
 	virtual void BeginPlay();
 	virtual void Tick(float _DeltaTime);
 
+	EGameModeState GetGameModeState()
+	{
+		return GameModeState;
+	}
+
+	void ChangeState(EGameModeState _State)
+	{
+		GameModeState = _State;
+		switch (GameModeState)
+		{
+		case EGameModeState::GameStart:
+			break;
+		case EGameModeState::InGame:
+			break;
+		case EGameModeState::Paused:
+			break;
+		case EGameModeState::GameEnd:
+			GameEndStart();
+
+			break;
+		default:
+			break;
+		}
+	}
 private:
 	void SoundInit();
 
-
+	EGameModeState GameModeState = EGameModeState::GameStart;
 
 	std::shared_ptr<class APlayMap> Map;
 	//std::vector<std::vector<std::shared_ptr<class ACandy>>> Candys;

@@ -233,6 +233,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PreCompile.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="ResultHUD.cpp" />
     <ClCompile Include="ScoreActor.cpp" />
     <ClCompile Include="Shine.cpp">
       <SubType>
@@ -307,6 +308,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ResultHUD.h" />
     <ClInclude Include="ScoreActor.h" />
     <ClInclude Include="Shine.h">
       <SubType>

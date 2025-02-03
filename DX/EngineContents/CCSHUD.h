@@ -24,6 +24,9 @@ public:
 	class UImageWidget* ScoreTextBox;
 	class UImageWidget* FrameWidget;
 	class UImageWidget* ScoreBar;
+	class UImageWidget* ScoreStar1;
+	class UImageWidget* ScoreStar2;
+	class UImageWidget* ScoreStar3;
 
 	class UImageWidget* ButtonWidget;
 

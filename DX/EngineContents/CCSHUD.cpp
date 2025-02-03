@@ -1,4 +1,4 @@
-#include "PreCompile.h"
+	#include "PreCompile.h"
 #include "CCSHUD.h"
 #include <EngineCore/DefaultSceneComponent.h>
 #include <EngineCore/SpriteRenderer.h>
@@ -94,7 +94,23 @@ void ACCSHUD::BeginPlay()
 		ScoreBar->SetRelativeScale3D({ 78,150,0.0f });
 		ScoreBar->SetTexture("HUD_3.png");
 
-		
+		ScoreStar1 = CreateWidget<UImageWidget>(-1).get();
+		ScoreStar1->SetAutoScale(false);
+		ScoreStar1->SetWorldLocation({ -175,-30 });
+		ScoreStar1->SetScale3D({ 50,50,0.0f });
+		ScoreStar1->SetTexture("Score_Star1.png");
+
+		ScoreStar2 = CreateWidget<UImageWidget>(-1).get();
+		ScoreStar2->SetAutoScale(false);
+		ScoreStar2->SetWorldLocation({ -175,10 });
+		ScoreStar2->SetScale3D({ 50,50,0.0f });
+		ScoreStar2->SetTexture("Score_Star2.png");
+
+		ScoreStar3 = CreateWidget<UImageWidget>(-1).get();
+		ScoreStar3->SetAutoScale(false);
+		ScoreStar3->SetWorldLocation({ -175,50 });
+		ScoreStar3->SetScale3D({ 50,50,0.0f });
+		ScoreStar3->SetTexture("Score_Star3.png");
 	}
 
 

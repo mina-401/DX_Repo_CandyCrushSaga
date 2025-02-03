@@ -46,6 +46,9 @@
     <ClCompile Include="CustomCandyRenderer.cpp" />
     <ClCompile Include="CandyGameInstance.cpp" />
     <ClCompile Include="ScoreActor.cpp" />
+    <ClCompile Include="ResultHUD.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
@@ -95,6 +98,9 @@
     <ClInclude Include="CustomCandyRenderer.h" />
     <ClInclude Include="CCSStruct.h" />
     <ClInclude Include="ScoreActor.h" />
+    <ClInclude Include="ResultHUD.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameMode">

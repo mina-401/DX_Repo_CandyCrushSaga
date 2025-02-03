@@ -865,7 +865,7 @@ void ACandyManager::CandyDestroyStart()
         // 캔디 스프라이트 모양에 따른 기본 점수 계산한다.
         BasicPlayerStateScore(Candy);
 
-        ACC = GetGameInstance<CandyGameInstance>()->PlayerStat.Score;
+        ACC = static_cast<float>( GetGameInstance<CandyGameInstance>()->PlayerStat.Score);
        // ACC += 75.0f; //75 -> 1.5 , 1->0.02
 
       
