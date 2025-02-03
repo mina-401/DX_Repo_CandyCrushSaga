@@ -37,5 +37,11 @@ void UCandyCrushSaga::CandyGSetting()
 
 	UEngineFont::Load("BrandonGrotesqueBold", "BrandonGrotesque-Bold");
 	//UEngineFont::Load("DX하늘구름 중간", "DX하늘구름 중간");
+	{
+		std::shared_ptr<UEngineMaterial> Mat = UEngineMaterial::Create("LMHCustomPostEffect");
+		Mat->SetVertexShader("LMHCustomPostEffect.fx");
+		Mat->SetPixelShader("LMHCustomPostEffect.fx");
+		Mat->SetDepthStencilState("ALWAYS");
 
+	}
 }

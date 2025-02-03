@@ -19,7 +19,7 @@ void ULMHPostEffect::Init()
 	// Renderer에서 만들어진 랜더유닛은 
 
 	RenderUnit.SetMesh("FullRect");
-	RenderUnit.SetMaterial("JHJEffect");
+	RenderUnit.SetMaterial("LMHCustomPostEffect");
 
 
 }

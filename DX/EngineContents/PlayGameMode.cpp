@@ -22,7 +22,8 @@
 #include <EngineCore/TimeEventComponent.h>
 #include "TitleGameMode.h"
 #include "ResultHUD.h"
-
+#include <EngineCore/EngineRenderTarget.h>
+#include "LMHPostEffect.h"
 class DebugWindow : public UEngineGUIWindow
 {
 public:
@@ -54,32 +55,14 @@ APlayGameMode::APlayGameMode()
 		Map=GetWorld()->SpawnActor<APlayMap>();
 	
 	}
+	
 
 }
 APlayGameMode::~APlayGameMode()
 {
 }
 
-void APlayGameMode::SoundInit()
-{
 
-	UEngineDirectory Dir;
-	if (false == Dir.MoveParentToDirectory("ContentsResources"))
-	{
-		MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-		return;
-	}
-	Dir.Append("Sounds");
-
-	std::vector<UEngineFile> ImageFiles = Dir.GetAllFile(true, { ".wav", ".mp3" });
-
-	for (size_t i = 0; i < ImageFiles.size(); i++)
-	{
-		std::string FilePath = ImageFiles[i].GetPathToString();
-		UEngineSound::Load(FilePath);
-	}
-
-}
 
 void APlayGameMode::LevelChangeStart()
 {
@@ -148,10 +131,18 @@ void APlayGameMode::BeginPlay()
 		StartGame(5, 5);
 
 		ChangeState(EGameModeState::InGame);
+		ChangeState(EGameModeState::GameEnd);
 		//});
 	}
 
+	{
+		//UEngineRenderTarget* LastTarget = GetWorld()->GetLastRenderTarget();
+		//LastTarget->AddEffect<ULMHPostEffect>();
 
+		// 포스트 이펙트 켜고 끄기.
+		//std::shared_ptr<UPostEffect> Effect = LastTarget->GetPostEffect(0);
+		//Effect->IsActive = false;
+	}
 }
 
 void APlayGameMode::StartGame(int x, int y)
@@ -168,15 +159,22 @@ void APlayGameMode::StartGame(int x, int y)
 void APlayGameMode::GameEndStart()
 {
 	//결과 확인하는 UI 
+	Result = GetWorld()->SpawnActor<AResultHUD>();
 
 
 }
 void APlayGameMode::GameEnd(float _DeltaTime)
 {
-	// 점수판에 점수
-	AHUD* Result = GetWorld()->SpawnActor<AResultHUD>().get();
-//UEngineCore::ResetLevel<ATitleGameMode, ACandyManager, AHUD>("TitleLevel");
-//UEngineCore::OpenLevel("TitleLevel");
+	Result;
+	if (true == Result->IsDestroy()) {
+		// 점수판 제거됨
+		UEngineCore::ResetLevel<ATitleGameMode, ACandyManager, AHUD>("TitleLevel");
+		UEngineCore::OpenLevel("TitleLevel");
+	}
+	else {
+		int a = 0;
+	}
+
 }
 void APlayGameMode::InGame(float _DeltaTime)
 {

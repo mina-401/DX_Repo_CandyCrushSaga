@@ -90,5 +90,7 @@ private:
 	//class UWidget* ScoreTextWidget;
 
 	USoundPlayer SoundPlayer;
+
+	std::shared_ptr<class AResultHUD> Result = nullptr;
 };
 

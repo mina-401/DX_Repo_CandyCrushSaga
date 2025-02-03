@@ -142,6 +142,7 @@ void ACCSHUD::Tick(float _DeltaTime)
 	AActor::Tick(_DeltaTime);
 
 
+
 	Turn = GetGameInstance<CandyGameInstance>()->PlayerStat.Turn;
 
 	TransText->SetText("남은 턴수: " + (std::to_string(Turn)));
