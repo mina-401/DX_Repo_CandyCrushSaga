@@ -1,21 +1,20 @@
 #include "PreCompile.h"
 #include "ResultHUD.h"
 #include <EngineCore/DefaultSceneComponent.h>
-#include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/FontWidget.h>
+#include <EngineCore/ImageWidget.h>
 #include "CandyGameInstance.h"
 #include <EngineCore/TimeEventComponent.h>
-
+#include <EngineCore/GameInstance.h>
+#include "CandyGameInstance.h"
+#include <EngineCore/Actor.h>
 
 AResultHUD::AResultHUD()
 {
 
 
-	std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
-	RootComponent = Default;
 
-	Renderer = CreateDefaultSubObject<USpriteRenderer>().get();
-	Renderer->SetupAttachment(RootComponent);
+	Renderer = GetWorld()->GetHUD()->CreateWidget<UImageWidget>(-1).get();
 
 	Renderer->SetTexture("ScorePanel.png");
 	Renderer->SetAutoScale(false);
@@ -23,8 +22,7 @@ AResultHUD::AResultHUD()
 	Renderer->SetWorldLocation({0,0,-300.0f });
 
 	{
-		Stars[0] = CreateDefaultSubObject<USpriteRenderer>().get();
-		Stars[0]->SetupAttachment(RootComponent);
+		Stars[0] = GetWorld()->GetHUD()->CreateWidget<UImageWidget>(-1).get();
 
 		Stars[0]->SetTexture("Score_Star1.png");
 		Stars[0]->SetAutoScale(false);
@@ -32,8 +30,7 @@ AResultHUD::AResultHUD()
 		Stars[0]->SetWorldLocation({ -30,30,-310.0f });
 	}
 	{
-		Stars[1] = CreateDefaultSubObject<USpriteRenderer>().get();
-		Stars[1]->SetupAttachment(RootComponent);
+		Stars[1] = GetWorld()->GetHUD()->CreateWidget<UImageWidget>(-1).get();
 
 		Stars[1]->SetTexture("Score_Star2.png");
 		Stars[1]->SetAutoScale(false);
@@ -42,15 +39,27 @@ AResultHUD::AResultHUD()
 	}
 
 	{
-		Stars[2] = CreateDefaultSubObject<USpriteRenderer>().get();
-		Stars[2]->SetupAttachment(RootComponent);
+		Stars[2] = GetWorld()->GetHUD()->CreateWidget<UImageWidget>(-1).get();
 		Stars[2]->SetTexture("Score_Star3.png");
 		Stars[2]->SetAutoScale(false);
 		Stars[2]->SetRelativeScale3D({ 100,100,0.0 });
 		Stars[2]->SetWorldLocation({ 25,40,-310.0f });
 	}
 
-	
+	for (int i = 0; i <= 2; i++)
+	{
+		Stars[i]->SetActive(false);
+	}
+
+	{
+
+		ScroeResultText = GetWorld()->GetHUD()-> CreateWidget<UFontWidget>(-1).get();
+		ScroeResultText->SetFont("BrandonGrotesqueBold", 20.0f, TColor<unsigned char>::BLACK, FW1_LEFT);
+		ScroeResultText->SetWorldLocation({ 10,0 ,0 });
+
+		ScroeResultText->SetText("점수: ");
+
+	}
 }
 
 AResultHUD::~AResultHUD()
@@ -61,33 +70,10 @@ void AResultHUD::SetSprite(int index)
 {
 	Renderer->SetSprite("Message.png", index);
 }
-void AResultHUD::BeginPlay()
-{
-	AActor::BeginPlay();
-
-	for (int i = 0; i <= 2; i++)
-	{
-		Stars[i]->SetActive(false);
-	}
-
-	{
-
-		UFontWidget* ScoreText = CreateWidget<UFontWidget>(-1).get();
-		ScoreText->SetFont("BrandonGrotesqueBold", 20.0f, TColor<unsigned char>::BLACK, FW1_LEFT);
-		ScoreText->SetWorldLocation({ -30,0 ,0 });
-
-		ScoreText->SetText("내 점수는..: ");
-
-	}
-}
 
 void AResultHUD::Tick(float _DeltaTime)
 {
-	AActor::Tick(_DeltaTime);
-	//ScoreText->SetText("점수: " + std::to_string(GetGameInstance<CandyGameInstance>()->PlayerStat.Score ));
-
-
-
+	UWidget::Tick(_DeltaTime);
 
 	if (CurTime > DestroyTime)
 	{

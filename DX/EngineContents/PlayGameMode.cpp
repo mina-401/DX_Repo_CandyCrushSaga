@@ -97,7 +97,7 @@ void APlayGameMode::LevelChangeStart()
 		Window->SetActive(true);
 	}
 	GetGameInstance<CandyGameInstance>()->IsGameEnd = false;
-	GetGameInstance<CandyGameInstance>()->Init();
+	
 
 }
 
@@ -131,7 +131,7 @@ void APlayGameMode::BeginPlay()
 		StartGame(5, 5);
 
 		ChangeState(EGameModeState::InGame);
-		ChangeState(EGameModeState::GameEnd);
+		//ChangeState(EGameModeState::GameEnd);
 		//});
 	}
 
@@ -156,12 +156,22 @@ void APlayGameMode::StartGame(int x, int y)
 	CandyManager->CandyFindConsec();
 	CandyManager->CandyDestroyCheck();
 }
+
+void APlayGameMode::GameStart()
+{
+	GetGameInstance<CandyGameInstance>()->Init();
+
+}
 void APlayGameMode::GameEndStart()
 {
 	//결과 확인하는 UI 
-	Result = GetWorld()->SpawnActor<AResultHUD>();
+	//Result = GetWorld()->SpawnActor<AResultHUD>();
+	Result = GetWorld()->GetHUD()->CreateWidget<AResultHUD>(-1);
+	ScoreStar = GetGameInstance<CandyGameInstance>()->PlayerStat.ScoreStar;
+	Score = GetGameInstance<CandyGameInstance>()->PlayerStat.Score;
 
-	GetGameInstance<CandyGameInstance>()->PlayerStat.ScoreStar = 2;
+
+	if(nullptr != Result) Result->ScroeResultText->SetText( std::to_string(Score));
 
 }
 void APlayGameMode::GameEnd(float _DeltaTime)
@@ -170,6 +180,7 @@ void APlayGameMode::GameEnd(float _DeltaTime)
 
 	if (true == Result->IsDestroy()) {
 		// 점수판 제거됨
+		
 		UEngineCore::ResetLevel<ATitleGameMode, ACandyManager, AHUD>("TitleLevel");
 		UEngineCore::OpenLevel("TitleLevel");
 	}
@@ -179,9 +190,13 @@ void APlayGameMode::GameEnd(float _DeltaTime)
 		{
 			CurTime = 0;
 
-			if (star > GetGameInstance<CandyGameInstance>()->PlayerStat.ScoreStar) return;
+			if (ScoreStar == -1) return; // 점수를 얻지 못함
+			if (star > ScoreStar) return; // 3개 스타 얻음
+			
 			Result->StarSetActive(star++);
 		}
+
+
 
 		
 
@@ -216,7 +231,10 @@ void APlayGameMode::InGameStart()
 void APlayGameMode::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
-
+	if (UEngineInput::IsDown('E') == true)
+	{
+		ChangeState(EGameModeState::GameEnd);
+	}
 	switch (GameModeState)
 	{
 	case EGameModeState::GameStart:

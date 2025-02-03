@@ -130,6 +130,8 @@ public:
 	void Disable(float _DeltaTime);
 	void CandyDestroyStart();
 
+	void HudScoreBar();
+
 	void BasicPlayerStateScore(ACandy* Candy);
 	
 
@@ -194,6 +196,9 @@ private:
 	// ÇÑÅÏ¿¡ ÄÞº¸ÇÑ È½¼ö
 	int ComboCount = 0;
 	int BonusScore = 100;
+	
+	int ScoreStar = 0;
+	int Score = 0;
 	float ACC = 0;
 	bool IsCombo = false;
 	

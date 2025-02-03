@@ -865,18 +865,7 @@ void ACandyManager::CandyDestroyStart()
         // 캔디 스프라이트 모양에 따른 기본 점수 계산한다.
         BasicPlayerStateScore(Candy);
 
-        ACC = static_cast<float>( GetGameInstance<CandyGameInstance>()->PlayerStat.Score);
-       // ACC += 75.0f; //75 -> 1.5 , 1->0.02
-
-      
-        ACCSHUD* Hud = dynamic_cast<ACCSHUD*>( GetWorld()->GetHUD());
-
-        //2000 
-        if (Hud != nullptr)
-        {
-            //Hud->Score->SetRelativeScale3D({ 33.0f,ACC/2,0.0f });
-           // Hud->Score->SetWorldLocation({ -191,-57+ACC*0.01f,0});
-        }
+        HudScoreBar();
        
         // 연쇄해서 부서지는 캔디 존재한다.
         if (ComboCount >= 2)
@@ -917,10 +906,9 @@ void ACandyManager::CandyDestroyStart()
             default:
                 break;
             }
-            //AScoreActor* ScoreActor = GetWorld()->SpawnActor< AScoreActor>().get();
 
 
-            GetGameInstance<CandyGameInstance>()->PlayerStat.Score += BonusScore*ComboCount;
+            Score += BonusScore*ComboCount;
         }
 
             //기본점수       
@@ -977,25 +965,62 @@ void ACandyManager::CandyDestroyStart()
     }
 }
 
+void ACandyManager::HudScoreBar()
+{
+    ACC = Score;
+
+    if (ACC > 5000)
+    {
+        ScoreStar = 2;
+    }
+    else if (ACC > 2700)
+    {
+        ScoreStar = 1;
+
+
+    }
+    else if (ACC > 1000)
+    {
+        ScoreStar = 0;
+
+
+    }
+    else {
+        ScoreStar = -1;
+
+    }
+
+    ACCSHUD* Hud = dynamic_cast<ACCSHUD*>(GetWorld()->GetHUD());
+
+
+
+    //2000 
+    if (Hud != nullptr)
+    {
+        Hud->Score->SetRelativeScale3D({ 33.0f,ACC / 2,0.0f });
+        Hud->Score->SetWorldLocation({ -191,-57 + ACC * 0.01f,0 });
+    }
+}
+
 
 void ACandyManager::BasicPlayerStateScore(ACandy* Candy)
 {
     switch (Candy->CandyData.CandySpriteType)
     {
     case ESpriteType::Normal:
-        GetGameInstance<CandyGameInstance>()->PlayerStat.Score += 10;
+        Score += 10;
 
         break;
     case ESpriteType::StripedHorizontal:
-        GetGameInstance<CandyGameInstance>()->PlayerStat.Score += 30;
+        Score += 30;
 
         break;
     case ESpriteType::StripedVertical:
-        GetGameInstance<CandyGameInstance>()->PlayerStat.Score += 30;
+        Score += 30;
 
         break;
     case ESpriteType::Wrapped:
-        GetGameInstance<CandyGameInstance>()->PlayerStat.Score += 50;
+       Score += 50;
 
         break;
     case ESpriteType::None:
@@ -1109,10 +1134,15 @@ void ACandyManager::Tick(float _DeltaTime)
 {
     AActor::Tick(_DeltaTime);
 
+    GetGameInstance<CandyGameInstance>()->PlayerStat.ScoreStar = ScoreStar;
+    GetGameInstance<CandyGameInstance>()->PlayerStat.Score = Score;
+
+
     if (UEngineInput::IsDown('R') == true)
     {
         ResettingStart();
     }
+  
 
     switch (BoardState)
     {

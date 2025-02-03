@@ -9,29 +9,6 @@
 
 ACCSHUD::ACCSHUD()
 {
-
-
-}
-
-ACCSHUD::~ACCSHUD()
-{
-}
-
-void ACCSHUD::BeginPlay()
-{
-	AActor::BeginPlay();
-
-	/*std::shared_ptr<UDefaultSceneComponent> Default = CreateDefaultSubObject<UDefaultSceneComponent>();
-	RootComponent = Default;
-
-	Score = CreateDefaultSubObject<USpriteRenderer>().get();
-	Score->SetupAttachment(RootComponent);
-	Score->SetPivotValue({ 0.0f,0.5f });
-	Score->SetScale3D({ 500,500,1 });
-	Score->SetWorldLocation({ 0,0,-500 });
-	Score->SetAutoScale(false);*/
-	//Score->SetupAttachment(RootCompoenent);
-
 	{
 		ButtonWidget = CreateWidget<UImageWidget>(-1).get();
 
@@ -45,7 +22,7 @@ void ACCSHUD::BeginPlay()
 		ButtonWidget->SetTexture("StartButton_2.png");
 		ButtonWidget->SetAutoScale(false);
 
-		
+
 
 		UFontWidget* RestartText = CreateWidget<UFontWidget>(-1).get();
 		RestartText->SetFont("BrandonGrotesqueBold", 20.0f, TColor<unsigned char>::BLACK, FW1_CENTER);
@@ -55,11 +32,11 @@ void ACCSHUD::BeginPlay()
 
 		ButtonWidget->SetDownEvent([this] {
 			ButtonWidget->SetScale3D({ 120,170.0f,0.0f });
-		});
+			});
 		ButtonWidget->SetUpEvent([this] {
 			ButtonWidget->SetScale3D({ 100,150,0.0f });
 			IsRestart = true;
-		});
+			});
 	}
 	{
 
@@ -134,6 +111,19 @@ void ACCSHUD::BeginPlay()
 		MaxScoreText->SetWorldLocation({ -310,200 });
 
 	}
+
+}
+
+ACCSHUD::~ACCSHUD()
+{
+}
+
+void ACCSHUD::BeginPlay()
+{
+	AActor::BeginPlay();
+
+
+	
 
 }
 

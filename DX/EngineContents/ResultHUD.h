@@ -1,9 +1,10 @@
 #pragma once
 #include <EngineCore/HUD.h>
+#include <EngineCore/ImageWidget.h>
 
 
 // Ό³Έν :
-class AResultHUD : public AHUD
+class AResultHUD : public UImageWidget
 {
 public:
 	// constrcuter destructer
@@ -18,7 +19,7 @@ public:
 	AResultHUD& operator=(const AResultHUD& _Other) = delete;
 	AResultHUD& operator=(AResultHUD&& _Other) noexcept = delete;
 
-	class USpriteRenderer* GetRenderer()
+	class UImageWidget* GetRenderer()
 	{
 		return Renderer;
 	}
@@ -27,15 +28,16 @@ public:
 	void SetScoreStar(int _value);
 
 	int ScoreStar = 0;
+	class UFontWidget* ScroeResultText;
 
 protected:
-	void BeginPlay() override;
+	//void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 private:
 	class UFontWidget* ScoreText;
-	class USpriteRenderer* Renderer = nullptr;
+	class UImageWidget* Renderer = nullptr;
 
-   USpriteRenderer* Stars[3];
+	UImageWidget* Stars[3];
 
    float DestroyTime = 50.0f;
    float CurTime = 0.0f;

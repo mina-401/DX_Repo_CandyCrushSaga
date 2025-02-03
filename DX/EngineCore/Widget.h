@@ -19,10 +19,10 @@ public:
 	UWidget& operator=(const UWidget& _Other) = delete;
 	UWidget& operator=(UWidget&& _Other) noexcept = delete;
 
-	virtual void Tick(float _DeltaTime);
-	virtual void Render(class UEngineCamera* Camera, float _DeltaTime);
+	ENGINEAPI virtual void Tick(float _DeltaTime);
+	ENGINEAPI virtual void Render(class UEngineCamera* Camera, float _DeltaTime);
 
-	class ULevel* GetWorld();
+	ENGINEAPI class ULevel* GetWorld();
 
 
 	void SetHoverEvent(std::function<void()> _Value)

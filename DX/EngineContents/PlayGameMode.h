@@ -29,6 +29,8 @@ public:
 	//bool IsGameEnd = false;
 	void StartGame(int x, int y);
 
+	void GameStart();
+
 	void GameEndStart();
 
 	void GameEnd(float _DeltaTime);
@@ -55,6 +57,7 @@ protected:
 		switch (GameModeState)
 		{
 		case EGameModeState::GameStart:
+			GameStart();
 			break;
 		case EGameModeState::InGame:
 			break;
@@ -97,6 +100,7 @@ private:
 	float StarTime = 50.0f;
 
 	int star = 0;
-	int ScoreStar = 0;
+	int ScoreStar = 2;
+	int Score = 0;
 };
 
