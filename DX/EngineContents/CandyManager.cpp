@@ -967,7 +967,7 @@ void ACandyManager::CandyDestroyStart()
 
 void ACandyManager::HudScoreBar()
 {
-    ACC = Score;
+    ACC = static_cast<int>( Score);
 
     if (ACC > 5000)
     {

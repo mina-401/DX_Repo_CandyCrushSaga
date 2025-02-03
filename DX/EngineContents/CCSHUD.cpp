@@ -25,7 +25,7 @@ ACCSHUD::ACCSHUD()
 
 
 		UFontWidget* RestartText = CreateWidget<UFontWidget>(-1).get();
-		RestartText->SetFont("BrandonGrotesqueBold", 20.0f, TColor<unsigned char>::BLACK, FW1_CENTER);
+		RestartText->SetFont("CandyCrush", 20.0f, TColor<unsigned char>::BLACK, FW1_CENTER);
 		RestartText->SetWorldLocation({ -290,-35,0 });
 
 		RestartText->SetText("돌리기");
@@ -94,20 +94,20 @@ ACCSHUD::ACCSHUD()
 	{
 
 		TransText = CreateWidget<UFontWidget>(-1).get();
-		TransText->SetFont("BrandonGrotesqueBold", 20.0f, TColor<unsigned char>::BLACK, FW1_LEFT);
+		TransText->SetFont("CandyCrush", 20.0f, TColor<unsigned char>::BLACK, FW1_LEFT);
 		//TransText->SetFont("BrandonGrotesque-Bold", 20.0f, TColor<unsigned char>::BLACK, FW1_LEFT);
 		TransText->SetWorldLocation({ -310,120 });
 
 		TransText->SetText("남은 턴수: " + (std::to_string(GetGameInstance<CandyGameInstance>()->PlayerStat.Turn)));
 
 		ScoreText = CreateWidget<UFontWidget>(-1).get();
-		ScoreText->SetFont("BrandonGrotesqueBold", 20.0f, TColor<unsigned char>::BLACK, FW1_LEFT);
+		ScoreText->SetFont("CandyCrush", 20.0f, TColor<unsigned char>::BLACK, FW1_LEFT);
 		ScoreText->SetWorldLocation({ -310,45 });
 
 		ScoreText->SetText("점수: " + (std::to_string(GetGameInstance<CandyGameInstance>()->PlayerStat.Score)));
 
 		MaxScoreText = CreateWidget<UFontWidget>(-1).get();
-		MaxScoreText->SetFont("BrandonGrotesqueBold", 20.0f, TColor<unsigned char>::BLACK, FW1_LEFT);
+		MaxScoreText->SetFont("CandyCrush", 20.0f, TColor<unsigned char>::BLACK, FW1_LEFT);
 		MaxScoreText->SetWorldLocation({ -310,200 });
 
 	}

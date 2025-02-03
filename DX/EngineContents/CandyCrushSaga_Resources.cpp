@@ -37,6 +37,7 @@ void UCandyCrushSaga::CandyGSetting()
 		Dir.Append("Fonts");*/
 
 		UEngineFont::Load("BrandonGrotesqueBold", "BrandonGrotesque-Bold");
+		UEngineFont::Load("CandyCrush", "Candy Crush");
 	}
 	//UEngineFont::Load("DX하늘구름 중간", "DX하늘구름 중간");
 	{

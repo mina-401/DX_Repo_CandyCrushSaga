@@ -11,14 +11,11 @@ public:
 
 	static inline float Combo = 2;
 
-
-	//static inline float CandyThreeBlock = 3;
-
 	static inline float BasicScore = 50;
 	static inline float BasicComboScore = 50;
 	static inline float ComboScore = 100;
 
-	static inline int MaxTurn = 30;
+	static inline int MaxTurn = 5;
 	static inline int MaxScore = 5000;
 
 };

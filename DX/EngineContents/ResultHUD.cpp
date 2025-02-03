@@ -54,7 +54,7 @@ AResultHUD::AResultHUD()
 	{
 
 		ScroeResultText = GetWorld()->GetHUD()-> CreateWidget<UFontWidget>(-1).get();
-		ScroeResultText->SetFont("BrandonGrotesqueBold", 20.0f, TColor<unsigned char>::BLACK, FW1_LEFT);
+		ScroeResultText->SetFont("CandyCrush", 20.0f, TColor<unsigned char>::BLACK, FW1_LEFT);
 		ScroeResultText->SetWorldLocation({ 10,0 ,0 });
 
 		ScroeResultText->SetText("Á¡¼ö: ");
