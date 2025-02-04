@@ -237,6 +237,11 @@ void UCollision::CollisionEventCheck(std::shared_ptr<UCollision> _Other)
 
 void UCollision::DebugRender(UEngineCamera* _Camera, float _DeltaTime)
 {
+	if (false == IsDebug())
+	{
+		return;
+	}
+
 	URenderUnit Unit;
 
 	FTransform& CameraTrans = _Camera->GetTransformRef();

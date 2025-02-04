@@ -24,9 +24,7 @@ ACandy::ACandy()
 	Collision = CreateDefaultSubObject<UCollision>();
 	Collision->SetupAttachment(RootComponent);
 	Collision->SetCollisionProfileName("Candy");
-
 	Collision->SetRelativeScale3D({ 50,50,0.0f });
-
 	Collision->DebugOff();
 
 }
