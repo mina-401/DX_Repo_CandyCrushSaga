@@ -132,6 +132,8 @@ public:
 
 	void HudScoreBar();
 
+	void HudBar(int Score);
+
 	void BasicPlayerStateScore(ACandy* Candy);
 	
 
@@ -199,7 +201,7 @@ private:
 	
 	int ScoreStar = 0;
 	int Score = 0;
-	float ACC = 0;
+	//float Score = 0;
 	bool IsCombo = false;
 	
 	UEngineRandom Random;

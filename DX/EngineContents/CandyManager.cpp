@@ -967,19 +967,18 @@ void ACandyManager::CandyDestroyStart()
 
 void ACandyManager::HudScoreBar()
 {
-    ACC = static_cast<int>( Score);
 
-    if (ACC > 5000)
+    if (Score > 5000)
     {
         ScoreStar = 2;
     }
-    else if (ACC > 2700)
+    else if (Score > 2700)
     {
         ScoreStar = 1;
 
 
     }
-    else if (ACC > 1000)
+    else if (Score > 1000)
     {
         ScoreStar = 0;
 
@@ -990,6 +989,12 @@ void ACandyManager::HudScoreBar()
 
     }
 
+    
+    HudBar(Score);
+}
+
+void ACandyManager::HudBar(int Score)
+{
     ACCSHUD* Hud = dynamic_cast<ACCSHUD*>(GetWorld()->GetHUD());
 
 
@@ -997,8 +1002,8 @@ void ACandyManager::HudScoreBar()
     //2000 
     if (Hud != nullptr)
     {
-        Hud->Score->SetRelativeScale3D({ 33.0f,ACC / 2,0.0f });
-        Hud->Score->SetWorldLocation({ -191,-57 + ACC * 0.01f,0 });
+        Hud->Score->SetRelativeScale3D({ 33.0f,Score / 2,0.0f });
+        Hud->Score->SetWorldLocation({ -191,-57 + Score * 0.01f,0 });
     }
 }
 
