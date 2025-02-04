@@ -1106,19 +1106,15 @@ void ACandyManager::Tick(float _DeltaTime)
         break;
     case ECandyManagerState::Destroy:
         CandyDestroy();
-
         break;
     case ECandyManagerState::NewCandyDrop:
         NewCandyDrop(_DeltaTime);
-
         break;
     case ECandyManagerState::Update:
         Update(_DeltaTime);
-
         break;
     case ECandyManagerState::Disable:
         Disable(_DeltaTime);
-
         break;
     default:
         break;

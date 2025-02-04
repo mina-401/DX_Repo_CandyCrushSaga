@@ -28,7 +28,7 @@ AMouse::AMouse()
 	Collision = CreateDefaultSubObject<UCollision>();
 	Collision->SetupAttachment(RootComponent);
 	Collision->SetCollisionProfileName("Mouse");
-
+	Collision->DebugOff();
 	//Collision->SetRelativeScale3D({ 50,50,0.0f });
 
 	//Collision->SetCollisionEnter(std::bind(&AMouse::CollisionEnter, this, std::placeholders::_1,std::placeholders::_2));

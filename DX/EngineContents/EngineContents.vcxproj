@@ -200,7 +200,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="LightGameMode.cpp" />
     <ClCompile Include="MeshActor.cpp" />
     <ClCompile Include="Mouse.cpp">
       <SubType>
@@ -210,7 +209,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayGameMode.cpp">
       <SubType>
       </SubType>
@@ -280,7 +278,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="LightGameMode.h" />
     <ClInclude Include="MeshActor.h" />
     <ClInclude Include="Mouse.h">
       <SubType>
@@ -290,7 +287,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayGameMode.h">
       <SubType>
       </SubType>
@@ -304,10 +300,6 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PreCompile.h" />
-    <ClInclude Include="MyQueue.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="ResultHUD.h" />
     <ClInclude Include="ScoreActor.h" />
     <ClInclude Include="Shine.h">

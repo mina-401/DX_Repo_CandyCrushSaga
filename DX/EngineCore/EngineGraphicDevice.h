@@ -82,17 +82,17 @@ private:
 
 	// 메모리 로드해라 관련
 	// 그래픽카드에한테 그림 저장좀 해달라고 할수 있습니다.
-	Microsoft::WRL::ComPtr<ID3D11Device> Device = nullptr;
 
 	// 랜더링 그려라 관련
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext> Context = nullptr;
 
 	// 다이렉트 x에서는 백버퍼를 스왑 체인이라고 부르고
 	// 내가 교체나 
-	Microsoft::WRL::ComPtr<IDXGISwapChain> SwapChain = nullptr;
-
+	Microsoft::WRL::ComPtr<ID3D11Device> Device = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> Context = nullptr;
 	Microsoft::WRL::ComPtr<IDXGIAdapter> MainAdapter = nullptr;
 
+
+	Microsoft::WRL::ComPtr<IDXGISwapChain> SwapChain = nullptr;
 	std::shared_ptr<class UEngineRenderTarget> BackBufferTarget;
 
 	//FVector ClearColor = FVector::BLUE;

@@ -27,6 +27,8 @@ ACandy::ACandy()
 
 	Collision->SetRelativeScale3D({ 50,50,0.0f });
 
+	Collision->DebugOff();
+
 }
 
 ACandy::~ACandy()

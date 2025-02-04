@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PreCompile.cpp" />
     <ClCompile Include="CandyCrushSaga.cpp" />
     <ClCompile Include="TitleGameMode.cpp">
@@ -23,7 +22,6 @@
     <ClCompile Include="PlayMap.cpp">
       <Filter>GameMap</Filter>
     </ClCompile>
-    <ClCompile Include="Candy.cpp" />
     <ClCompile Include="CCSHUD.cpp">
       <Filter>HUD</Filter>
     </ClCompile>
@@ -33,25 +31,40 @@
     <ClCompile Include="TileMapGameMode.cpp">
       <Filter>GameMode</Filter>
     </ClCompile>
-    <ClCompile Include="CandyManager.cpp" />
-    <ClCompile Include="Mouse.cpp" />
-    <ClCompile Include="LightGameMode.cpp" />
-    <ClCompile Include="MeshActor.cpp" />
     <ClCompile Include="MyCustomRenderer.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="Shine.cpp" />
-    <ClCompile Include="BackGroundTile.cpp" />
-    <ClCompile Include="LMHPostEffect.cpp" />
     <ClCompile Include="CustomCandyRenderer.cpp" />
     <ClCompile Include="CandyGameInstance.cpp" />
-    <ClCompile Include="ScoreActor.cpp" />
     <ClCompile Include="ResultHUD.cpp">
       <Filter>HUD</Filter>
     </ClCompile>
+    <ClCompile Include="LMHPostEffect.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshActor.cpp">
+      <Filter>Play\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Shine.cpp">
+      <Filter>Play\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreActor.cpp">
+      <Filter>Play\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Play</Filter>
+    </ClCompile>
+    <ClCompile Include="CandyManager.cpp">
+      <Filter>Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Candy.cpp">
+      <Filter>Play</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGroundTile.cpp">
+      <Filter>Play</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Player.h" />
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="CandyCrushSaga.h" />
     <ClInclude Include="TitleGameMode.h">
@@ -63,17 +76,12 @@
     <ClInclude Include="TitleButton.h">
       <Filter>Title</Filter>
     </ClInclude>
-    <ClInclude Include="CustomTestRenderer.h">
-      <Filter>Render</Filter>
-    </ClInclude>
     <ClInclude Include="PlayGameMode.h">
       <Filter>GameMode</Filter>
     </ClInclude>
     <ClInclude Include="PlayMap.h">
       <Filter>GameMap</Filter>
     </ClInclude>
-    <ClInclude Include="Candy.h" />
-    <ClInclude Include="CCSConst.h" />
     <ClInclude Include="CCSHUD.h">
       <Filter>HUD</Filter>
     </ClInclude>
@@ -83,23 +91,48 @@
     <ClInclude Include="TileMapGameMode.h">
       <Filter>GameMode</Filter>
     </ClInclude>
-    <ClInclude Include="CandyManager.h" />
-    <ClInclude Include="Mouse.h" />
-    <ClInclude Include="MyQueue.h" />
-    <ClInclude Include="CCSEnums.h" />
-    <ClInclude Include="LightGameMode.h" />
-    <ClInclude Include="MeshActor.h" />
     <ClInclude Include="MyCustomRenderer.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="Shine.h" />
-    <ClInclude Include="BackGroundTile.h" />
-    <ClInclude Include="LMHPostEffect.h" />
     <ClInclude Include="CustomCandyRenderer.h" />
-    <ClInclude Include="CCSStruct.h" />
-    <ClInclude Include="ScoreActor.h" />
     <ClInclude Include="ResultHUD.h">
       <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomTestRenderer.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="LMHPostEffect.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshActor.h">
+      <Filter>Play\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Shine.h">
+      <Filter>Play\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreActor.h">
+      <Filter>Play\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSStruct.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSEnums.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="CCSConst.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Play</Filter>
+    </ClInclude>
+    <ClInclude Include="CandyManager.h">
+      <Filter>Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Candy.h">
+      <Filter>Play</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGroundTile.h">
+      <Filter>Play</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +156,15 @@
     </Filter>
     <Filter Include="Global">
       <UniqueIdentifier>{b68d4045-6d62-4959-a339-edb4b5a99a96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect">
+      <UniqueIdentifier>{e4527ebd-df78-45b6-b177-c13d1e4cc128}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play">
+      <UniqueIdentifier>{a3de3f72-38e4-45c0-a76b-2281b38deb92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play\Actor">
+      <UniqueIdentifier>{c9fe2d09-3c30-49f5-b171-63fb1e1b6a4d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

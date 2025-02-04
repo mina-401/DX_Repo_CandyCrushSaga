@@ -115,6 +115,8 @@ void APlayGameMode::BeginPlay()
 		GetWorld()->CreateCollisionProfile("Candy");
 		GetWorld()->CreateCollisionProfile("Mouse");
 		GetWorld()->LinkCollisionProfile("Mouse", "Candy");
+
+
 	}
 	{
 		CandyMouseObj = GetWorld()->SpawnActor<AMouse>();
