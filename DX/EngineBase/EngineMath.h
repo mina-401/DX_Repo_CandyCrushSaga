@@ -23,6 +23,16 @@
 // xmvector
 
 
+
+		//------------------------------------------------------------------------------
+		// Ray
+class URay
+{
+public:
+	DirectX::XMFLOAT3 Origin;
+	DirectX::XMFLOAT3 Direction;
+};
+
 class ENGINEAPI  UEngineMath
 {
 public:
@@ -118,6 +128,11 @@ public:
 	}
 
 	ENGINEAPI TVector(DirectX::XMVECTOR _DirectVector) : DirectVector(_DirectVector)
+	{
+
+	}
+
+	ENGINEAPI TVector(DirectX::XMFLOAT3 _Float3) : X(_Float3.x), Y(_Float3.y), Z(_Float3.z), W(1.0f)
 	{
 
 	}
@@ -361,7 +376,7 @@ public:
 		return Result;
 	}
 
-	TVector ABSVectorReturn()
+	TVector ABSVectorReturn() const
 	{
 		return DirectX::XMVectorAbs(DirectVector);
 	}
@@ -667,21 +682,21 @@ public:
 		DirectMatrix = DirectX::XMMatrixIdentity();
 	}
 
-	FVector GetFoward()
+	FVector GetFoward() const
 	{
 		FVector Dir = ArrVector[2];
 		Dir.Normalize();
 		return Dir;
 	}
 
-	FVector GetRight()
+	FVector GetRight() const
 	{
 		FVector Dir = ArrVector[0];
 		Dir.Normalize();
 		return Dir;
 	}
 
-	FVector GetUp()
+	FVector GetUp() const
 	{
 		FVector Dir = ArrVector[1];
 		Dir.Normalize();
@@ -776,17 +791,27 @@ public:
 	//                 1280          720        640           360            누가 앞에 나오고 누가 뒤에 나올거냐
 	void ViewPort(float _Width, float _Height, float _Left, float _Top, float _ZMin, float _ZMax)
 	{
-		Identity();
-		Arr2D[0][0] = _Width * 0.5f;
-		// Y축 반전
-		Arr2D[1][1] = -_Height * 0.5f;
+		float halfWidth = _Width * 0.5f;
+		float halfHeight = _Height * 0.5f;
 
-		// 화면 2~3뿌릴건데 그중에서 누가 앞에오고 뒤에오고를 결정하려면 
-		Arr2D[2][2] = _ZMax != 0.0f ? 1.0f : _ZMin / _ZMax;
+		DirectMatrix = DirectX::XMMATRIX(
+			halfWidth, 0.0f, 0.0f, 0.0f,
+			0.0f, -halfHeight, 0.0f, 0.0f,
+			0.0f, 0.0f, _ZMin - _ZMax, 0.0f,
+			halfWidth, halfHeight, _ZMin, 1.0f
+		);
 
-		Arr2D[3][0] = Arr2D[0][0] + _Left;
-		Arr2D[3][1] = -Arr2D[1][1] + _Top;
-		Arr2D[3][2] = _ZMax != 0.0f ? 1.0f : _ZMin / _ZMax;
+		//Identity();
+		//Arr2D[0][0] = _Width * 0.5f;
+		//// Y축 반전
+		//Arr2D[1][1] = -_Height * 0.5f;
+
+		//// 화면 2~3뿌릴건데 그중에서 누가 앞에오고 뒤에오고를 결정하려면 
+		//Arr2D[2][2] = _ZMax != 0.0f ? 1.0f : _ZMin / _ZMax;
+
+		//Arr2D[3][0] = Arr2D[0][0] + _Left;
+		//Arr2D[3][1] = -Arr2D[1][1] + _Top;
+		//Arr2D[3][2] = _ZMax != 0.0f ? 1.0f : _ZMin / _ZMax;
 	}
 
 
@@ -864,6 +889,7 @@ enum class ECollisionType
 	AABB,
 	// 회전한 박스
 	OBB,
+	RAY,
 	Max
 
 };
@@ -875,6 +901,7 @@ struct FCollisionData
 		// 정방원
 		DirectX::BoundingSphere Sphere;
 		DirectX::BoundingBox AABB;
+		URay Ray;
 		DirectX::BoundingOrientedBox OBB;
 	};
 
@@ -918,6 +945,7 @@ struct FTransform
 	float4x4 World;
 	float4x4 View;
 	float4x4 Projection;
+	float4x4 WV;
 	float4x4 WVP;
 
 	FTransform()
@@ -966,6 +994,25 @@ public:
 		return LocalWorld.GetUp();
 	}
 
+	FVector GetRayDirection() const
+	{
+		return World.ArrVector[2].NormalizeReturn();
+	}
+
+	FVector GetRayOrigin() const
+	{
+		return WorldLocation;
+	}
+
+	void SetRayDirection(FVector _Direction)
+	{
+		World.ArrVector[2] = _Direction;
+	}
+
+	void SetRayOrigin(FVector _Origin)
+	{
+		WorldLocation = _Origin;
+	}
 
 private:
 	friend class CollisionFunctionInit;
@@ -1003,6 +1050,10 @@ public:
 	ENGINEAPI static bool AABBToOBB(const FTransform& _Left, const FTransform& _Right);
 	ENGINEAPI static bool AABBToAABB(const FTransform& _Left, const FTransform& _Right);
 
+	ENGINEAPI static bool OBBToRay(const FTransform& _Left, const FTransform& _Right);
+	ENGINEAPI static bool SphereToRay(const FTransform& _Left, const FTransform& _Right);
+	ENGINEAPI static bool AABBToRay(const FTransform& _Left, const FTransform& _Right);
+
 
 
 	FCollisionData GetCollisionData() const
@@ -1012,9 +1063,22 @@ public:
 		// Sphere와 AABB전체를 다 세팅해준겁니다.
 		Result.OBB.Center = WorldLocation.DirectFloat3;
 		Result.OBB.Extents = (WorldScale * 0.5f).ABSVectorReturn().DirectFloat3;
+		// Result.OBB.Extents = WorldScale.ABSVectorReturn().DirectFloat3;
 		Result.OBB.Orientation = WorldQuat.DirectFloat4;
 		return Result;
 	}
+
+	FCollisionData GetCollisionToRay() const
+	{
+		FCollisionData Result;
+		// OBB를 세팅해준거 같지만 모든 애들을 다 세팅해준 것입니다.
+		// Sphere와 AABB전체를 다 세팅해준겁니다.
+		Result.OBB.Center = WorldLocation.DirectFloat3;
+		Result.OBB.Extents = World.GetFoward().DirectFloat3;
+		Result.OBB.Orientation = WorldQuat.DirectFloat4;
+		return Result;
+	}
+
 
 	FVector ZAxisCenterLeftTop() const
 	{

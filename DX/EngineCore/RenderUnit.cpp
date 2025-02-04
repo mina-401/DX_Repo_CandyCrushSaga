@@ -240,19 +240,6 @@ void URenderUnit::Render(class UEngineCamera* _Camera, float _DeltaTime)
 	Data.DeltaTime = _DeltaTime;
 	Data.AccTime += _DeltaTime;
 
-	// ¿’«≤æÓº¿∫Ì∑Ø 
-
-	// Ω¶¿Ã¥ı ∏Æº“Ω∫
-
-	//	ShaderResSetting();
-
-	//for (std::pair<EShaderType, UEngineShaderResources>& ShaderRes : Resources)
-	//{
-	//	UEngineShaderResources& Res = ShaderRes.second;
-	//	Res.Setting();
-	//}
-
-
 	for (std::pair<const EShaderType, UEngineShaderResources>& Pair : Resources)
 	{
 		Pair.second.Setting();

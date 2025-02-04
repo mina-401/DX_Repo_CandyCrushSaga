@@ -39,6 +39,11 @@ public:
 
 	void InGameStart();
 
+	class USoundPlayer* GetSoundPlayer()
+	{
+		return &SoundPlayer;
+	}
+
 protected:
 
 	void LevelChangeStart() override;

@@ -6,6 +6,9 @@
 #include "CandyGameInstance.h"
 #include <EngineCore/FontRenderer.h>
 #include <EngineCore/FontWidget.h>
+#include <EnginePlatform/EngineSound.h>
+#include "PlayGameMode.h"
+#include <EnginePlatform/EngineSound.h>
 
 ACCSHUD::ACCSHUD()
 {
@@ -111,7 +114,38 @@ ACCSHUD::ACCSHUD()
 		MaxScoreText->SetWorldLocation({ -310,200 });
 
 	}
+	{
+		ButtonSound = CreateWidget<UImageWidget>(-1).get();
 
+		ButtonSound->SetScale3D({ 50, 50, 1 });
+		ButtonSound->SetWorldLocation({ 300,120 });
+		///BackDoor->SetRelativeScale3D({ 78,150,0.0f });
+
+		ButtonSound->SetTexture("SoundOnOff.png");
+		ButtonSound->SetUpEvent([this]() {
+			
+			APlayGameMode* CurPlayGameMode = dynamic_cast<APlayGameMode*>(CurGameMode);
+			SoundPlayer= CurPlayGameMode->GetSoundPlayer();
+
+			SoundPlayer->OnOffSwtich();
+		});
+
+	}
+
+	{
+		BackDoor = CreateWidget<UImageWidget>(-1).get();
+
+		BackDoor->SetScale3D({ 50, 50, 1 });
+		BackDoor->SetWorldLocation({ 300,180 });
+		///BackDoor->SetRelativeScale3D({ 78,150,0.0f });
+		BackDoor->SetTexture("Back.png");
+
+		BackDoor->SetUpEvent([this]() {
+
+			GetGameInstance<CandyGameInstance>()->IsGameEnd = true;
+			});
+
+	}
 }
 
 ACCSHUD::~ACCSHUD()
@@ -123,7 +157,6 @@ void ACCSHUD::BeginPlay()
 	AActor::BeginPlay();
 
 
-	
 
 }
 
@@ -131,7 +164,8 @@ void ACCSHUD::Tick(float _DeltaTime)
 {
 	AActor::Tick(_DeltaTime);
 
-
+	
+	CurGameMode = GetGameInstance<CandyGameInstance>()->CurGameMode;
 
 	Turn = GetGameInstance<CandyGameInstance>()->PlayerStat.Turn;
 

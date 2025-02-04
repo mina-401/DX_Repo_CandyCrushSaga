@@ -7,7 +7,6 @@
 #include <EngineCore/TimeEventComponent.h>
 #include "MyCustomRenderer.h"
 #include <EngineCore/Collision.h>
-#include <EngineCore/Level.h>
 
 AMeshActor::AMeshActor()
 {
@@ -50,7 +49,7 @@ void AMeshActor::Tick(float _DeltaTime)
 	if (UEngineInput::IsDown('P'))
 	{
 		GetWorld()->GetMainCamera()->FreeCameraOn();
-		GetWorld()->GetMainCamera()->SetFreeCameraRotSpeed(1000.0f);
+		// GetWorld()->GetMainCamera()->SetFreeCameraRotSpeed(1000.0f);
 	}
 
 	// AddActorRotation({0.0f, 0.0f, 360.0f * _DeltaTime });

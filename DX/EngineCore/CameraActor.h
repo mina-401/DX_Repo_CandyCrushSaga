@@ -5,6 +5,8 @@
 // Ό³Έν :
 class ACameraActor : public AActor
 {
+	friend class ULevel;
+
 public:
 	// constrcuter destructer
 	ACameraActor();
@@ -47,6 +49,8 @@ public:
 	ENGINEAPI void FreeCameraOff();
 
 	ENGINEAPI void FreeCameraSwitch();
+
+	ENGINEAPI void EngineFreeCameraUpdate(float _DeltaTime);
 
 
 	// #ifdef _DEBUG

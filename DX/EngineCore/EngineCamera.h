@@ -27,6 +27,8 @@ public:
 	UEngineCamera& operator=(const UEngineCamera& _Other) = delete;
 	UEngineCamera& operator=(UEngineCamera&& _Other) noexcept = delete;
 
+	ENGINEAPI bool CheckPickCollision(std::string_view _CollisionProfile, std::vector<class UCollision*>& _Collision);
+
 	void BeginPlay() override;
 
 	void Render(float _DetlaTime);

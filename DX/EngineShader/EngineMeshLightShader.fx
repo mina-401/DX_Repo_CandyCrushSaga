@@ -43,18 +43,21 @@ VertexShaderOutPut MeshLight_VS(EngineVertex _Vertex /*, int _DataIndex*/)
 	// 뷰공간으로 노말을 보냈어
 	
 	// 뷰공간으로 보낸 포지션이 됩니다.
-    OutPut.VIEWPOS = mul(_Vertex.POSITION, World * View);
+    OutPut.VIEWPOS = mul(_Vertex.POSITION, WV);
 	
 	// 실수로 w에 1이 들어가면 이동값을 적용받게 된다.
 	// 그러므로 이동값이 적용되는것을 확실하게 차단하기 위해서 w를 신경써주는게 좋다.
     _Vertex.NORMAL.w = 0.0f;
-    OutPut.NORMAL = mul(_Vertex.NORMAL, World * View);
+    OutPut.NORMAL = mul(_Vertex.NORMAL, WV);
+    OutPut.NORMAL.w = 0.0f;
 	
     _Vertex.BINORMAL.w = 0.0f;
-    OutPut.BINORMAL = mul(_Vertex.BINORMAL, World * View);
+    OutPut.BINORMAL = mul(_Vertex.BINORMAL, WV);
+    OutPut.NORMAL.w = 0.0f;
 	
     _Vertex.TANGENT.w = 0.0f;
-    OutPut.TANGENT = mul(_Vertex.TANGENT, World * View);
+    OutPut.TANGENT = mul(_Vertex.TANGENT, WV);
+    OutPut.NORMAL.w = 0.0f;
 	
 	// 빛 계산공식을 여기에서 해버리고 넘기면 고로쉐이딩이라고 한다.
 	// OutPut.LIGHTCOLOR = 
@@ -72,12 +75,27 @@ float4 MeshLight_PS(VertexShaderOutPut _Vertex) : SV_Target0
     float4 ResultColor;
     ResultColor = SettingColor;
 	
-	// 여기서 
-    float4 DiffuseColor = CalDiffusLight(_Vertex.NORMAL, LightArr[0]);
-    float4 SpacularLight = CalSpacularLight(_Vertex.VIEWPOS, _Vertex.NORMAL, LightArr[0]);
+	// _Vertex.NORMAL = CalBumpNormal(_Vertex.NORMAL, NormalTexture);
 	
-    ResultColor.xyz *= (DiffuseColor + SpacularLight);
+	// 여기서 
+    float4 DiffuseColor;
+    float4 SpacularLight;
+    float4 AmbiantLight = (0.1f, 0.1f, 0.1f, 0.1f);
+	
+    for (int i = 0; i < LightCount; ++i)
+    {
+        DiffuseColor += CalDiffusLight(_Vertex.NORMAL, LightArr[i]);
+        SpacularLight += CalSpacularLight(_Vertex.VIEWPOS, _Vertex.NORMAL, LightArr[i]);
+		//AmbiantLight += LightArr[0].AmbientLight;
+    }
+	
+	
+	// ResultColor.xyz *= (DiffuseColor.xyz + AmbiantLight.xyz);
+    ResultColor.xyz *= (DiffuseColor.xyz + SpacularLight.xyz + AmbiantLight.xyz);
     ResultColor.a = 1.0f;
+	
+	// ResultColor = _Vertex.NORMAL;
+	// ResultColor = _Vertex.VIEWPOS;
 	
     return ResultColor;
 	// return float4(1.0f, 0.0f, 0.0f, 1.0f);

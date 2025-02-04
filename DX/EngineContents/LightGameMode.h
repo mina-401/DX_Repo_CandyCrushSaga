@@ -2,6 +2,7 @@
 #include <EngineCore/GameMode.h>
 #include <atomic>
 #include <EnginePlatform/EngineThread.h>
+#include <EnginePlatform/EngineSound.h>
 
 // Ό³Έν :
 class ALightGameMode : public AGameMode
@@ -18,6 +19,8 @@ public:
 	ALightGameMode& operator=(ALightGameMode&& _Other) noexcept = delete;
 
 	void Tick(float _DeltaTime);
+
+	void BeginPlay() override;
 
 
 protected:
@@ -36,6 +39,8 @@ private:
 	// std::atomic<bool> TextureLoad = false;
 	// std::atomic<bool> SpriteLoad = false;
 
+	USoundPlayer SoundPlayer;
+	std::shared_ptr<class AMeshActor> NewMonster;
 	// UEngineThread Thread;
 };
 

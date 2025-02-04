@@ -11,6 +11,7 @@ class ULevel : public UObject
 	friend class UCollision;
 	friend class UEngineCore;
 	friend class ULight;
+	friend class UEngineCamera;
 
 public:
 	// constrcuter destructer

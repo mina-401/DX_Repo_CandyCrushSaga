@@ -472,3 +472,42 @@ bool FTransform::AABBToAABB(const FTransform& _Left, const FTransform& _Right)
 	FCollisionData RightCol = _Right.GetCollisionData();
 	return LeftCol.AABB.Intersects(RightCol.AABB);
 }
+
+bool FTransform::OBBToRay(const FTransform& _Left, const FTransform& _Right)
+{
+	FCollisionData LeftCol = _Left.GetCollisionData();
+	FCollisionData RightCol = _Right.GetCollisionToRay();
+
+	float Data;
+
+	FVector Dir = RightCol.Ray.Direction;
+	FVector Origin = RightCol.Ray.Origin;
+
+	return LeftCol.OBB.Intersects(Origin.DirectVector, Dir.DirectVector, Data);
+}
+
+bool FTransform::SphereToRay(const FTransform& _Left, const FTransform& _Right)
+{
+	FCollisionData LeftCol = _Left.GetCollisionData();
+	FCollisionData RightCol = _Right.GetCollisionToRay();
+
+	float Data;
+
+	FVector Dir = RightCol.Ray.Direction;
+	FVector Origin = RightCol.Ray.Origin;
+
+	return LeftCol.Sphere.Intersects(Origin.DirectVector, Dir.DirectVector, Data);
+}
+
+bool FTransform::AABBToRay(const FTransform& _Left, const FTransform& _Right)
+{
+	FCollisionData LeftCol = _Left.GetCollisionData();
+	FCollisionData RightCol = _Right.GetCollisionToRay();
+
+	float Data;
+
+	FVector Dir = RightCol.Ray.Direction;
+	FVector Origin = RightCol.Ray.Origin;
+
+	return LeftCol.AABB.Intersects(Origin.DirectVector, Dir.DirectVector, Data);
+}

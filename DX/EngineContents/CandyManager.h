@@ -96,12 +96,13 @@ public:
 	
 	bool RowCheckInProgress(int X, int Y);
 	bool ColCheckInProgress(int X, int Y);
-
 	void CandyFindConsecInProgress();
 	void InProgress(float _DeltaTime);
 
 
 	void CandyFindConsec();
+	void RowCheck(int X, int Y);
+	void ColCheck(int X, int Y);
 	void CandyDestroyCheck();
 	void CandyChange(class  ACandy* SelectCandy, class ACandy* CurCandy);
 	void InProgressCandyClear();
@@ -124,22 +125,17 @@ public:
 	void PushDestroyCandy(int _row, int _col,ESpriteType SpriteType);
 
 	void UpdateStart();
-	void CandyDisableCheck();
 	void Update(float _DeltaTime);
 	void DisableStart();
 	void Disable(float _DeltaTime);
 	void CandyDestroyStart();
 
 	void HudScoreBar();
-
 	void HudBar(int Score);
 
 	void BasicPlayerStateScore(ACandy* Candy);
 	
-
-
-	void RowCheck(int X, int Y);
-	void ColCheck(int X, int Y);
+	
 
 	 std::vector<std::vector<class ACandy*>> Candys;
 	 int CandyRow = 0; //Y
@@ -160,7 +156,6 @@ public:
 	 }
 
 	 void ChangeCandyState(ECandyManagerState _CandyState);
-	 void ChangeBoardState(ECandyBoardState _BoardState);
 
 	 FVector IndexToWorldPos(FIntPoint _Index);
 
@@ -201,7 +196,6 @@ private:
 	
 	int ScoreStar = 0;
 	int Score = 0;
-	//float Score = 0;
 	bool IsCombo = false;
 	
 	UEngineRandom Random;

@@ -2,7 +2,9 @@
 #include "EngineCamera.h"
 #include "Renderer.h"
 #include "EngineRenderTarget.h"
+#include "Collision.h"
 #include "EngineCore.h"
+#include "Level.h"
 
 UEngineCamera::UEngineCamera()
 {
@@ -136,4 +138,159 @@ void UEngineCamera::CalculateViewAndProjection()
 	}
 
 	int a = 0;
+}
+
+
+
+bool UEngineCamera::CheckPickCollision(std::string_view _CollisionProfile, std::vector<class UCollision*>& _Collision)
+{
+	CalculateViewAndProjection();
+
+	if (ProjectionType == EProjectionType::Perspective)
+	{
+		FVector MousePos = UEngineCore::GetMainWindow().GetMousePos();
+		FVector ScreenSize = UEngineCore::GetMainWindow().GetWindowSize();
+
+		FVector RayOrigin = FVector(0.0f, 0.0f, 0.0f, 1.0f);
+		FVector RayDirection = MousePos;
+
+		FMatrix ViewPort;
+		ViewPort.ViewPort(ScreenSize.X, ScreenSize.Y, 0.0f, 0.0f, 0.0f, 1.0f);
+		FMatrix Projection = GetTransformRef().Projection;
+		FMatrix InvView = GetTransformRef().View.InverseReturn();
+
+		MousePos.X = (2.0f * MousePos.X / ScreenSize.X - 1.0f) / Projection.Arr2D[0][0];
+		MousePos.Y = (-2.0f * MousePos.Y / ScreenSize.Y + 1.0f) / Projection.Arr2D[1][1];
+		MousePos.Z = 1.0f;
+
+		RayOrigin.DirectVector = DirectX::XMVector3TransformCoord(RayOrigin.DirectVector, InvView.DirectMatrix);
+
+		RayDirection.DirectVector = DirectX::XMVectorSet(MousePos.X, MousePos.Y, 1.0f, 0.0f);
+		RayDirection.DirectVector = DirectX::XMVector3TransformNormal(RayDirection.DirectVector, InvView.DirectMatrix);
+		RayDirection.DirectVector = DirectX::XMVector3Normalize(RayDirection.DirectVector);
+
+
+		FTransform RayTrans;
+		RayTrans.SetRayOrigin(RayOrigin);
+		RayTrans.SetRayDirection(RayDirection);
+
+
+
+		ULevel* Level = GetWorld();
+
+		std::string UpperName = UEngineString::ToUpper(_CollisionProfile.data());
+
+		if (false == GetWorld()->Collisions.contains(UpperName))
+		{
+			MSGASSERT("존재하지 않는 콜리전 그룹과 충돌할수는 없습니다.");
+			return false;
+		}
+
+		std::list<std::shared_ptr<UCollision>>& CollisionGroup = GetWorld()->Collisions[UpperName];
+
+		for (std::shared_ptr<UCollision>& Collision : CollisionGroup)
+		{
+			ECollisionType Type = Collision->GetCollisionType();
+
+			switch (Type)
+			{
+			case ECollisionType::Sphere:
+				if (true == FTransform::OBBToRay(Collision->GetTransformRef(), RayTrans))
+				{
+					_Collision.push_back(Collision.get());
+				}
+				break;
+			case ECollisionType::AABB:
+				if (true == FTransform::OBBToRay(Collision->GetTransformRef(), RayTrans))
+				{
+					_Collision.push_back(Collision.get());
+				}
+				break;
+			case ECollisionType::OBB:
+				if (true == FTransform::OBBToRay(Collision->GetTransformRef(), RayTrans))
+				{
+					_Collision.push_back(Collision.get());
+				}
+				break;
+			case ECollisionType::RAY:
+			case ECollisionType::Max:
+			case ECollisionType::Point:
+			case ECollisionType::Rect:
+			case ECollisionType::CirCle:
+			case ECollisionType::OBB2D:
+			default:
+				MSGASSERT("레이로 충돌할수 없는 타입입니다.");
+				break;
+			}
+		}
+	}
+	else if (ProjectionType == EProjectionType::Orthographic)
+	{
+		FVector MousePos = UEngineCore::GetMainWindow().GetMousePos();
+		FVector ScreenSize = UEngineCore::GetMainWindow().GetWindowSize();
+
+		MousePos.X = (2.0f * MousePos.X / ScreenSize.X - 1.0f);
+		MousePos.Y = (1.0f - 2.0f * MousePos.Y / ScreenSize.Y);
+		MousePos.Z = 1.0f;
+
+		MousePos *= GetTransformRef().Projection.InverseReturn();
+		MousePos *= GetTransformRef().View.InverseReturn();
+		MousePos.Z = 0.0f;
+
+		FTransform RayTrans;
+		RayTrans.SetRayOrigin(MousePos);
+		RayTrans.SetRayDirection(FVector(0.0f, 0.0f, 1.0f));
+
+		ULevel* Level = GetWorld();
+
+		std::string UpperName = UEngineString::ToUpper(_CollisionProfile.data());
+
+		if (false == GetWorld()->Collisions.contains(UpperName))
+		{
+			MSGASSERT("존재하지 않는 콜리전 그룹과 충돌할수는 없습니다.");
+			return false;
+		}
+
+		std::list<std::shared_ptr<UCollision>>& CollisionGroup = GetWorld()->Collisions[UpperName];
+
+
+		for (std::shared_ptr<UCollision>& Collision : CollisionGroup)
+		{
+			ECollisionType Type = Collision->GetCollisionType();
+
+			switch (Type)
+			{
+			case ECollisionType::Sphere:
+				if (true == FTransform::OBBToRay(Collision->GetTransformRef(), RayTrans))
+				{
+					_Collision.push_back(Collision.get());
+				}
+				break;
+			case ECollisionType::AABB:
+				if (true == FTransform::OBBToRay(Collision->GetTransformRef(), RayTrans))
+				{
+					_Collision.push_back(Collision.get());
+				}
+				break;
+			case ECollisionType::OBB:
+				if (true == FTransform::OBBToRay(Collision->GetTransformRef(), RayTrans))
+				{
+					_Collision.push_back(Collision.get());
+				}
+				break;
+			case ECollisionType::RAY:
+			case ECollisionType::Max:
+			case ECollisionType::Point:
+			case ECollisionType::Rect:
+			case ECollisionType::CirCle:
+			case ECollisionType::OBB2D:
+			default:
+				MSGASSERT("레이로 충돌할수 없는 타입입니다.");
+				break;
+			}
+		}
+	}
+
+
+	return _Collision.size() != 0;
 }

@@ -14,7 +14,7 @@ struct FLightData
 
 cbuffer FLightDatas : register(b11)
 {
-    int Count;
+    int LightCount;
     FLightData LightArr[256];
 };
 
@@ -25,43 +25,34 @@ cbuffer FLightDatas : register(b11)
 
 float4 CalSpacularLight(float4 _ViewPos, float4 _ViewNormal, FLightData _Data)
 {
-    float ResultLight = 0.0f;
-
-    float4 N = normalize(_ViewNormal);
-    float4 L = normalize(_Data.ViewLightRevDir);
-	
-	// 반사 벡터를 구할수가 있다.
-    float3 Reflection = normalize(2.0f * N.xyz * dot(L.xyz, N.xyz) - L.xyz);
-	
-    float3 Eye = normalize(_ViewPos.xyz - _Data.CameraPosition.xyz);
-	
-	// 0~1사이의 값이 나올수 밖에 없다.
-    ResultLight = max(0.0f, dot(Reflection.xyz, Eye.xyz));
-	
-	// 내가 바라보는 방향백터의 영방향 반사벡터를 구합니다.
-	
-    ResultLight = pow(ResultLight, 30.0f);
-	
-	// float4 Reflection
-    return ResultLight;
+    float4 ResultRatio = 0.0f;
+    
+    float3 N = normalize(_ViewNormal.xyz);
+    float3 L = normalize(_Data.ViewLightRevDir.xyz);
+    
+    float3 ReflectionN = normalize(2.0f * dot(N.xyz, L.xyz) * _ViewNormal.xyz - L.xyz);
+    ReflectionN = normalize(ReflectionN);
+    
+    float3 EyeL = normalize(_Data.CameraPosition.xyz - _ViewPos.xyz);
+    
+    float Result = max(0.0f, dot(EyeL.xyz, ReflectionN.xyz));
+    ResultRatio.xyzw = pow(Result, 30.0f);
+    
+    return ResultRatio;
 }
 
 float4 CalDiffusLight(float4 _ViewNormal, FLightData _Data)
 {
-    float4 N = normalize(_ViewNormal);
-    float4 L = normalize(_Data.ViewLightRevDir);
+    float3 N = normalize(_ViewNormal.xyz);
+    float3 L = normalize(_Data.ViewLightRevDir.xyz);
 	// _Data.LightRevDir 뷰공간에 존재하는 녀석이어야 공식이 성립한다.
 	
 	// Ratio비율에 가까운 값
-    float ResultLight;
+    float ResultLight = 0.0f;
 	
 	// 스위즐링(swizzling) 문법 Hlsl에서만 사용가능
 	// .xz
-    ResultLight = dot(N, L);
-	
-	// 음수가 나올수가 있기 때문에.
-	// 최소값을 0으로 고정    최소값  최대값
-    ResultLight = max(0.0f, ResultLight);
+    ResultLight = saturate(dot(N.xyz, L.xyz));
 	
 	// 빛의 강도
     return ResultLight * 0.5f;

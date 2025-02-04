@@ -32,6 +32,8 @@ public:
 	CandyGameInstance& operator=(CandyGameInstance&& _Other) noexcept = delete;
 		
 
+	class AGameMode* CurGameMode = nullptr;
+
 	PlayerStatus PlayerStat;
 	GameStatus GameStat;
 

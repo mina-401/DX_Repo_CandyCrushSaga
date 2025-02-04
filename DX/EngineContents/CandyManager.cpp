@@ -450,13 +450,13 @@ void ACandyManager::InProgress(float _DeltaTime)
     {
         if (true == FindInProgressCombo)
         {
-            ChangeBoardState(ECandyBoardState::InProgress);
+            //ChangeBoardState(ECandyBoardState::InProgress);
 
             return;
         }
         else
         {
-            ChangeBoardState(ECandyBoardState::Resetting);
+           // ChangeBoardState(ECandyBoardState::Resetting);
 
             return;
         }
@@ -538,12 +538,11 @@ void ACandyManager::ClearCandys()
 void ACandyManager::ResettingStart()
 {
     ResetCandyBoard();
-    ChangeBoardState(ECandyBoardState::InProgress);
+    //ChangeBoardState(ECandyBoardState::InProgress);
     
 }
 void ACandyManager::ResetCandyBoard()
 {
-
 
     ClearCandys(); // 캔디딀 저장 삭제
     CandyCreate(); // 캔디 다시 만듦
@@ -557,29 +556,6 @@ void ACandyManager::ResetCandyBoard()
 FVector ACandyManager::IndexToWorldPos(FIntPoint _Index)
 {
     return LeftBottom + float4(_Index.Y * CandyScale.Y, _Index.X * CandyScale.X);
-}
-void ACandyManager::ChangeBoardState(ECandyBoardState _BoardState)
-{
-    BoardState = _BoardState;
-    switch (BoardState)
-    {
-    case ECandyBoardState::Ready:
-        break;
-    case ECandyBoardState::InProgress:
-       // CandyFindConsecInProgress(); 
-        break;
-    case ECandyBoardState::Paused:
-        break;
-    case ECandyBoardState::Completed:
-        break;
-    case ECandyBoardState::Resetting:
-       // ResettingStart();
-        break;
-    case ECandyBoardState::GameOver:
-        break;
-    default:
-        break;
-    }
 }
 
 void ACandyManager::ChangeCandyState(ECandyManagerState _CandyState)
@@ -625,7 +601,6 @@ void ACandyManager::NewCandyDropStart()
     
             if (nullptr == Candys[row][col])
             {
-                //5 < 4+1
                 if (CandyRow < row + 1)
                 {
                     continue;
@@ -679,7 +654,6 @@ void ACandyManager::NewCandyDropStart()
                 int Index = Random.RandomInt(1, 78);
                 FVector Pos = IndexToWorldPos({ NewCandyRow, col });
                 ACandy* NewCandy = NewCandyCreate(row,col,Pos);
-               // NewCandy->SetActive(false);
 
                 DropData NewData;
                 NewData.Candy = NewCandy;
@@ -746,9 +720,7 @@ void ACandyManager::NewCandyDrop(float _Delta)
         return;
         
     }
-
 }
-
 
 void ACandyManager::PushDestroyCandy(int _row, int _col, ESpriteType SpriteType)
 {
@@ -763,7 +735,6 @@ void ACandyManager::PushDestroyCandy(int _row, int _col, ESpriteType SpriteType)
     case ESpriteType::Normal:
         return;
         break;
-        //return;
     case ESpriteType::StripedHorizontal:
        BottomRow = _row;
        BottonCol = 0;
@@ -789,7 +760,6 @@ void ACandyManager::PushDestroyCandy(int _row, int _col, ESpriteType SpriteType)
         return;
         break;
     default:
-       // return;
         break;
     }
 
@@ -865,6 +835,7 @@ void ACandyManager::CandyDestroyStart()
         // 캔디 스프라이트 모양에 따른 기본 점수 계산한다.
         BasicPlayerStateScore(Candy);
 
+        //UI HUD에서 스코어 바를 조정한다
         HudScoreBar();
        
         // 연쇄해서 부서지는 캔디 존재한다.
@@ -906,35 +877,15 @@ void ACandyManager::CandyDestroyStart()
             default:
                 break;
             }
-
-
             Score += BonusScore*ComboCount;
         }
 
-            //기본점수       
-
-       
-
         PrevColor = CurColor;
-        // 
-         //class AShine* ShineEffect = GetWorld()->SpawnActor<AShine>().get();
-        // ShineEffect->SetActorLocation(Candy->GetActorLocation());
+       
          Candys[Candy->CandyData.row][Candy->CandyData.col] = nullptr;
          Candy->Destroy();
          Candy = nullptr;
-           
-        /* TimeEventComponent->AddUpdateEvent(2.0f, [this, Candy,ShineEffect](float _Delta, float _Acc)
-             {
-                
-             });
-         TimeEventComponent->AddEndEvent(2.0f, [this,ShineEffect]()
-             {
-                 ShineEffect->Destroy();
-             });*/
-        // ShineEffectList.push_back(ShineEffect);
-
     }
-
     
     CandyClear();
 
@@ -997,13 +948,17 @@ void ACandyManager::HudBar(int Score)
 {
     ACCSHUD* Hud = dynamic_cast<ACCSHUD*>(GetWorld()->GetHUD());
 
-
+    float Acc = static_cast<float>( Score);
+    if (Score > 7000)
+    {
+        Acc = 7000;
+    }
 
     //2000 
     if (Hud != nullptr)
     {
-        Hud->Score->SetRelativeScale3D({ 33.0f,(float)Score / 2,0.0f });
-        Hud->Score->SetWorldLocation({ -191,-57 + (float)Score * 0.01f,0 });
+        Hud->Score->SetRelativeScale3D({ 33.0f,(float)Acc / 2,0.0f });
+        Hud->Score->SetWorldLocation({ -191,-57 + (float)Acc * 0.01f,0 });
     }
 }
 
@@ -1057,7 +1012,6 @@ void ACandyManager::UpdateStart()
     //연속하는 캔디 찾음
     CandyFindConsec();
 
-    // 부술 캔디를 확인
 }
 
 void ACandyManager::CandyDestroyCheck()
@@ -1075,10 +1029,7 @@ void ACandyManager::CandyDestroyCheck()
     }
 
 }
-void ACandyManager::CandyDisableCheck()
-{
-    
-}
+
 void ACandyManager::Update(float _DeltaTime)
 {
     if (false == IsCandyDestroy() && (GetGameInstance<CandyGameInstance>()->CandyMouseCon.IsTransEnd == true))
@@ -1099,7 +1050,6 @@ void ACandyManager::Update(float _DeltaTime)
         return;
     }
 
-   // CandyDisableCheck();
 }
 void ACandyManager::DisableStart()
 {
@@ -1131,7 +1081,6 @@ void ACandyManager::BeginPlay()
 {
     AActor::BeginPlay();
 
-  //  ChangeBoardState(ECandyBoardState::Ready);
 
 }
 
@@ -1148,27 +1097,7 @@ void ACandyManager::Tick(float _DeltaTime)
         ResettingStart();
     }
   
-
-    switch (BoardState)
-    {
-    case ECandyBoardState::Ready:
-        break;
-    case ECandyBoardState::InProgress:
-       // InProgress(_DeltaTime);
-        break;
-    case ECandyBoardState::Paused:
-        break;
-    case ECandyBoardState::Completed:
-        break;
-    case ECandyBoardState::Resetting:
-        break;
-    case ECandyBoardState::GameOver:
-        break;
-    default:
-        break;
-    }
     
- 
     switch (CandyState)
     {
     case ECandyManagerState::Select:

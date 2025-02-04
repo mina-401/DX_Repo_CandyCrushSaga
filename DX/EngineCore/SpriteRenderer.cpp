@@ -26,10 +26,6 @@ USpriteRenderer::~USpriteRenderer()
 {
 }
 
-void USpriteRenderer::SetPivotValue(FVector _Value)
-{
-	SpriteData.Pivot = _Value;
-}
 void USpriteRenderer::SetSprite(std::string_view _Name, UINT _Index)
 {
 	Sprite = UEngineSprite::Find<UEngineSprite>(_Name).get();
@@ -140,6 +136,7 @@ void USpriteRenderer::CameraTransUpdate(UEngineCamera* _Camera)
 	}
 
 	RendererTrans.Projection = CameraTrans.Projection;
+	RendererTrans.WV = CurWorld * RendererTrans.View;
 	RendererTrans.WVP = CurWorld * RendererTrans.View * RendererTrans.Projection;
 }
 

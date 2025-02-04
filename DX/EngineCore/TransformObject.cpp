@@ -3,6 +3,7 @@
 #include "EngineCamera.h"
 
 UTransformObject::UTransformObject()
+	: Parent(nullptr)
 {
 }
 
@@ -54,5 +55,6 @@ void UTransformObject::CameraTransUpdate(UEngineCamera* _Camera)
 	//	// 랜더러는 월드 뷰 프로젝트를 다 세팅받았고
 	RendererTrans.View = CameraTrans.View;
 	RendererTrans.Projection = CameraTrans.Projection;
+	RendererTrans.WV = RendererTrans.World * RendererTrans.View;
 	RendererTrans.WVP = RendererTrans.World * RendererTrans.View * RendererTrans.Projection;
 }

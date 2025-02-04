@@ -30,7 +30,7 @@ public:
 
 	void SetRadius(float _Value);
 
-	//void Release();
+	void Release();
 
 	// vector인게 왜 vector로 하냐
 	// unreal에서 vector
@@ -41,6 +41,11 @@ public:
 	void SetCollisionType(ECollisionType _Type)
 	{
 		CollisionType = _Type;
+	}
+
+	ECollisionType GetCollisionType()
+	{
+		return CollisionType;
 	}
 
 	void CollisionEventCheck(std::shared_ptr<UCollision> _Other);

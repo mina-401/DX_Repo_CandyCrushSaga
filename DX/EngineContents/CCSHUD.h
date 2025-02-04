@@ -27,23 +27,28 @@ public:
 	class UImageWidget* ScoreStar1;
 	class UImageWidget* ScoreStar2;
 	class UImageWidget* ScoreStar3;
-
+	class UImageWidget* BackDoor;
+	class UImageWidget* ButtonSound;
 	class UImageWidget* ButtonWidget;
 
-	//class UImageWidget* Score;
 	std::shared_ptr<UImageWidget> Score;
 
 	bool IsRestart = false;
-	//class USpriteRenderer* Score;
+
+
+	
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 private:
 
-	
+	class AGameMode* CurGameMode = nullptr;
 	float ACC = 0;
 	//PlayerStatus PlayerStat;
 	int Turn;
 	int MaxScore;
+
+	class USoundPlayer* SoundPlayer;
+
 };
 

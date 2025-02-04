@@ -97,8 +97,7 @@ void APlayGameMode::LevelChangeStart()
 		Window->SetActive(true);
 	}
 	GetGameInstance<CandyGameInstance>()->IsGameEnd = false;
-	
-
+	GetGameInstance<CandyGameInstance>()->CurGameMode = this;
 }
 
 void APlayGameMode::LevelChangeEnd()
@@ -106,6 +105,7 @@ void APlayGameMode::LevelChangeEnd()
 	SoundPlayer.Stop();
 
 	GetGameInstance<CandyGameInstance>()->IsGameEnd = false;
+	GetGameInstance<CandyGameInstance>()->CurGameMode = nullptr;
 }
 
 void APlayGameMode::BeginPlay()
