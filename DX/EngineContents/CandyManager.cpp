@@ -1002,8 +1002,8 @@ void ACandyManager::HudBar(int Score)
     //2000 
     if (Hud != nullptr)
     {
-        Hud->Score->SetRelativeScale3D({ 33.0f,Score / 2,0.0f });
-        Hud->Score->SetWorldLocation({ -191,-57 + Score * 0.01f,0 });
+        Hud->Score->SetRelativeScale3D({ 33.0f,(float)Score / 2,0.0f });
+        Hud->Score->SetWorldLocation({ -191,-57 + (float)Score * 0.01f,0 });
     }
 }
 
