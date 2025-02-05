@@ -77,19 +77,18 @@ protected:
 		}
 	}
 private:
-	void SoundInit();
 
 	EGameModeState GameModeState = EGameModeState::GameStart;
 
-	std::shared_ptr<class APlayMap> Map;
+	std::shared_ptr<class APlayMap> Map =nullptr;
 	//std::vector<std::vector<std::shared_ptr<class ACandy>>> Candys;
 
-	 class ACandyManager* CandyManager;
-	 std::shared_ptr< class AMouse> CandyMouseObj;
-	void PlayDirLoad();
-	void SpritesInit();
+	class ACandyManager* CandyManager = nullptr;;
+	std::shared_ptr< class AMouse> CandyMouseObj = nullptr;
 
-	std::shared_ptr<class AHUD> GameMainHud;
+	std::shared_ptr<class AHUD> GameMainHud = nullptr;
+
+
 	class UWidget* ScoreWidget;
 	class UWidget* ScoreBarWidget;
 	class UWidget* ScoreTextBoxWidget;

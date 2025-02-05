@@ -486,12 +486,12 @@ void ACandyManager::CandyFindConsec()
 
 void ACandyManager::CandyChange(class ACandy* SelectCandy, class ACandy* CurCandy)
 {
-    FCandySpriteData& SelectCandyDataRef = SelectCandy->GetCandyData();
-    FCandySpriteData& CurCandyDataRef = CurCandy->GetCandyData();
+    CandySpriteData& SelectCandyDataRef = SelectCandy->GetCandyData();
+    CandySpriteData& CurCandyDataRef = CurCandy->GetCandyData();
 
 
-    FCandySpriteData SelectCandyData = SelectCandy->CandyData;
-    FCandySpriteData CurCandyData = CurCandy->CandyData;
+    CandySpriteData SelectCandyData = SelectCandy->CandyData;
+    CandySpriteData CurCandyData = CurCandy->CandyData;
 
     //자료 바꾸기
  

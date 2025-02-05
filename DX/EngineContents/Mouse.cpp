@@ -50,27 +50,15 @@ AMouse::AMouse()
 				return;
 			}
 
-
-
 			class ACandy* CurCandy = dynamic_cast<ACandy*>(_Other->GetActor());
 			class AMouse* me = dynamic_cast<AMouse*>(_This->GetActor());
 
-			if (nullptr == this->SelectCandy)
-			{
-				//UEngineDebug::OutPutString("Not Candy");
-				
-
-			}
-			else {
-				//UEngineDebug::OutPutString("Candy Select");
-			}
+	
 
 			if (CurCandy != nullptr) {
 				if (true == UEngineInput::IsDown(VK_LBUTTON))
 				{
 					this->SelectCandy = CurCandy;
-					//this->SelectCandy->SetActive(false);
-
 
 				}
 
@@ -158,26 +146,16 @@ AMouse::AMouse()
 			
 		});
 
-	Collision->SetCollisionEnd([](UCollision* _This, UCollision* _Other)
-		{
-			//UEngineDebug::OutPutString("End");
-
-		});
 }
  
 AMouse::~AMouse()
 {
 }
 
-//void AMouse::CollisionEnter(UCollision* _This, UCollision* _Other)
-//{
-//	int a = 0;
-//}
 void AMouse::BeginPlay()
 {
 	AActor::BeginPlay();
 
-	//class APlayGameMode* PlayGameMode= dynamic_cast<APlayGameMode*>(GetWorld()->GetGameMode());
 	CandyManager = dynamic_cast<ACandyManager*>( GetWorld()->GetMainPawn());
 	
 	if (CandyManager == nullptr)
@@ -205,12 +183,6 @@ void AMouse::Tick(float _DeltaTime)
 		GetGameInstance<CandyGameInstance>()->CandyMouseCon.IsTransEnd = true;
 	}
 
-
-	//모든 게임이 끝나면, 점수화면으로 이동
-	//if (IsGameEnd == true)
-	//{
-		//레벨 체인지
-	//}
 }
 
 

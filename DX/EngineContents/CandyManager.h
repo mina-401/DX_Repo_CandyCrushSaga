@@ -12,7 +12,6 @@ class StageCandyData
 public:
 	bool IsActive = true;
 	FVector Pos = { -1,-1,-100 };
-	//FVector TargetPos = { -1,-1 };
 
 	bool operator==(std::nullptr_t) const
 	{

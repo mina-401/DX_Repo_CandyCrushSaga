@@ -2,7 +2,7 @@
 #include <EngineCore/Actor.h>
 #include "CCSEnums.h"
 
-class FCandySpriteData
+class CandySpriteData
 {
 public:
 
@@ -122,11 +122,11 @@ public:
 
 	void SetPos(FVector _Pos);
 	
-	FCandySpriteData& GetCandyData()
+	CandySpriteData& GetCandyData()
 	{
 		return CandyData;
 	}
-	FCandySpriteData CandyData;
+	CandySpriteData CandyData;
 
 protected:
 	void BeginPlay() override;

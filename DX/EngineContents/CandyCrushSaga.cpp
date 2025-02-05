@@ -51,10 +51,6 @@ void UCandyCrushSaga::EngineStart(UEngineInitData& _Data)
 	UEngineCore::CreateLevel<APlayGameMode, ACandyManager, ACCSHUD>("PlayLevel");
 
 	UEngineCore::OpenLevel("TitleLevel");
-
-	UEngineGUI::CreateGUIWindow<UContentsEditorGUI>("CCSEditorGUI");
-	std::shared_ptr<UContentsEditorGUI> Window = UEngineGUI::FindGUIWindow<UContentsEditorGUI>("CCSEditorGUI");
-	Window->SetActive(true);
 	
 }
 void UCandyCrushSaga::SoundInit()

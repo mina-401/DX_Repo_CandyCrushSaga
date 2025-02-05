@@ -167,7 +167,7 @@ void APlayGameMode::GameStart()
 void APlayGameMode::GameEndStart()
 {
 	//결과 확인하는 UI 
-	//Result = GetWorld()->SpawnActor<AResultHUD>();
+
 	Result = GetWorld()->GetHUD()->CreateWidget<AResultHUD>(-1);
 	ScoreStar = GetGameInstance<CandyGameInstance>()->PlayerStat.ScoreStar;
 	Score = GetGameInstance<CandyGameInstance>()->PlayerStat.Score;
@@ -197,12 +197,6 @@ void APlayGameMode::GameEnd(float _DeltaTime)
 			
 			Result->StarSetActive(star++);
 		}
-
-
-
-		
-
-
 	}
 
 }
@@ -261,9 +255,4 @@ void APlayGameMode::Tick(float _DeltaTime)
 	
 }
 
-void APlayGameMode::SpritesInit()
-{
-	//
-
-}
 
