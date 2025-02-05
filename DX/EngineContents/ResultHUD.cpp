@@ -83,7 +83,7 @@ void AResultHUD::Tick(float _DeltaTime)
 
 	}
 
-	CurTime += 0.2f;
+	CurTime += _DeltaTime * 10.0f;
 
 
 }

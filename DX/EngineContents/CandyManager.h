@@ -193,7 +193,7 @@ private:
 	int ComboCount = 0;
 	int BonusScore = 100;
 	
-	int ScoreStar = 0;
+	int ScoreStar = -1;
 	int Score = 0;
 	bool IsCombo = false;
 	
