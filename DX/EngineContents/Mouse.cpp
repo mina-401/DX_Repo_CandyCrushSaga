@@ -12,6 +12,7 @@
 #include "CandyManager.h"
 #include <EngineCore/TimeEventComponent.h>
 #include "CCSConst.h"
+#include <EngineCore/HUD.h>
 
 
 AMouse::AMouse()
@@ -23,9 +24,9 @@ AMouse::AMouse()
 	TimeEventComponent = CreateDefaultSubObject<UTimeEventComponent>();
 	Renderer = CreateDefaultSubObject<USpriteRenderer>();
 	Renderer->SetupAttachment(RootComponent);
-	Renderer->SetAutoScale(false);
-	Renderer->SetTexture("Mouse.png");
-	Renderer->SetScale3D({ 30.0f,30.0f,-1000});
+	//Renderer->SetAutoScale(false);
+	//Renderer->SetTexture("Mouse.png");
+	//Renderer->SetScale3D({ 30.0f,30.0f});
 	//Renderer->SetRe({ 30.0f,30.0f,-1000});
 
 	Collision = CreateDefaultSubObject<UCollision>();
@@ -158,9 +159,13 @@ AMouse::~AMouse()
 void AMouse::BeginPlay()
 {
 	AActor::BeginPlay();
-
+	ImageRenderer = GetWorld()->GetHUD()->CreateWidget<UImageWidget>(-1);
+	ImageRenderer->SetAutoScale(false);
+	ImageRenderer->SetTexture("Mouse.png");
+	ImageRenderer->SetScale3D({ 30.0f,30.0f });
 	CandyManager = dynamic_cast<ACandyManager*>( GetWorld()->GetMainPawn());
 	
+
 	if (CandyManager == nullptr)
 	{
 		return;
@@ -176,11 +181,14 @@ void AMouse::Tick(float _DeltaTime)
 
 	std::shared_ptr<class ACameraActor> Camera = GetWorld()->GetMainCamera();
 	FVector Pos = Camera->ScreenMousePosToWorldPos();
-	Pos.X += 5.0f;
-	Pos.Y -= 5.0f;
-	Pos.Z = -1000.0f;
+
+	FVector ImagePos = Pos;
+
+	ImagePos.X += 5.0f;
+	ImagePos.Y -= 5.0f;
 
 	SetActorLocation(Pos); 
+	ImageRenderer->SetWorldLocation(ImagePos);
 
 	// 마우스 이동횟수 제한 있다.
 	if (GetGameInstance<CandyGameInstance>()->PlayerStat.Turn == 0)

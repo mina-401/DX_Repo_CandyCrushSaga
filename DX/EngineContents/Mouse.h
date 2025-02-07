@@ -30,6 +30,7 @@ protected:
 private:
 	std::shared_ptr<class UTimeEventComponent> TimeEventComponent;
 	std::shared_ptr<class USpriteRenderer> Renderer;
+	std::shared_ptr<class UImageWidget> ImageRenderer;
 	std::shared_ptr<class UCollision> Collision;
 
 	class ACandyManager* CandyManager;
