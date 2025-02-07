@@ -24,6 +24,9 @@ AMouse::AMouse()
 	Renderer = CreateDefaultSubObject<USpriteRenderer>();
 	Renderer->SetupAttachment(RootComponent);
 	Renderer->SetAutoScale(false);
+	Renderer->SetTexture("Mouse.png");
+	Renderer->SetScale3D({ 30.0f,30.0f,-1000});
+	//Renderer->SetRe({ 30.0f,30.0f,-1000});
 
 	Collision = CreateDefaultSubObject<UCollision>();
 	Collision->SetupAttachment(RootComponent);
@@ -173,7 +176,9 @@ void AMouse::Tick(float _DeltaTime)
 
 	std::shared_ptr<class ACameraActor> Camera = GetWorld()->GetMainCamera();
 	FVector Pos = Camera->ScreenMousePosToWorldPos();
-	Pos.Z = 0.0f;
+	Pos.X += 5.0f;
+	Pos.Y -= 5.0f;
+	Pos.Z = -1000.0f;
 
 	SetActorLocation(Pos); 
 
